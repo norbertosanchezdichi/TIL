@@ -1,6 +1,6 @@
  # Set the message variable equal to any string containing a new-line escape sequence
 message = "hello\nthere"
-print(messsage)
+print(message)
 
 # Add a string to the mountains variable that when printed results in: /\/\/\
 # You will need to use an escape sequence more than once!
