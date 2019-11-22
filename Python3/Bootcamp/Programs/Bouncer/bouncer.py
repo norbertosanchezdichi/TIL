@@ -8,6 +8,6 @@ if age:
 	elif age >= 21:
 		print('You can enter and can drink!')
 	else:
-		print('You can\'t come in, little one! :[)
+		print('You can\'t come in, little one! :[')
 else:
 	print('Enter an age!')
