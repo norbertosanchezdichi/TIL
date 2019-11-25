@@ -16,7 +16,7 @@ list5 = list1[-3:]
 print(f'list1[-3:] = {list5}')
 
 list6 = list1[:]
-print(list6)
+print(f'list6 = {list6}')
 print(f'list6 is list1 : {list6 is list1}')
 print(f'list6 == list1: {list6 == list1}')
 
