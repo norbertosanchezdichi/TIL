@@ -20,7 +20,7 @@ print(f'list6 = {list6}')
 print(f'list6 is list1 : {list6 is list1}')
 print(f'list6 == list1: {list6 == list1}')
 
-print('Using end parameter')
+print('\nUsing end parameter')
 
 list7 = list1[:2]
 print(f'list1[:2] = {list7}')
@@ -31,7 +31,7 @@ print(f'list1[2:4] = {list8}')
 list9 = list1[1:-1]
 print(f'list1[1:-1] = {list9}')
 
-print('Using step parameter')
+print('\nUsing step parameter')
 
 list10 = list1[1::2]
 print(f'list1[1::2] = {list10}')
@@ -41,3 +41,4 @@ print(f'list1[::3] = {list11}')
 
 list12 = list1[1::-1]
 print(f'list1[1::-1] = {list12}')
+
