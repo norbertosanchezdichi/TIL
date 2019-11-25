@@ -47,6 +47,7 @@ print('\nTricks with slicing')
 string = "This is fun!"
 print(f'string = {string}')
 print(f'string[::-1] = {string[::-1]}')
+print(f'string[7:][::-1] = {string[7:][::-1]}') 
 
 list1[2:3] = ['he', 'he']
 print(f'list1[2:3] = [\'he\', \'he\'] results in {list1}')
