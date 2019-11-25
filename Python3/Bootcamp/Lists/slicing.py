@@ -37,7 +37,7 @@ list10 = list1[1::2]
 print(f'list1[1::2] = {list10}')
 
 list11 = list1[::3]
-print(f'list1[::3] = {list11})
+print(f'list1[::3] = {list11}')
 
 list12 = list1[1::-1]
 print(f'list1[1::-1] = {list12}')
