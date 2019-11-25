@@ -7,7 +7,7 @@ guess = input('Guess a number from 1 through 10: ')
 
 while continue_playing == 'y':
 
-	while guess != random_number:
+	while int(guess) != random_number:
 	
 		guess = input('Guess a number from 1 through 10: ')
 		
