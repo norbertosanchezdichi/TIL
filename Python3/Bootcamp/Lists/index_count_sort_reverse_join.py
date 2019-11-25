@@ -9,3 +9,6 @@ print(f'Number of times 28 exists in list: {numbers.count(28)}')
 
 numbers.reverse()
 print(numbers)
+
+numbers.sort()
+print(numbers)
