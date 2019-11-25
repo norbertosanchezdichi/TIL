@@ -6,7 +6,7 @@ print('Scissors...')
 
 player1 = input('Player 1, make your move: ').lower()
 
-player2 = choice['rock', 'paper', 'scissors']
+player2 = choice(['rock', 'paper', 'scissors'])
 
 print(f'Computer plays {player2}')
 
