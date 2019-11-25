@@ -12,3 +12,8 @@ print(numbers)
 
 numbers.sort()
 print(numbers)
+
+characters = ['H', 'e', 'l', 'l', 'o']
+print(characters)
+'||'.join(characters)
+print(characters)
