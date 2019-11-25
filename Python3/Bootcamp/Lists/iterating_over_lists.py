@@ -5,5 +5,5 @@ for color in colors:
     
 index = 0
 while index < len(colors):
-    print(colors(index))
+    print(colors[index])
     index += 1
