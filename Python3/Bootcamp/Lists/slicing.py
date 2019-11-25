@@ -11,7 +11,7 @@ list4 = list1[-1:]
 print(list4)
 
 list5 = list1[-3:]
-print(list5)[
+print(list5)
 
 list6 = list1[:]
 print(list6)
