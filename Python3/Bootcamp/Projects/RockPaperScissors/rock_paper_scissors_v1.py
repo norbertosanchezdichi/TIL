@@ -1,7 +1,3 @@
-import random
-
-
-
 print('Rock...')
 print('Paper...')
 print('Scissors...')
