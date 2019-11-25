@@ -7,5 +7,5 @@ print(f'Index of last 3 is {numbers.index(3, len(numbers) - 3, len(numbers))}')
 
 print(f'Number of times 28 exists in list: {numbers.count(28)}')
 
-numbers_reversed = numbers.reverse()
-print(numbers_reversed)
+numbers.reverse()
+print(numbers)
