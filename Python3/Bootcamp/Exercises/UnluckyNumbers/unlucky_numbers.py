@@ -1,8 +1,10 @@
 for number in range(1, 21):
 
 	if number == 4 or number == 13:
-		print(f'{number} is UNLUCKY!')
+		state = 'UNLUCKY'
 	elif number % 2 == 0:
-		print(f'{number} is EVEN')
+		state = 'EVEN'
 	else:
-		print(f'{number} is ODD')
+		state = 'ODD'
+
+print(f'{number} is {state}!')
