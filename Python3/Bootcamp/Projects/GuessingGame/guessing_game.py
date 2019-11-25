@@ -2,13 +2,13 @@ import random
 
 random_number = random.randint(1, 10)
 
-continue = 'y'
+continue_playing = 'y'
 guess = input('Guess a number from 1 through 10: ')
 
-while continue == 'y':
+while continue_playing == 'y':
 
 	while guess != random_number:
 	
 		guess = input('Guess a number from 1 through 10: ')
 		
-	continue = input('You guessed right!  Want to continue (y/n)?').lower()
+	continue_playing = input('You guessed right!  Want to continue (y/n)?').lower()
