@@ -45,6 +45,7 @@ print(f'list1[1::-1] = {list12}')
 print('\nTricks with slicing')
 
 string = "This is fun!"
+print(f'string = {string}')
 print(f'string[::-1] = {string[::-1]}')
 
 list1[2:3] = ['he', 'he']
