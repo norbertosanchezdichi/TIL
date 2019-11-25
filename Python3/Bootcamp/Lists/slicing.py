@@ -1,3 +1,5 @@
+# Using start parameter
+
 list1 = list(range(1, 5))
 print(list1)
 
@@ -17,3 +19,14 @@ list6 = list1[:]
 print(list6)
 print(f'list6 is list1 : {list6 is list1}')
 print(f'list6 == list1: {list6 == list1}')
+
+# Using end parameter
+
+list7 = list1[:2]
+print(list7)
+
+list8 = list1[2:4]
+print(list8)
+
+list9 = list1[1:-1]
+print(list9)
