@@ -32,11 +32,9 @@ while player_wins < 2 or computer_wins < 2:
 		print('Computer WINS!')
 		computer_wins += 1
 
-	if player_wins > computer_wins:
-		print('CONGRATULATIONS!')
-		
-		break
-	else:
-		print('Better luck next time!')
-		
+if player_wins > computer_wins:
+	print('CONGRATULATIONS!')
+else:
+	print('Better luck next time!')
+	
 print(f'FINAL SCORE: Player Score: {player_wins} Computer Score: {computer_wins}')
