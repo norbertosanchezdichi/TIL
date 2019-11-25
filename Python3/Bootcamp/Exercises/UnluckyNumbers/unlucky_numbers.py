@@ -7,4 +7,4 @@ for number in range(1, 21):
 	else:
 		state = 'ODD'
 
-print(f'{number} is {state}!')
+	print(f'{number} is {state}!')
