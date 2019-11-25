@@ -15,5 +15,5 @@ print(numbers)
 
 characters = ['H', 'e', 'l', 'l', 'o']
 print(characters)
-'||'.join(characters)
+characters = '||'.join(characters)
 print(characters)
