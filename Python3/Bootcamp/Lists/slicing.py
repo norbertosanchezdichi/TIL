@@ -49,4 +49,4 @@ print(f'string = {string}')
 print(f'string[::-1] = {string[::-1]}')
 
 list1[2:3] = ['he', 'he']
-print(f'list[2:3] = [\'he\', \'he\'] results in {list1}')
+print(f'list1[2:3] = [\'he\', \'he\'] results in {list1}')
