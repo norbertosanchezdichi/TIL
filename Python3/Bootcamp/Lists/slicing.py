@@ -1,4 +1,4 @@
-list1 = [range(1, 5)]
+list1 = list(range(1, 5))
 print(list1)
 
 list2 = list1[1:]
