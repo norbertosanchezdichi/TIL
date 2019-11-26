@@ -7,4 +7,5 @@ print(name)
 print(f'{"".join([letter.upper() for letter in name]) =}')
 
 list = [0, '', False]
+print(list)
 print(f'{[bool(value) for value in list] = }')
