@@ -5,3 +5,5 @@ print(f'{[x * 10 for x in numbers] =}')
 name = 'norberto'
 print(name)
 print(f'{"".join([letter.upper() for letter in name]) =}')
+
+print(f'{[bool(value) for value in [0, '', False]] = }')
