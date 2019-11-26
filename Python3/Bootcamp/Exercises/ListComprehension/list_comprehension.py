@@ -5,3 +5,6 @@ print(f'{[num for num in list(range(1,5)) if num in list(range(3,7))] =}')
 names = ["Elie", "Tim", "Matt"]
 print(f'{names =}')
 print(f'{[name[::-1].lower() for name in names] =}')
+
+print(f'{[num for num in list(range(1,101)) if num % 12 == 0] =}')
+
