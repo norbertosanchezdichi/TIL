@@ -4,7 +4,7 @@ student = {
     'favorite_language': 'Python',
     25 : 'my favorite number!'}
 
-print(f'{instructor =}')
+print(f'{student =}')
 
 parrot = {'name': 'Lorenzo', 'age': 1.5, 'isLoco': True}
 
