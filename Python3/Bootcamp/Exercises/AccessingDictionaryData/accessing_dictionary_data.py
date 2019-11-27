@@ -12,6 +12,4 @@ print('Format() Solution')
 print(f'{"{} {}".format(artist["first"], artist["last"]) =}')
 
 print('f-String Solution')
-first = 'first'
-last = 'last'
-print(f'''{f""{artist[f'first']} {artist[f'last']}"" =}''')
+print(f'''{f"{artist[f'first']} {artist[f'last']}" =}''')
