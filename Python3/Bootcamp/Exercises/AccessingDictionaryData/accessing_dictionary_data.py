@@ -5,5 +5,11 @@ artist = {
 
 print(f'{artist =}')
 
-full_name = artist['first'] + ' ' + artist['last']
-print(f'{full_name =}')
+print('Concatenation Solution')
+print(f'{artist["first"] + " " + artist["last"] =}')
+
+print('Format() Solution')
+print('{} {}'.format(artist['first'], artist['last']))
+
+print('f-String Solution')
+print(f'{artist["first"]} {artist["last"]}')
