@@ -1,6 +1,6 @@
 student = {
     'name': 'Norberto',
-    'owns_dog' : True,
+    'owns_parrot' : True,
     'favorite_language': 'Python',
     25 : 'my favorite number!'}
 
