@@ -7,3 +7,4 @@ student = {
 print(f'{student =}')
 
 print(f'{student["name"] =}')
+print(f'{student[25] =}')
