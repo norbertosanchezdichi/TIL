@@ -10,3 +10,6 @@ parrot = {'name': 'Lorenzo', 'age': 1.5, 'isLoco': True}
 
 print(f'{parrot =}')
 
+car = dict(name = 'pegasus', age = 1.0)
+
+print(f'{car = }')
