@@ -13,6 +13,6 @@ bakery_stock = {
 print(f'{bakery_stock =}')
 
 if food in bakery_stock:
-    print('{} left'.format(bakery_stock.get(food)))
+    print(f'{bakery_stock.get(food)} left')
 else:
     print('We don\'t make that')
