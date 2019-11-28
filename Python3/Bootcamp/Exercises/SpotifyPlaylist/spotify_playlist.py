@@ -15,4 +15,10 @@ playlist = {'title' : 'patagonia bus',
                 }
             ]
 }
-print(f'{playlist =}')               
+print(f'{playlist =}')
+
+total_length = 0
+for song in playlist['songs']:
+    total_length += song['duration']
+    
+print(f'{total_length =}')
