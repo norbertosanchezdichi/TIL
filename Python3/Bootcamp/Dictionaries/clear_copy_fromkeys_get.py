@@ -10,7 +10,7 @@ student_copy = student.copy()
 print(f'{student_copy = }')
 
 student_copy.clear()
-print(f'{studnet_copy = }')
+print(f'{student_copy = }')
 
 new_student = {}.fromkeys(student.keys(), 'None')
 print(f"{new_student = }")
