@@ -14,7 +14,9 @@ print(f'{student =}')
 
 person = {'city': 'Los Angeles'}
 print(f'{person =}')
-print(f"{person.update(student) =}")
+person.update(student)
+print(f'{person =}')
 person['name'] = 'Otrebron'
 print(f'{person =}')
-print(f"{person.update({}) =}")
+person.update({})
+print(f'{person =}')
