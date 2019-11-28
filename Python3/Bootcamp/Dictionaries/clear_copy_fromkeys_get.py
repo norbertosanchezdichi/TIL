@@ -13,4 +13,4 @@ student_copy.clear()
 print(f'{studnet_copy = }')
 
 new_student = {}.fromkeys(student.keys(), 'None'
-print(f'{new_student = }')
+print(f"{new_student = }")
