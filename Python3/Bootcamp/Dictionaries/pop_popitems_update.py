@@ -7,3 +7,7 @@ print(f'{student =}')
 
 print(f'{student.pop(25) =}')
 print(f'{student =}')
+
+print(f'{student.popitem() =}')
+print(f'{student.popitem() =}')
+
