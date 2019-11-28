@@ -14,4 +14,4 @@ print(f'{student_copy = }')
 
 new_student = {}.fromkeys(student.keys(), None)
 print(f"{new_student = }")
-print(f'{new_studnet.get('name')}')
+print(f"{new_student.get('name')}")
