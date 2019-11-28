@@ -12,5 +12,5 @@ print(f'{student_copy = }')
 student_copy.clear()
 print(f'{student_copy = }')
 
-new_student = {}.fromkeys(student.keys(), 'None')
+new_student = {}.fromkeys(student.keys(), None)
 print(f"{new_student = }")
