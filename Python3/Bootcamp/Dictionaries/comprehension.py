@@ -4,3 +4,7 @@ print(f'{numbers =}')
 print(f"{ {key:value ** 2 for key, value in numbers.items()} =}")
 
 print(f"{ {num: num ** 2 for num in list(range(1,6))} =}")
+
+string1 = 'ABC'
+string2 = '123'
+print(f"{ {string1[i]: string2[i] for i in range(0, len(string1))} =}")
