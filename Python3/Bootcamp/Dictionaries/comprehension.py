@@ -11,4 +11,6 @@ string2 = '123'
 print(f"{string2 =}")
 print(f"{ {string1[i]: string2[i] for i in range(0, len(string1))} =}")
 
+print(f"{ {num: ('even' if num % 2 == 0 else 'odd') for num in numbers} =}")
+
 print(f"{ {num: (f'even' if num % 2 == 0 else f'odd') for num in numbers} =}")
