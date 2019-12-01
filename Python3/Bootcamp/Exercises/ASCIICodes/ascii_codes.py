@@ -1,0 +1,1 @@
+print(f"{ {code:chr(code) for code in range(65, 91)} =}")
