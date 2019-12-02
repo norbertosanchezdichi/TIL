@@ -9,3 +9,4 @@ locations = {
 }
 print(f'{locations =}')
 print(f"{locations[(35.6895, 39.6917)] =}")
+print(f"{locations.items() =}")
