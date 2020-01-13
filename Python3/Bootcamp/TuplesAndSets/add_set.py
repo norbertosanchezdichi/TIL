@@ -1,4 +1,4 @@
-cities = ['Los Angeles', 'San Jose', 'San Luis Obispo', 'Los Angeles']
+cities = {'Los Angeles', 'San Jose', 'San Luis Obispo', 'Los Angeles'}
 
 print(f'{cities =}')
 
