@@ -11,4 +11,5 @@ print(f'{cities =}')
 cities.discard('Santa Clara')
 
 print(f'{cities.copy() =}')
+print(f'{cities.copy() is cities =}')
 
