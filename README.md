@@ -1,2 +1,2 @@
-# Today I Learned (TIL)
+# TIL
 Today I learned...   
