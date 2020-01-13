@@ -9,3 +9,6 @@ cities.remove('Los Angeles')
 print(f'{cities =}')
 
 cities.discard('Santa Clara')
+
+print(f'{cities.copy() =}')
+
