@@ -7,3 +7,5 @@ print(f'{cities =}')
 
 cities.remove('Los Angeles')
 print(f'{cities =}')
+
+cities.discard('Santa Clara')
