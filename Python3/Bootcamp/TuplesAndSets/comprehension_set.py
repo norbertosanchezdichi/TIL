@@ -1,1 +1,1 @@
-print(f'{x**2 for x in range(10) =}')
+print(f'{{x**2 for x in range(10)} =}')
