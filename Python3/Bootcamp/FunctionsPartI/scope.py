@@ -8,7 +8,7 @@ print(instructor2) #NameError
 
 total = 0
 def increase_total():
-    total += 1  #UnboundLocalError: local variable "total" not found.  Must use "global" keyword.
+    total += 1  #UnboundLocalError: local variable "total" not found.  Must use "global" keyword.  Only works if the variable is only accessed and an assignment is not attempted.
     return total
     
 total = 0
