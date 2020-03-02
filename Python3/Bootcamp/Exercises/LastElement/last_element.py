@@ -1,6 +1,6 @@
-def last_element(list):
-    if list:
-        return list(list.len())
+def last_element(listOfStuff):
+    if listOfStuff:
+        return listOfStuff(listOfStuff.len())
     return None
 
 print(last_element([1,2]))
