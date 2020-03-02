@@ -11,4 +11,4 @@ def speak(animal = "dog"):
     else:
         return "?"
         
-speak()
+print(speak())
