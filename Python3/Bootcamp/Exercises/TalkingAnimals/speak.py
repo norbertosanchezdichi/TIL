@@ -5,7 +5,7 @@ def speak(animal = "dog"):
     elif animal == "duck":
         return "quack"
     elif animal == "cat":
-        return "meow":
+        return "meow"
     elif animal == "dog":
         return "woof"
     else:
