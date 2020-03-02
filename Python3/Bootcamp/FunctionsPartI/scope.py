@@ -16,3 +16,11 @@ def increase_total():
     global total
     total += 1
     return total
+    
+def outer():
+    count = 0
+    def inner():
+        nonlocal count #nonlocal keyword allows to modify a parent function's variable and not a global variable.
+        count += 1
+        return count
+    return inner()
