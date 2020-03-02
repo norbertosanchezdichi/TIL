@@ -4,4 +4,4 @@ def return_day(number):
     return day_of_the_week.get(number, None)
     
 print(return_day(6))
-print(return_day(01001110))
+print(return_day(0))
