@@ -1,5 +1,6 @@
-def speak(animal = "dog"):
+# Straigtforward solution
 
+def speak(animal = "dog"):
     if animal == "pig":
         return "oink"
     elif animal == "duck":
@@ -11,4 +12,17 @@ def speak(animal = "dog"):
     else:
         return "?"
         
+print(speak())
+
+# Compact solution
+
+def speak(animal = "dog"):
+    noises = {"dog": "woof", "pig": "oink", "duck": "quack", "cat": "meow"}
+    
+    noise = noises.get(animal)
+    
+    if noise:
+        return noise
+    return "?"
+    
 print(speak())
