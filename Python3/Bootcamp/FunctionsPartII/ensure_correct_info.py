@@ -3,4 +3,4 @@ def ensure_correct_info(*args):
         return 'Welcome back Norberto!'
     return 'Not sure who you are...'
     
-ensure_correct_info(25, True, "Norberto", "Sanchez-Dichi", "hi")
+print(ensure_correct_info(25, True, "Norberto", "Sanchez-Dichi", "hi"))
