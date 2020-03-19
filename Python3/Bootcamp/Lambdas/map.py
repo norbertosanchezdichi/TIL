@@ -1,7 +1,6 @@
 nums = [1, 2, 3, 4]
 doubles = map(lambda x: x*2,nums)
 
-print(f'{doubles.__name__}')
 print(f'{list(doubles)}')
 print(f'{list(doubles)}')
 
