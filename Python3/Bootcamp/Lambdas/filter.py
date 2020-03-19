@@ -12,4 +12,4 @@ print(a_names)
 names = ['Lassie', 'Norberto', 'Rusty']
 
 print(names)
-print(list(map(lambda name: f"Your instructor is {name}", filter(lambda v: len(v) > 6), names)))
+print(list(map(lambda name: f"Your instructor is {name}", filter(lambda v: len(v) > 6, names))))
