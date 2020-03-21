@@ -17,5 +17,5 @@ users = [
 
 print(f'users = {users}')
 print(f'sorted users by length = {sorted(users, key=len)}')
-print(f'sorted users by alphabetical order = {sorted(users, key=lambda user: user['username'])}')
-print(f'sorted users by alphabetical order = {sorted(users, key=lambda user: len(user['tweets']), reverse = True)}')
+print(f'sorted users by alphabetical order = {sorted(users, key=lambda user: user["username"])}')
+print(f'sorted users by alphabetical order = {sorted(users, key=lambda user: len(user["tweets"]), reverse = True)}')
