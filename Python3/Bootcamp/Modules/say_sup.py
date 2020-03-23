@@ -1,4 +1,4 @@
 def say_sup():
-    print("SUP! My __name__ is {__name__}")
+    print(f"SUP! My __name__ is {__name__}")
     
 say_sup()
