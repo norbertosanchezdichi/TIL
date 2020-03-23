@@ -1,3 +1,5 @@
-import termcolor
+from termcolor import colored
 
-print(dir(termcolor))
+text = colored("HI THERE", color = "cyan")
+
+print(text)
