@@ -12,6 +12,8 @@ def add_numbers(a, b, c, d):
     import pdb; pdb.set_trace()
     
     return a + b + c + d
+    
+add_numbers(1, 2, 3, 4)
 
 # Also used in one line
 # import pdb; pdb.set_trace()
