@@ -5,6 +5,7 @@ from termcolor import colored
 
 header = figlet_format("DAD JOKE 3000!")
 header = colored(header, color = "cyan")
+print(header)
 
 term = input("What would you like to search for? ")
 url = "https://icanhazdadjoke.com/search"
