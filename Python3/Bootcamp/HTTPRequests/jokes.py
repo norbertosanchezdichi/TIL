@@ -19,7 +19,7 @@ results = res["results"]
 if num_jokes > 1:
     print(f"I found {num_jokes} about {term}.  Here's one:")
     print(choice(results))
-else if num_jokes == 1:
+elif num_jokes == 1:
     print(f"I found one about {term}.  Here's one:")
     print(results[0]["joke"])
 else:
