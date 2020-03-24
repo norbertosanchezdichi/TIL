@@ -3,6 +3,7 @@ class Person:
         self.name = "Tony"
         self._secret = "hi!"
         self.__msg = "I like turtles!" # name mangling
+        self.__lol = "HAHAHAHAHA" # name mangling
     def doorman(self, guess):
         if guess == self._secret:
             pass
