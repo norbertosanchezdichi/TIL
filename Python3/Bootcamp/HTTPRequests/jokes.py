@@ -1,6 +1,6 @@
 import requests
 from random import choice
-from figlet import figlet_format
+from pyfiglet import figlet_format
 from termcolor import colored
 
 header = figlet_format("DAD JOKE 3000!")
