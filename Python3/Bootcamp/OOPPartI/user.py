@@ -40,7 +40,7 @@ class User:
 user1 = User("Joe", "Dawson", 25)
 user2 = User("Jack", "Chap", 29)
 
-user3 = User.from_string("Tom, Jones, 45")
+user3 = User.from_string("Tom,Jones,45")
 
 print(User.active_users)
 
