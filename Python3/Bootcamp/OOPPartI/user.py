@@ -2,6 +2,10 @@ class User:
     
     active_users = 0
     
+    @classmethod
+    def display_active_users(cls):
+        return f"There are currently {cls.active_users} active users."
+    
     def __init__(self, first, last, age):
         self.first = first
         self.last = last
@@ -36,7 +40,7 @@ print(User.active_users)
 print(user1.full_name())
 print(user2.full_name())
 
-print(User.active_users)
+print(User.display_active_users())
 
 print(user1.likes("Ice Cream"))
 print(user2.likes("Chips"))
