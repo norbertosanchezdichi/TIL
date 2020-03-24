@@ -8,7 +8,7 @@ header = colored(header, color = "cyan")
 
 term = input("What would you like to search for? ")
 url = "https://icanhazdadjoke.com/search"
-res = results.get(
+res = requests.get(
     url, 
     headers = {"Accept": "application/json"},
     params = {"term": term}).json()
