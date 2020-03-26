@@ -1,7 +1,7 @@
 import Card
 from random import shuffle
 
-def Deck:
+class Deck:
 
     def __init__(self):
         
