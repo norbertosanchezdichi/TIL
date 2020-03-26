@@ -9,7 +9,7 @@ class Deck:
         
         values = ("A", *range(2, 11),    "J", "Q", "K")
         
-        self.cards = [Card(suit, value) for suit in suits for value in values]
+        self.cards = [Card.Card(suit, value) for suit in suits for value in values]
                 
     def __repr__(self):
         return f"Deck of {self.count()} cards."
