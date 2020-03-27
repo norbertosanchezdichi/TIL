@@ -31,9 +31,9 @@ jaws = Aquatic("Jaws")
 lassie = Ambulatory("Lassie")
 captain_hook = Penguin("Captain Hook")
 
-print(captain_cook.swim())
-print(captain_cook.walk())
-print(captain_cook.greet())
+print(captain_hook.swim())
+print(captain_hook.walk())
+print(captain_hook.greet())
 
 print(f"captain_hook is instance of Penguin: {isinstance(captain_hook, Penguin)}")
 print(f"captain_hook is instance of Aquatic: {isinstance(captain_hook, Aquatic)}")
