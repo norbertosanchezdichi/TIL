@@ -23,7 +23,7 @@ class Ambulatory:
 class Penguin(Ambulatory, Aquatic):
     def __init__(self, name):
         print("PENGUIN INIT")
-        Ambulatory.__init__(name = name) # using super() would make code be ambiguous  
+        Ambulatory.__init__(self, name = name) # using super() would make code be ambiguous  
         Aquatic.__init__(self, name = name)
         
 
