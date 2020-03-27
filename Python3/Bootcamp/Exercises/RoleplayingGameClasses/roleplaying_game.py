@@ -21,7 +21,7 @@ class NPC(Character):
         super().__init__(name, hp, level)
     
     def speak(self):
-        return f"speak"
+        return f"{self.name} says there were monsters here last night!"
         
 villager = NPC("Bob", 100, 12)
 print(villager.name)
