@@ -10,3 +10,7 @@ class Cat(Animal):
 gandalf = Cat()
 gandalf.make_sound("meow")
 gandalf.cool = True
+print(gandalf.cool)
+print(Cat.cool)
+print(Animal.cool)
+print(isinstance(gandalf, Animal))
