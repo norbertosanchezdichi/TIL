@@ -12,7 +12,7 @@ class Human:
         return self.age
         
     def __add__(self, other):
-        if ininstance(other, Human):
+        if isinstance(other, Human):
             return Human(first = 'Newborn', last = self.last, age = 0)
         return "You can't add that!"
         
