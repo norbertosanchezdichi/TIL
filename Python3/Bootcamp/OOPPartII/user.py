@@ -51,12 +51,11 @@ class Moderator(User):
         
     @classmethod
     def display_active_mods(cls):
-        return f"There are currently {cls.total_mods} active mos."
+        return f"There are currently {cls.total_mods} active mods."
         
     def remove_post(self):
         return f"{self.full_name()} removed a post from the {self.community} community"
-        
-print(User.display_active_users)
+
 jasmine = Moderator("Jasmine", "O'conner", 61, "Piano")
 jack = Moderator("Jack", "O'conner", 41, "Horses")
 print(User.display_active_users)
