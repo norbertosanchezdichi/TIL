@@ -23,7 +23,7 @@ class NPC(Character):
     #def speak(self):
         #return f"I heard there were monsters running around last night!"
         
-villager = Character("Bob", 100, 12)
+villager = NPC("Bob", 100, 12)
 #print(villager.name)
 #print(villager.hp)
 #print(villager.level)
