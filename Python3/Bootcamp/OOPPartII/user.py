@@ -56,13 +56,14 @@ class Moderator(User):
     def remove_post(self):
         return f"{self.full_name()} removed a post from the {self.community} community"
 
+print(User.display_active_users())
 jasmine = Moderator("Jasmine", "O'conner", 61, "Piano")
 jack = Moderator("Jack", "O'conner", 41, "Horses")
-print(User.display_active_users)
+print(User.display_active_users())
 u1 = User("Tom", "Sanchez", 35)
 u1 = User("Tom", "Cruise", 56)
 u1 = User("Tom", "Smith", 23)
-print(User.display_active_users)
+print(User.display_active_users())
 print(jasmine.full_name())
 print(jasmine.community)
 print(User.display_active_users())
