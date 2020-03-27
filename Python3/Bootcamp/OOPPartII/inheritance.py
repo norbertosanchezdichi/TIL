@@ -10,7 +10,7 @@ class Animal:
         print(sound)
     
 class Cat(Animal):
-    def __init__(self, name, species, breed, toy):
+    def __init__(self, name, breed, toy):
         super().__init__(name, species = "Cat")
         self.breed = breed
         self.toy = toy
