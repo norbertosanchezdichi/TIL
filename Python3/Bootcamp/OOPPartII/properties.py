@@ -36,7 +36,7 @@ class Human:
     def full_name(self, name):
         self.first, self.last = name.split(" ")
         
-jane = Humman("Jane", "Goodall", 50)
+jane = Human("Jane", "Goodall", 50)
 
 #print(jane.get_age())
 #jane.set_age(45) 
