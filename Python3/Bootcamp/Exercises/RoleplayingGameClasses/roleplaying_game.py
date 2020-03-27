@@ -21,10 +21,10 @@ class NPC(Character):
         super().__init__(name, hp, level)
     
     def speak(self):
-        return f"I heard there were monsters running around last night!"
+        return f"speak"
         
 villager = NPC("Bob", 100, 12)
 print(villager.name)
 print(villager.hp)
 print(villager.level)
-print(villager.speak())
+#print(villager.speak())
