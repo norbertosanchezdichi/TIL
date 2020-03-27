@@ -16,7 +16,7 @@ class D(B,C):
         print("Method Defined In: D")
         super().do_something()# calls do_something() for the next class in line of the MRO
  
-print(D.__mro)
+print(D.__mro__)
 print(D.mro())
 help(D)
         
