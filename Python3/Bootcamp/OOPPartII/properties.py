@@ -46,6 +46,6 @@ print(jane.age)
 jane.age = 20
 print(jane.age)
 print(jane.full_name)
-jane.full_name("Tommy Hawk")
+jane.full_name = "Tommy Hawk"
 print(jane.full_name)
-print(dict(jane))
+print(jane.__dict__)
