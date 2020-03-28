@@ -4,7 +4,7 @@ class GrumpyDict(dict):
         return super().__repr__()
     
     def __missing__(self, key):
-        print("YOU WANT {key}? WELL IT AINT HERE!")
+        print(f"YOU WANT {key} WELL IT AINT HERE!")
         
     def __setitem__(self, key, value):
         print("YOU WANT TO CHANGE THE DICTIONARY?")
