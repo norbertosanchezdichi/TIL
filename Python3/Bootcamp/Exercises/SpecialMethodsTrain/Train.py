@@ -10,4 +10,4 @@ class Train:
         
 a_train = Train(4)
 print(a_train)
-len(a_train)
+print(len(a_train))
