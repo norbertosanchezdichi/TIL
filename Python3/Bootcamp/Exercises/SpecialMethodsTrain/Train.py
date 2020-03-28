@@ -6,7 +6,7 @@ class Train:
         return f"{self.num_cars} car train"
         
     def __len__(self):
-        return self.num_cars
+        print(self.num_cars)
         
 a_train = Train(4)
 print(a_train)
