@@ -1,10 +1,7 @@
 def week():
     daysInWeek = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
     for day in daysInWeek:
-        try:
-            yield day
-        except:
-            raise StopIteration
+        yield day
         
 days = week()
 print(next(days)) # 'Monday'
