@@ -6,10 +6,10 @@ def current_beat():
         yield nums[i]
         i += 1
 
-print(current_beat())
-print(current_beat())
-print(current_beat())
-print(current_beat())
-print(current_beat())
-print(current_beat())
-print(current_beat())
+print(next(current_beat()))
+print(next(current_beat()))
+print(next(current_beat()))
+print(next(current_beat()))
+print(next(current_beat()))
+print(next(current_beat()))
+print(next(current_beat()))
