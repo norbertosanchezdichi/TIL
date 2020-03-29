@@ -15,7 +15,8 @@ def speed_test(fn):
 @speed_test
 def sum_nums_gen(number):
     return sum(x for x in range(number))
-    
+
+@speed_test    
 def sum_nums_list(number):
     return sum([x for x in range(number)])
     
