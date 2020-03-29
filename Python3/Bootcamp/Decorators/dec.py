@@ -14,12 +14,11 @@ def rage():
     print("I HATE YOU!")
     
 greet = be_polite(greet)
-greet()
-greet()
-greet()
 
 polite_rage = be_polite(rage)
 polite_rage()
+
+# now call functions taking advantage of decorator
 
 greet()
 rage()
