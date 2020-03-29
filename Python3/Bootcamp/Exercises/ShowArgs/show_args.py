@@ -3,12 +3,12 @@ from functools import wraps
 def show_args(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        print(f"Here are the args: {*args}")
-        print(f"Here are the kwargs: {**kwargs}")
+        print(f"Here are the args: {args}")
+        print(f"Here are the kwargs: {kwargs}")
         return fn(*args, **kwargs)
     return wrapper
 
-@show_args    
+@show_args
 def do_nothing():
     pass
 
