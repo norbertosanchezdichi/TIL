@@ -12,7 +12,7 @@ def only_ints(fn):
 def only_ints(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        if any([arg for arg in args if type(arg) != int] or if len(kwargs)):
+        if any([arg for arg in args if type(arg) != int]) or if len(kwargs):
             return "Please only invoke with integers."
         return fn(*args, **kwargs)
     return wrapper
