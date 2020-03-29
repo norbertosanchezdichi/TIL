@@ -6,6 +6,7 @@ def ensure_fewer_than_three_args(fn):
         if len(args) < 3:
             return fn(*args, **kwargs)
         return "Too many arguments!"
+    return wrapper
 
 @ensure_fewer_than_three_args
 def add_all(*nums):
