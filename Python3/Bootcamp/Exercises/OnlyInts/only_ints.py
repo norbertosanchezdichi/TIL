@@ -13,5 +13,5 @@ def only_ints(fn):
 def add(x, y):
     return x + y
     
-add(1, 2) # 3
-add("1", "2") # "Please only invoke with integers."
+print(add(1, 2)) # 3
+print(add("1", "2")) # "Please only invoke with integers."
