@@ -19,5 +19,5 @@ def sum_nums_gen(number):
 def sum_nums_list(number):
     return sum([x for x in range(number)])
     
-print(sum_nums_gen(50000000))
-print(sum_nums_list(50000000))
+print(sum_nums_gen(5000000))
+print(sum_nums_list(5000000))
