@@ -9,7 +9,7 @@ def show_args(fn):
     return wrapper
 
 @show_args
-def do_nothing(self, a, b):
+def do_nothing(*args, **kwargs):
     pass
 
 do_nothing(1, 2, 3, a = "hi", b = "bye")
