@@ -11,8 +11,8 @@ def ensure_fewer_than_three_args(fn):
 def add_all(*nums):
     return sum(nums)
 
-add_all() # 0
-add_all(1) # 1
-add_all(1,2) # 3
-add_all(1,2,3) # "Too many arguments!"
-add_all(1,2,3,4,5,6) # "Too many arguments!"
+print(add_all())
+print(add_all(1))
+print(add_all(1,2))
+print(add_all(1,2,3))
+print(add_all(1,2,3,4,5,6))
