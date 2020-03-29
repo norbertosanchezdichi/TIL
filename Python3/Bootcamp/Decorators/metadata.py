@@ -8,7 +8,7 @@ return wrapper
 
 @log_function_data
 def add(x, y):
-    """Adds two numbers together"""
+"""Adds two numbers together"""
     return x + y
     
 print(add(10, 30))
