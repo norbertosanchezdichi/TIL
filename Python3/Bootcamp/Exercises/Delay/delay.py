@@ -8,8 +8,8 @@ def delay(time):
             print(f"Waiting {time} seconds before running {fn.__name__}")
             sleep(time)
             return fn(*args, **kwargs)
-            return wrapper
-        return inner
+        return wrapper
+    return inner
 
 @delay(3)        
 def say_hi():
