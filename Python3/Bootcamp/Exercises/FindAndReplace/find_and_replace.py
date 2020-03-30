@@ -7,3 +7,4 @@ def find_and_replace(file_name, search, replace):
         file.truncate()
     
 find_and_replace("story.txt", "Alice", "Norberto")
+find_and_replace("story.txt", "she", "he")
