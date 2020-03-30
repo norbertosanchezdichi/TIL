@@ -8,3 +8,4 @@ def find_and_replace(file_name, search, replace):
     
 find_and_replace("story.txt", "Alice", "Norberto")
 find_and_replace("story.txt", "she", "he")
+find_and_replace("story.txt", "She", "He")
