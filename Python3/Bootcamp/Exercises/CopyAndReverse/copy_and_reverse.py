@@ -4,3 +4,5 @@ def copy_and_reverse(file1, file2):
     
     with open(file2, 'w') as file:
         file.write(data[::-1])
+        
+copy_and_reverse('story.txt', 'reverse_story.txt')
