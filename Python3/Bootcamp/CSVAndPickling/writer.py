@@ -11,4 +11,4 @@ with open('fighters.csv') as file:
 with open('screaming_fighters.csv', 'w') as file:
     csv_writer = writer(file)
     for fighter in fighters:
-        csv_writer.writenow(fighter)
+        csv_writer.writerow(fighter)
