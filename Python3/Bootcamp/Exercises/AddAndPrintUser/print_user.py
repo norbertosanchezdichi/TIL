@@ -7,6 +7,6 @@ def print_users():
         users = list(csv_reader)
         
         for u in users:
-            print(f"{u['First Name'] u['Last Name']}")
+            print(f"{u['First Name']} {u['Last Name']}")
             
 print_users()
