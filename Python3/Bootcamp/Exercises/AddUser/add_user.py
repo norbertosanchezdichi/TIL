@@ -11,7 +11,7 @@ def add_user(first_name, last_name):
             
             csv_writer.writeheader()
             
-            print(list(csv_writer))
+            print(list(csv_reader))
             
             for user in csv_reader:
                 csv_writer.writerow({
