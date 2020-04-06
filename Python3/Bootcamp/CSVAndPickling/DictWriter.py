@@ -11,7 +11,7 @@ with open("fighters_using_DictWriter.csv", "w") as file:
 from csv import DictReader
 
 def cm_to_in(cm):
-    return int(cm) * 0.393701
+    return float(cm) * 0.393701
 
 with open("fighters.csv") as file:
     csv_reader = DictReader(file)
