@@ -18,7 +18,7 @@ with open("fighters.csv") as file:
     fighters = (list(csv_reader))
     
 with open("fighters_in_inches.csv", "w") as file:
-    header = ("Name", "Country", "Height")
+    headers = ("Name", "Country", "Height")
     csv_writer = DictWriter(file, fieldnames = headers)
     for f in fighters:
         csv_writer.writerow({
