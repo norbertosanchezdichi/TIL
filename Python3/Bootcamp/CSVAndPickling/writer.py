@@ -10,4 +10,4 @@ with open('fighters.csv') as file:
     with open('screaming_fighters.csv', 'w') as file:
         csv_writer = writer(file)
         for fighter in csv_reader:
-            csv_writer.writerow([s.upper() for s in row] for row in csv_writer)
+            csv_writer.writerow([s.upper() for s in fighter])
