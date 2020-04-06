@@ -9,7 +9,7 @@ def add_user(first_name, last_name):
         with open("users.csv", "w") as file:
             csv_writer = DictWriter(file, fieldnames = headers)
             
-            print(csv_reader)
+            print(list(csv_reader))
             
             for user in csv_reader:
                 csv_writer.writerow({
