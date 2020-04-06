@@ -6,7 +6,7 @@ def update_users(old_first, old_last, new_first, new_last):
         count = 0
         
         with open("users.csv", "w") as file:
-            csv_writer = csv.writer(file)
+            csv_writer = writer(file)
             for u in users:
                 if u[0] == old_first and u[1] == old_last:
                     csv_writer.writerow([new_first, new_last])
