@@ -3,6 +3,7 @@ from csv import DictReader, DictWriter
 def add_user(first_name, last_name):
     with open("users.csv") as file:
         csv_reader = DictReader(file)
+        users = list(csv_reader)
         headers = list(next(csv_reader))
         print(headers)
     
@@ -11,9 +12,7 @@ def add_user(first_name, last_name):
             
             csv_writer.writeheader()
             
-            print(list(csv_reader))
-            
-            for user in csv_reader:
+            for user in users:
                 csv_writer.writerow({
                     "First Name": user["First Name"],
                     "Last Name": user["Last Name"]
