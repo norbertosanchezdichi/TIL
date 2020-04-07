@@ -38,7 +38,7 @@ print(data)
 data = soup.find(id = "first").find_next_sibling()
 print(data)
 
-data = soup.find(id = "first").find_next_sibling().next_sibling()
+data = soup.find(id = "first").find_next_sibling().find_next_sibling()
 print(data)
 
 data = soup.select("[data-example]")[1].find_previous_sibling()
@@ -48,3 +48,4 @@ data = soup.find(class_ = "super-special").find_next_sibling(class_ = "special")
 print(data)
 
 data = soup.find("h3").find_parent("html")
+print(data)
