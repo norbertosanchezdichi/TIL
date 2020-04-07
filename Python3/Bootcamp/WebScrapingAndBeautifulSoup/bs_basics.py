@@ -34,5 +34,5 @@ print(d)
 s = soup.find(class_ = "special")
 print(s)
 
-de = soup.find_all(attrs={"data-sample": "yes"})
+de = soup.find_all(attrs={"data-example": "yes"})
 print(de)
