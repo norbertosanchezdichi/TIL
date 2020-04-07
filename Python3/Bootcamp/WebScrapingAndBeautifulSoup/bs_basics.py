@@ -36,3 +36,15 @@ print(s)
 
 de = soup.find_all(attrs={"data-example": "yes"})
 print(de)
+
+d = soup.select("#first")[0]
+print(d)
+
+s = soup.select(".special")
+print(s)
+
+divs = soup.select("div")
+print(divs)
+
+de = soup.select("[data-example]")
+print(de)
