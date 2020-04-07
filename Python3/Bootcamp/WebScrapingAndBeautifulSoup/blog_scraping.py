@@ -16,5 +16,5 @@ with open("blog_data.csv", "w") as csv_file:
         a_tag = article.find("a")
         title = a_tag.get_text()
         url = a_tag['href']
-        date = article.find("time")["datatime"]
+        date = article.find("time")["datetime"]
         csv_writer.writerow([title, url, date])        
