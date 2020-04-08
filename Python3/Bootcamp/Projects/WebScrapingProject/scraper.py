@@ -29,7 +29,7 @@ remaining_guesses = 4
 print("Here's a quote:")
 print(quote["text"])
 guess = ''
-while guess.lower() != quote["author"}.lower() and remaining_guesses > 0:
+while guess.lower() != quote["author"].lower() and remaining_guesses > 0:
     guess = input(f"Who said this quote?  Guesses remaining: {remaining_guesses}\n")
     remaining_guesses -= 1
     
