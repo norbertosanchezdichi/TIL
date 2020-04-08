@@ -1,14 +1,8 @@
-import requests
-from bs4 import BeautifulSoup
-from time import sleep
-
-base_url = "http://quotes.toscrape.com"
-url = "/page/1"
-
+d
 while url:
     res = requests.get(f"{base_url}{url}")
     print(f"Now scraping {base_url}{url}...")
-    soup = BeautifulSoup(res, "html.parser")
+    soup = BeautifulSoup(res.text, "html.parser")
     quotes = soup.find_all(class_="quote")
     
     all_quotes = {}
