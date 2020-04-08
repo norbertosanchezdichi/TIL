@@ -8,4 +8,4 @@ soup = BeautifulSoup(file, "html.parser")
 availability = soup.findAll(class_="as-purchaseinfo-dudeinfo-deliverymsg")
 
 with open("juicy_details.txt", "w") as file:
-    file.write(str("Currently unavailable" not in availability))
+    file.write(str("Currently unavailable" not in str(availability)))
