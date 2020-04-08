@@ -9,7 +9,7 @@ while url:
     res = requests.get(f"{base_url}{url}")
     print(f"Now scraping {base_url}{url}...")
     soup = BeautifulSoup(res, "html.parser")
-    quotes = soup.find_all(class_"quote")
+    quotes = soup.find_all(class_="quote")
     
     all_quotes = {}
     for quote in quotes:
