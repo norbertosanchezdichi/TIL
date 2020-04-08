@@ -11,7 +11,7 @@ while url:
     soup = BeautifulSoup(res.text, "html.parser")
     quotes = soup.find_all(class_="quote")
     
-    all_quotes = {}
+    all_quotes = []
     for quote in quotes:
         all_quotes.append({
         "text": quote.find(class_ = "text").get_text(),
