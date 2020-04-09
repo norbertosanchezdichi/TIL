@@ -20,6 +20,11 @@ def start_game(quotes):
     guess = ''
     while guess.lower() != quote["author"].lower() and remaining_guesses > 0:
         guess = input(f"Who said this quote?  Guesses remaining: {remaining_guesses}\n")
+        
+        if guess.lower() == quote["author"].lower():
+            print("YOU GOT IT RIGHT!")
+            break
+        
         remaining_guesses -= 1
         
         if remaining_guesses == 3:
