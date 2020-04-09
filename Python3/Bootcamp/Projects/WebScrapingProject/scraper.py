@@ -12,7 +12,7 @@ def scrape_quotes():
         res = requests.get(f"{BASE_URL}{url}")
         print(f"Now scraping {BASE_URL}{url}...")
         soup = BeautifulSoup(res.text, "html.parser")
-        quotes = soup.find_all(class_="quote")d
+        quotes = soup.find_all(class_="quote")
     
         all_quotes = []
         for quote in quotes:
