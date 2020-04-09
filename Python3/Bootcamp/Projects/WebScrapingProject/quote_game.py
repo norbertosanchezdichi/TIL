@@ -4,6 +4,8 @@ from time import sleep
 from random import choice
 from csv import DictReader
 
+BASE_URL = "http://quotes.toscrape.com"
+
 def read_quotes(filename):
     with open(filename, "r") as file:
         csv_reader = DictReader(file)
