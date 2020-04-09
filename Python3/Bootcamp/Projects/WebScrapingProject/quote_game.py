@@ -46,7 +46,7 @@ def start_game(quotes):
         again = input("Would you like to play again (y/n)?")
     if again.lower() in ('yes', 'y'):
         return start_game(quotes)
-    else:dsd
+    else:
         print("OK, GOODBYE!")
 
 quotes = read_quotes("quotes.csv")     
