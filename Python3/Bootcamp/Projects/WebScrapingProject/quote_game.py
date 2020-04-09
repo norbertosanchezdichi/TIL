@@ -39,7 +39,7 @@ def start_game(quotes):
     again = ''        
     while again.lower() not in ('y', 'yes', 'n', 'no'):
         again = input("Would you like to play again (y/n)?")
-    if again.lower() is ('yes', 'y'):
+    if again.lower() is in ('yes', 'y'):
         return start_game(quotes)
     else:
         print("OK, GOODBYE!")
