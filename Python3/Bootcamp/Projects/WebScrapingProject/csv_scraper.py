@@ -4,6 +4,8 @@ from time import sleep
 from random import choice
 from csv import DictWriter
 
+BASE_URL = "http://quotes.toscrape.com"
+
 def scrape_quotes():        
     url = "/page/1"
 

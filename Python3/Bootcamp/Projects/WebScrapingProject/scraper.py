@@ -3,8 +3,6 @@ from bs4 import BeautifulSoup
 from time import sleep
 from random import choice
 
-BASE_URL = "http://quotes.toscrape.com"
-
 def read_quotes(filename):
     with open(filename, "r") as file:
         csv_reader = DictReader(file)
