@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-
+import logging
 
 class CountriesSpider(scrapy.Spider):
     name = 'countries'
@@ -15,4 +15,7 @@ class CountriesSpider(scrapy.Spider):
         
             # absolute_url = f"https://www.worldometers.info{link}"
             # absolute_url = response.urljoin(link)
-            yield response.follow(url = link)
+            yield response.follow(url = link, callback = self.parse_country)
+    
+    def parse_country(self, response):
+        logging.info(response.url)
