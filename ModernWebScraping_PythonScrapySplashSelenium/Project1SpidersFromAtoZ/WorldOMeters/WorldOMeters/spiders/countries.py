@@ -13,8 +13,5 @@ class CountriesSpider(scrapy.Spider):
             name = country.xpath(".//text()").get()
             link = country.xpath(".//@href").get()
         
-        yield {
-            'name': name,
-            'country_link': link
-        }
-            
+            yield scrapy.Request(url = link)
+                
