@@ -8,7 +8,7 @@ class GdpDebtSpider(scrapy.Spider):
     start_urls = ['http://www.worldpopulationreview.com/countries/countries-by-national-debt/']
 
     def parse(self, response):
-        rows = response.xpath("//*[@id="__next"]/div/div[1]/div[2]/div[2]/div[1]/div/div/div/div/div[2]/table/tbody/tr[1]")
+        rows = response.xpath("//table/tbody/tr")
         for row in rows:
             country_name = row.xpath(".//td[1]/a/text()").get()
             country_link = row.xpath(".//td[1]/a/@href").get()
