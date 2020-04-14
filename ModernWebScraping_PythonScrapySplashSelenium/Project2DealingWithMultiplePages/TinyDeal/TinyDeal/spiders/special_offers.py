@@ -12,6 +12,6 @@ class SpecialOffersSpider(scrapy.Spider):
             yield {
                 'title': product.xpath(".//a[@class='p_box_title']/text()").get(),
                 'url': response.urljoin(product.xpath(".//a[@class='p_box_title']/@href").get()),
-                'discount_price': product.xpath(".//div[@class='p_box_price']/span[1]").get_text()),
-                'original_price': product.xpath(".//div[@class='p_box_price']/span[2]").get_text())
+                'discount_price': product.xpath(".//div[@class='p_box_price']/span[1]").get_text(),
+                'original_price': product.xpath(".//div[@class='p_box_price']/span[2]").get_text()
             }
