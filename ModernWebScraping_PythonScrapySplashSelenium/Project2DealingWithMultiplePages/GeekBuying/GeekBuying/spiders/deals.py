@@ -19,5 +19,5 @@ class DealsSpider(scrapy.Spider):
                 'name': product_name,
                 'url': product_url,
                 'price': product_price,
-                'promotion': product_ends
+                'promotion': promotion_ends
             }
