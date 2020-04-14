@@ -20,3 +20,4 @@ class DealsSpider(scrapy.Spider):
                 'url': product_url,
                 'price': product_price,
                 'promotion': product_ends
+            }
