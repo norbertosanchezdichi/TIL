@@ -7,7 +7,7 @@ class DealsSpider(scrapy.Spider):
     allowed_domains = ['www.geekbuying.com']
     
     def start_requests(self):
-        yield scrapy.Request(url='https://www.geekbuying/deals', callback=self.parse, headers={
+        yield scrapy.Request(url='https://www.geekbuying.com/deals', callback=self.parse, headers={
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
             })
 
