@@ -15,9 +15,9 @@ class DealsSpider(scrapy.Spider):
             product_price = product.xpath(".//div[@class='category_li_price']/span/text()").get()
             promotion_ends = product.xpath(".//div[@class='category_li_claibg']/span/text()").get()
             
-            yield {
-                'name': product_name,
-                'url': product_url,
-                'price': product_price,
-                'promotion': promotion_ends
-            }
+        yield {
+            'name': product_name,
+            'url': product_url,
+            'price': product_price,
+            'promotion': promotion_ends
+        }
