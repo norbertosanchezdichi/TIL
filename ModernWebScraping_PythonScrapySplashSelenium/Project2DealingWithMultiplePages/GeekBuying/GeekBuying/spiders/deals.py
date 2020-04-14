@@ -21,3 +21,7 @@ class DealsSpider(scrapy.Spider):
                 'price': product_price,
                 'promotion': promotion_ends
             }
+            
+        next_page = response.xpath("//a[@class='next']/@href").get()
+        if next_page:
+            yield response.follow(url=next_page, callback=self.parse)
