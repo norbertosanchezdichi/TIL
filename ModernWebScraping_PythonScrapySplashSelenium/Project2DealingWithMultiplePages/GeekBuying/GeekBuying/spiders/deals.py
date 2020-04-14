@@ -28,4 +28,5 @@ class DealsSpider(scrapy.Spider):
             
         next_page = response.xpath("//a[@class='next']/@href").get()
         if next_page:
-            yield response.follow(url=next_page, callback=self.parse)
+            yield response.follow(url=next_page, callback=self.parse, headers={
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'})
