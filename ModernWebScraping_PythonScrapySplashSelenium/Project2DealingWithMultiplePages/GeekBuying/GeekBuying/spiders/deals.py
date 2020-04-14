@@ -5,7 +5,7 @@ import scrapy
 class DealsSpider(scrapy.Spider):
     name = 'deals'
     allowed_domains = ['www.geekbuying.com']
-    start_urls = ['http://www.geekbuying.com/deals']
+    start_urls = ['https://www.geekbuying.com/deals']
 
     def parse(self, response):
         products = response.xpath("//div[@class='category_li']")
