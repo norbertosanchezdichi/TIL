@@ -17,6 +17,8 @@ function main(splash, args)
   input_box:send_keys("<Enter>")
   assert(splash:wait(5))
   
+  splash:set_viewport_full()
+  
   return {
     image = splash:png(),
     html = splash:html()
