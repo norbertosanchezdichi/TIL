@@ -8,8 +8,13 @@ function main(splash, args)
   input_box:send_text("my user agent")
   assert(splash:wait(0.5))
   
+  --[[
   search_button = assert(splash:select("#search_button_homepage"))
   search_button:mouse_click()
+  assert(splash:wait(5))
+  --]]
+  
+  input_box:send_keys("<Enter>")
   assert(splash:wait(5))
   
   return {
