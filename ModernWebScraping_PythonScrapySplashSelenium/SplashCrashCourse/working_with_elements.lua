@@ -1,4 +1,6 @@
 function main(splash, args)
+    splash:set_user_agent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Safari/605.1.15")
+
 	url = args.url
   assert(splash:go(url))
   assert(splash:wait(1))
@@ -23,4 +25,4 @@ function main(splash, args)
     image = splash:png(),
     html = splash:html()
   }
-end
+endd
