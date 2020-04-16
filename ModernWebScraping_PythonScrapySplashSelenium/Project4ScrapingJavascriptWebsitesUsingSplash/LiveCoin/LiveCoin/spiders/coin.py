@@ -27,7 +27,7 @@ class CoinSpider(scrapy.Spider):
     
     def start_requests(self):
         yield SplashRequest(url="https://www.livecoin.net/en", callback=self.parse, endpoint="execute", args={
-            'lua-source': self.script
+            'lua_source': self.script
         })
 
     def parse(self, response):
