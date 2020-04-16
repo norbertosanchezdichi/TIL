@@ -32,4 +32,4 @@ class CoinSpider(scrapy.Spider):
         })
 
     def parse(self, response):
-        pass
+        print(response.body)
