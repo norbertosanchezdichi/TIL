@@ -92,3 +92,4 @@ DOWNLOADER_MIDDLEWARES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 SPLASH_URL = 'http://138.197.218.111:8050'
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
