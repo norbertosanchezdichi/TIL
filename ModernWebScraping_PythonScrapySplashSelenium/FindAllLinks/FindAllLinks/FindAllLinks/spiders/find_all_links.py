@@ -29,11 +29,11 @@ class FindAllLinksSpider(scrapy.Spider):
             link_text = link.xpath('.//text()')
             link_url = link.xpath('.//@href')
             
-        yield {
-                'link_url': link_url,
-                'link_text': link_text,
-                'HTTP status code': response.status
-        }
+            yield {
+                    'link_url': link_url,
+                    'link_text': link_text,
+                    'HTTP status code': response.status
+            }
             
         
 # if link_text has valid text (using regex. [a-zA-z\d]+)
