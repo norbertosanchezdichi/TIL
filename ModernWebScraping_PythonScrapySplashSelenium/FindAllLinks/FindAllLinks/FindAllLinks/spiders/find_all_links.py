@@ -32,7 +32,7 @@ class FindAllLinksSpider(scrapy.Spider):
             yield {
                     'link_text': link_text,
                     'link_url': link_url,
-                    'parent_url'
+                    'parent_url': response.url,
                     'HTTP status code': response.status
             }
             
