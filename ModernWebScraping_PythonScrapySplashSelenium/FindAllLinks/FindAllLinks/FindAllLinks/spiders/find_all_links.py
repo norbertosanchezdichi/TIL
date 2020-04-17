@@ -27,8 +27,6 @@ class FindAllLinksSpider(scrapy.Spider):
         
         for link in links:
             link_text = link.xpath('.//text()').get()
-            if not link_text:
-                continue
             link_url = link.xpath('.//@href').get()
             
             yield {
