@@ -19,8 +19,6 @@ class FindAllLinksSpider(scrapy.Spider):
         end
     '''
     
-    link_counter = 0
-
     def start_requests(self):
         yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
 
@@ -28,20 +26,17 @@ class FindAllLinksSpider(scrapy.Spider):
         links = response.xpath('//a')
         origin_url = response.url
         for link in links:
-            self.link_counter += 1
-            if self.link_counter > 1000:
-                break
+            link_url = response.urljoin(link.xpath('.//@href').get())
+            
+            try:
+                yield SplashRequest(url=link_url, endpoint='execute', args={'lua_source': self.script})
+            else:
+                continue
             
             if link.xpath('.//img').get():
                 link_text = link.xpath('.//img/@alt').get()
             else:
                 link_text = link.xpath('.//text()').get()
-            
-            link_url = response.urljoin(link.xpath('.//@href').get())
-            if "javascript" not in link_url:
-                yield SplashRequest(url=link_url, endpoint='execute', args={'lua_source': self.script})
-            else:
-                continue
             
             yield {
                 'link_text': link_text,
