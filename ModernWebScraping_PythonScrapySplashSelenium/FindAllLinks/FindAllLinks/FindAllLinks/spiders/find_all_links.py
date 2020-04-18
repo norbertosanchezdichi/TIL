@@ -26,13 +26,11 @@ class FindAllLinksSpider(scrapy.Spider):
     def parse(self, response):
         links = response.xpath('//a')
         origin_url = response.url
+        
         for link in links:
             link_url = response.urljoin(link.xpath('.//@href').get())
             
-            if "javascript" not in link_url:
-                yield scrapy.Request(url=link_url, callback=self.parse, meta={'splash': {'args': {'lua_source': self.script}}})
-            else:
-                continue
+            yield scrapy.Request(url=link_url, meta={'splash': {'args': {'lua_source': self.script}}})
             
             if link.xpath('.//img').get():
                 link_text = link.xpath('.//img/@alt').get()
@@ -45,6 +43,4 @@ class FindAllLinksSpider(scrapy.Spider):
                 'link_title': response.xpath('//title/text()').get(),
                 'HTTP status code': response.status,
                 'origin_url': origin_url
-            }    
-        
-# if link_text has valid text (using regex. [a-zA-z\d]+)
+            }
