@@ -30,7 +30,7 @@ class FindAllLinksSpider(scrapy.Spider):
         for link in links:
             link_url = response.urljoin(link.xpath('.//@href').get())
             
-            if link.xpath('.//img').get():
+            if not link_text:
                 link_text = link.xpath('.//img/@alt').get()
             else:
                 link_text = link.xpath('.//text()').get()
