@@ -47,6 +47,8 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
             
             link_url = response.urljoin(link.xpath('.//@href').get())
             
+            yield SplashRequest(url=link_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
+            
             yield {
                 'link_text': link_text,
                 'link_url': link_url,
