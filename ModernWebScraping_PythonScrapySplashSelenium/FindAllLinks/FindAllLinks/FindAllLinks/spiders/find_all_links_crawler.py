@@ -52,7 +52,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
             yield {
                 'link_text': link_text,
                 'link_url': link_url,
-                'link_title': response.xpath('//title').get(),
+                'link_title': response.xpath('//title/text()').get(),
                 'HTTP status code': response.status,
                 'origin_url': origin_url
             }
