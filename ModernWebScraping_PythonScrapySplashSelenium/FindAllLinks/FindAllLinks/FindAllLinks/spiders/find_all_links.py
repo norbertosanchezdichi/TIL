@@ -28,10 +28,7 @@ class FindAllLinksSpider(scrapy.Spider):
         for link in links:
             link_url = response.urljoin(link.xpath('.//@href').get())
             
-            try:
-                yield SplashRequest(url=link_url, callback=self.parse, endpoint='execute', args={'lua_source': self.script})
-            except:
-                continue
+            yield SplashRequest(url=link_url, callback=self.parse, endpoint='execute', args={'lua_source': self.script})
             
             if link.xpath('.//img').get():
                 link_text = link.xpath('.//img/@alt').get()
