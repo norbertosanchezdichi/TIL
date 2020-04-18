@@ -31,7 +31,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
           'args': {
               'wait': 1,
           },
-          'endpoint': 'render.html',           
+          'endpoint': 'execute',           
         })
         return request
     
