@@ -23,11 +23,11 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     '''
     
     rules = (
-        Rule(LinkExtractor(restrict_xpaths='//a'), callback=self.parse_item, follow=True),
+        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True),
     )
     
     def start_requests(self):
-        yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
+        yield SplashRequest(url='https://www.maximintegrated.com/en', endpoint='execute', args={'lua_source': self.script})
 
     def parse_item(self, response):
             yield {
