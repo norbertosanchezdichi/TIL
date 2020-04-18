@@ -34,17 +34,22 @@ class FindAllLinksSpider(scrapy.Spider):
                 link_text = link.xpath('.//img/@alt').get()
             else:
                 link_text = link.xpath('.//text()').get()
-                
+            
             links_dictionary[link_url] = link_text
                 
         for link_url, link_text in links_dictionary.items():
-
-            yield SplashRequest(url=link_url, endpoint='execute', args={'lua_source': self.script})
-        
+            try:
+                yield SplashRequest(url=link_url, endpoint='execute', args={'lua_source': self.script})
+                link_title = response.xpath('//title/text()').get()
+                link_http_status = response.status
+            else:
+                link_title = ''
+                link_http_status = ''
+                
             yield {
                 'link_text': link_text,
                 'link_url': link_url,
-                'link_title': response.xpath('//title/text()').get(),
-                'HTTP status code': response.status,
+                'link_title': link_title,
+                'HTTP status code': link_http_status,
                 'origin_url': origin_url
             }
