@@ -28,10 +28,27 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     rules = (
         Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True),
     )
+    
+    def start_requests(self):
+        yield SplashRequest(url='https://www.maximintegrated.com', callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
 
     def parse_item(self, response):
-        item = {}
-        #item['domain_id'] = response.xpath('//input[@id="sid"]/@value').get()
-        #item['name'] = response.xpath('//div[@id="name"]').get()
-        #item['description'] = response.xpath('//div[@id="description"]').get()
-        return item
+        link_url = response.url
+
+        if link_url.xpath('.//img').get():
+            link_text = link_url.xpath('.//img/@alt').get()
+        else:
+            link_text = link_url.xpath('.//text()').get()
+            
+        link_counter += 1
+        print(f'Link #{link_counter}\n')
+        print(f'Link text: {link_text}\n')
+        print(f'Link url:  {link_url}\n')
+        print(f'HTTP status code: {response.status}\n\n')
+        
+        
+        yield {
+                'link_text': link_text,
+                'link_url': response.urljoin(link_url),
+                'HTTP status code': response.status
+        }
