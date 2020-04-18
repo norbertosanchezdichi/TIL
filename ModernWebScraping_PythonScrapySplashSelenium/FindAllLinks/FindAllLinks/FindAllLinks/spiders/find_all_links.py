@@ -22,7 +22,7 @@ class FindAllLinksSpider(scrapy.Spider):
     '''
     
     def start_requests(self):
-        yield scrapy.Request("http://localhost:8050/render.html?url=" + link_absolute_url, callback=self.parse_page)
+        yield scrapy.Request("http://localhost:8050/render.html?url=" + allowed_domains[0], callback=self.parse_page)
         #yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse_page, endpoint='execute', args={'lua_source': self.script})
 
     def parse_page(self, response):
