@@ -23,7 +23,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     '''
     
     rules = (
-        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True)
+        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True),
     )
     
     def start_requests(self):
