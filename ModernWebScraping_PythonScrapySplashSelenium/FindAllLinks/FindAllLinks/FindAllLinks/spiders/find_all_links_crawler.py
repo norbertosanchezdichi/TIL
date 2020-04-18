@@ -23,37 +23,12 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     '''
     
     rules = (
-        Rule(LxmlLinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True, process_request="useSplash")
+        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True)
     )
     
     def start_requests(self):
         yield SplashRequest(url='https://www.maximintegrated.com/en', endpoint='execute', args={'lua_source': self.script})
         
-    def _requests_to_follow(self, response):
-        if not isinstance(
-                response,
-                (HtmlResponse, SplashJsonResponse, SplashTextResponse)):
-            return
-        seen = set()
-        for n, rule in enumerate(self._rules):
-            links = [lnk for lnk in rule.link_extractor.extract_links(response)
-                     if lnk not in seen]
-            if links and rule.process_links:
-                links = rule.process_links(links)
-            for link in links:
-                seen.add(link)
-                r = self._build_request(n, link)
-                yield rule.process_request(r)
-
-    def use_splash(self, request):
-        request.meta.update(splash={
-            'args': {
-                'wait': 1,
-            },
-            'endpoint': 'render.html',
-        })
-        return request
-
     def parse_item(self, response):
             yield {
                 'link_url': response.url,
