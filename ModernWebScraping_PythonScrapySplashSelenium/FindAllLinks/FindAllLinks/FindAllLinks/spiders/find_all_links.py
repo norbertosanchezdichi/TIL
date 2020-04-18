@@ -30,7 +30,7 @@ class FindAllLinksSpider(scrapy.Spider):
             
             try:
                 yield SplashRequest(url=link_url, endpoint='execute', args={'lua_source': self.script})
-            else:
+            except:
                 continue
             
             if link.xpath('.//img').get():
