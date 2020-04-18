@@ -29,7 +29,7 @@ class FindAllLinksSpider(scrapy.Spider):
             link_url = response.urljoin(link.xpath('.//@href').get())
             
             if "javascript" not in link_url:
-                yield SplashRequest(url=link_url, callback=self.parse, endpoint='execute', args={'lua_source': self.script})
+                response = SplashRequest(url=link_url, callback=self.parse, endpoint='execute', args={'lua_source': self.script})
             else:
                 continue
             
