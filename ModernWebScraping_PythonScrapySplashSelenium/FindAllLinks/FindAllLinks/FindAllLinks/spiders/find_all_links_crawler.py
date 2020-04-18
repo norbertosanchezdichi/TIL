@@ -9,9 +9,24 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     name = 'find_all_links_crawler'
     allowed_domains = ['www.maximintegrated.com']
     start_urls = ['http://www.maximintegrated.com/']
+    
+    script = '''
+        function main(splash, args)
+      
+            splash.private_mode_enabled = false
+          
+            url = args.url
+            assert(splash:go(url))
+            assert(splash:wait(1))
+          
+            return splash:html()
+        end
+    '''
+    
+    link_counter = 0
 
     rules = (
-        Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
+        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True),
     )
 
     def parse_item(self, response):
