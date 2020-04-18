@@ -27,11 +27,11 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     )
     
     def start_requests(self):
-        yield scrapy.Request("http://localhost:8050/render.html?url=" + allowed_domains[0], self.parse_page)
+        yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
        
     def parse_item(self, response):
         yield {
             'link_url': response.url,
             'link_title': response.xpath('//title/text()').get(),
             'HTTP status code': response.status
-        }
+        }    
