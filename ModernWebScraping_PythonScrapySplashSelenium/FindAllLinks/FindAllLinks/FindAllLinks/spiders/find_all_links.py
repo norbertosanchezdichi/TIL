@@ -37,13 +37,14 @@ class FindAllLinksSpider(scrapy.Spider):
                 
             links_dictionary.update({link_url: link_text})
                 
-        print(links_dictionary)
-        print(len(links_dictionary))
+        for link_url, link_text in links_dictionary:
         
-        #yield {
-        #    'link_text': link_text,
-        #    'link_url': link_url,
-        #    'link_title': response.xpath('//title/text()').get(),
-        #    'HTTP status code': response.status,
-        #    'origin_url': origin_url
-        #}
+            yield SplashRequest(url=link_url, endpoint='execute', args={'lua_source': self.script})
+        
+            yield {
+                'link_text': link_text,
+                'link_url': link_url,
+                'link_title': response.xpath('//title/text()').get(),
+                'HTTP status code': response.status,
+                'origin_url': origin_url
+            }
