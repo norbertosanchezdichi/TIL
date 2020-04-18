@@ -48,7 +48,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     def use_splash(self, request):
         request.meta.update(splash={
             'args': {
-                'lua_source': self.script,
+                'wait': 1,
             },
             'endpoint': 'render.html',
         })
