@@ -42,8 +42,8 @@ class FindAllLinksSpider(scrapy.Spider):
         for link_relative_url, link_text in self.links.items():
             link_absolute_url = response.urljoin(link_relative_url)
             
-            if link_absolute_url not in links_crawled:
-                links_crawled.append(link_absolute_url)
+            if link_absolute_url not in self.links_crawled:
+                self.links_crawled.append(link_absolute_url)
                 try:
                     yield SplashRequest(url=link_absolute_url, endpoint='execute', args={'lua_source': self.script})
                     links_crawled
@@ -64,4 +64,4 @@ class FindAllLinksSpider(scrapy.Spider):
                 'origin_url': origin_url
             }
             
-        print(f"links_crawled length: {len(links_crawled)}")
+        print(f"links_crawled length: {len(self.links_crawled)}")
