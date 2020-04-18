@@ -35,7 +35,7 @@ class FindAllLinksSpider(scrapy.Spider):
             else:
                 link_text = link.xpath('.//text()').get()
                 
-            links_dictionary.append(link_url: link_text)
+            links_dictionary.update({link_url: link_text})
                 
         print(links_dictionary)
         
