@@ -20,9 +20,9 @@ class FindAllLinksSpider(scrapy.Spider):
     '''
     
     def start_requests(self):
-        yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
+        yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse_page, endpoint='execute', args={'lua_source': self.script})
 
-    def parse(self, response):
+    def parse_page(self, response):
         origin_url = response.url
         links = response.xpath('//a')
         links_dictionary = {}
