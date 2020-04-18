@@ -22,8 +22,7 @@ class FindAllLinksSpider(scrapy.Spider):
     '''
     
     def start_requests(self):
-        yield scrapy.Request("http://localhost:8050/render.html?url=" + self.allowed_domains[0], callback=self.parse_page)
-        #yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse_page, endpoint='execute', args={'lua_source': self.script})
+        yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse_page, endpoint='execute', args={'lua_source': self.script})
 
     def parse_page(self, response):
         origin_url = response.url
@@ -46,9 +45,7 @@ class FindAllLinksSpider(scrapy.Spider):
             if link_absolute_url not in self.links_crawled:
                 self.links_crawled.append(link_absolute_url)
                 try:
-                    yield scrapy.Request("http://localhost:8050/render.html?url=" + link_absolute_url)
-                    #yield SplashRequest(url=link_absolute_url, callback=self.parse_page, endpoint='execute', args={'lua_source': self.script})
-                    links_crawled
+                    yield SplashRequest(url=link_absolute_url, callback=self.parse_page, endpoint='execute', args={'lua_source': self.script})
                     link_title = response.xpath('//title/text()').get()
                     link_http_status = response.status
                 except:
