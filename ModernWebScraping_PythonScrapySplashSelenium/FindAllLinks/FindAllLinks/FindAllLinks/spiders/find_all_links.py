@@ -38,11 +38,12 @@ class FindAllLinksSpider(scrapy.Spider):
             links_dictionary[link_url] = link_text
                 
         for link_url, link_text in links_dictionary.items():
+            
             try:
                 yield SplashRequest(url=link_url, endpoint='execute', args={'lua_source': self.script})
                 link_title = response.xpath('//title/text()').get()
                 link_http_status = response.status
-            else:
+            except:
                 link_title = ''
                 link_http_status = ''
                 
