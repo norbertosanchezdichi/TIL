@@ -22,8 +22,6 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
         end
     '''
     
-    link_counter = 0
-
     rules = (
         Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True),
     )
@@ -32,28 +30,8 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
         yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
 
     def parse_item(self, response):
-        links = response.xpath('//a')
-        origin_url = response.url
-        for link in links:
-            self.link_counter += 1
-            if self.link_counter > 500:
-                break
-            
-            if link.xpath('.//img').get():
-                link_text = link.xpath('.//img/@alt').get()
-            else:
-                link_text = link.xpath('.//text()').get()
-            
-            link_url = response.urljoin(link.xpath('.//@href').get())
-            if "javascript" not in link_url:
-                yield SplashRequest(url=link_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
-            else:
-                continue
-            
             yield {
-                'link_text': link_text,
-                'link_url': link_url,
+                'link_url': response.url,
                 'link_title': response.xpath('//title/text()').get(),
-                'HTTP status code': response.status,
-                'origin_url': origin_url
+                'HTTP status code': response.status
             }
