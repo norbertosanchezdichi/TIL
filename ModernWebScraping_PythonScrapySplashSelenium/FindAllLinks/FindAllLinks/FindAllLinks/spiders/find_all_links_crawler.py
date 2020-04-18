@@ -35,20 +35,20 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     def parse_item(self, response):
         link_url = response.url
 
-        if link_url.xpath('.//img').get():
-            link_text = link_url.xpath('.//img/@alt').get()
-        else:
-            link_text = link_url.xpath('.//text()').get()
+        #if link_url.xpath('.//img').get():
+        #    link_text = link_url.xpath('.//img/@alt').get()
+        #else:
+        #    link_text = link_url.xpath('.//text()').get()
             
         link_counter += 1
-        print(f'Link #{link_counter}\n')
-        print(f'Link text: {link_text}\n')
+        #print(f'Link #{link_counter}\n')
+        #print(f'Link text: {link_text}\n')
         print(f'Link url:  {link_url}\n')
         print(f'HTTP status code: {response.status}\n\n')
         
         
         yield {
-                'link_text': link_text,
+                #'link_text': link_text,
                 'link_url': response.urljoin(link_url),
                 'HTTP status code': response.status
         }
