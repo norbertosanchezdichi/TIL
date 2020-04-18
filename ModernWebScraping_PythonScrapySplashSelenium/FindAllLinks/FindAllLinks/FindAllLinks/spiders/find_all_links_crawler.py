@@ -23,11 +23,36 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     '''
     
     rules = (
-        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True),
+        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True, process_request="useSplash")
     )
     
     def start_requests(self):
         yield SplashRequest(url='https://www.maximintegrated.com/en', endpoint='execute', args={'lua_source': self.script})
+        
+    def _requests_to_follow(self, response):
+        if not isinstance(
+                response,
+                (HtmlResponse, SplashJsonResponse, SplashTextResponse)):
+            return
+        seen = set()
+        for n, rule in enumerate(self._rules):
+            links = [lnk for lnk in rule.link_extractor.extract_links(response)
+                     if lnk not in seen]
+            if links and rule.process_links:
+                links = rule.process_links(links)
+            for link in links:
+                seen.add(link)
+                r = self._build_request(n, link)
+                yield rule.process_request(r)
+
+    def use_splash(self, request):
+        request.meta.update(splash={
+            'args': {
+                'lua_source': self.script,
+            },
+            'endpoint': 'render.html',
+        })
+        return request
 
     def parse_item(self, response):
             yield {
@@ -35,3 +60,6 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
                 'link_title': response.xpath('//title/text()').get(),
                 'HTTP status code': response.status
             }
+            
+            
+#yield scrapy.Request("http://localhost:8050/render.html?url=" + page_url, self.parse_page)
