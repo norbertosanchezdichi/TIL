@@ -46,8 +46,10 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
                 link_text = link.xpath('.//text()').get()
             
             link_url = response.urljoin(link.xpath('.//@href').get())
-            
-            yield SplashRequest(url=link_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
+            if "javascript" not in link_url:
+                yield SplashRequest(url=link_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
+            else:
+                continue
             
             yield {
                 'link_text': link_text,
