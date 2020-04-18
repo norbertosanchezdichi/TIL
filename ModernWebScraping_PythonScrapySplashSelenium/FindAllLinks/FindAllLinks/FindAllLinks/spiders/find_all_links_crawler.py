@@ -42,8 +42,8 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
             })
 
     def _requests_to_follow(self, response):
-        if not isinstance(response, (HtmlResponse, SplashJsonResponse, SplashTextResponse)):
-            return
+        #if not isinstance(response, (HtmlResponse, SplashJsonResponse, SplashTextResponse)):
+        #   return
         seen = set()
         for n, rule in enumerate(self._rules):
             links = [lnk for lnk in rule.link_extractor.extract_links(response)
