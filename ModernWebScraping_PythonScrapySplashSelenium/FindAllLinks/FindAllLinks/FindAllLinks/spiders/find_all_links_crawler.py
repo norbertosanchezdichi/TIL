@@ -3,7 +3,6 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy_splash import SplashRequest
-import requests
 
 
 class FindAllLinksCrawlerSpider(CrawlSpider):
@@ -85,8 +84,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
             if link_absolute_url not in self.links_crawled:
                 self.links_crawled.append(link_absolute_url)
                 try:
-                    response = requests.get(link_absolute_url)
-                    #yield SplashRequest(url=link_absolute_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
+                    yield SplashRequest(url=link_absolute_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
                     link_title = response.xpath('//title/text()').get()
                     link_http_status = response.status
                 except:
