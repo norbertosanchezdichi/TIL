@@ -5,6 +5,8 @@ from scrapy_splash import SplashRequest
 class FindAllLinksSpider(scrapy.Spider):
     name = 'find_all_links'
     allowed_domains = ['www.maximintegrated.com/en']
+    links= {}
+    links_crawled = []
     
     script = '''
         function main(splash, args)
@@ -25,7 +27,6 @@ class FindAllLinksSpider(scrapy.Spider):
     def parse_page(self, response):
         origin_url = response.url
         links = response.xpath('//a')
-        links_dictionary = {}
         
         for link in links:
             link_relative_url = link.xpath('.//@href').get()
@@ -36,18 +37,23 @@ class FindAllLinksSpider(scrapy.Spider):
             if not link_text:
                 link_text = link.xpath('.//img/@title').get()
 
-            links_dictionary[link_relative_url] = link_text
+            self.links[link_relative_url] = link_text
                 
-        for link_relative_url, link_text in links_dictionary.items():
+        for link_relative_url, link_text in self.links.items():
             link_absolute_url = response.urljoin(link_relative_url)
             
-            try:
-                yield SplashRequest(url=link_absolute_url, endpoint='execute', args={'lua_source': self.script})
-                link_title = response.xpath('//title/text()').get()
-                link_http_status = response.status
-            except:
-                link_title = ''
-                link_http_status = ''
+            if link_absolute_url not in links_crawled:
+                links_crawled.append(link_absolute_url)
+                try:
+                    yield SplashRequest(url=link_absolute_url, endpoint='execute', args={'lua_source': self.script})
+                    links_crawled
+                    link_title = response.xpath('//title/text()').get()
+                    link_http_status = response.status
+                except:
+                    link_title = ''
+                    link_http_status = ''
+            else:
+                continue
                 
             yield {
                 'link_text': link_text,
@@ -57,3 +63,5 @@ class FindAllLinksSpider(scrapy.Spider):
                 'HTTP status code': link_http_status,
                 'origin_url': origin_url
             }
+            
+        print(f"links_crawled length: {len(links_crawled)}")
