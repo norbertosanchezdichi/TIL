@@ -2,6 +2,7 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
+from scrapy_splash import SplashRequest
 
 
 class FindAllLinksCrawlerSpider(CrawlSpider):
