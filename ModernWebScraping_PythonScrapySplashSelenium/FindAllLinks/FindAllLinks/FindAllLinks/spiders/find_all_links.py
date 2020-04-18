@@ -38,6 +38,7 @@ class FindAllLinksSpider(scrapy.Spider):
             links_dictionary.update({link_url: link_text})
                 
         print(links_dictionary)
+        print(len(links_dictionary))
         
         #yield {
         #    'link_text': link_text,
