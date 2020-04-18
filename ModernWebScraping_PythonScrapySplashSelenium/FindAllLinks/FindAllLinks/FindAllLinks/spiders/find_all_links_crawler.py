@@ -37,7 +37,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     
     def start_requests(self):
         url = 'https://www.maximintegrated.com/en'
-        yield SplashRequest(url=url, callback=self.parse_m, endpoint='execute', dont_filter=True,args={
+        yield SplashRequest(url=url, callback=self.parse_item, endpoint='execute', dont_filter=True,args={
                 'url': url, 'lua_source': self.script
             })
 
