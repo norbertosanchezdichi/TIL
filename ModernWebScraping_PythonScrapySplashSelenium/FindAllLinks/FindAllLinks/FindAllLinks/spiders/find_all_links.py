@@ -33,6 +33,8 @@ class FindAllLinksSpider(scrapy.Spider):
             
             if not link_text:
                 link_text = link.xpath('.//img/@alt').get()
+            if not link_text:
+                link_text = link.xpath('.//img/@title').get()
 
             links_dictionary[link_relative_url] = link_text
                 
