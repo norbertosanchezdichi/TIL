@@ -4,7 +4,7 @@ from scrapy_splash import SplashRequest
 
 class FindAllLinksSpider(scrapy.Spider):
     name = 'find_all_links'
-    allowed_domains = ['www.maximintegrated.com']
+    allowed_domains = ['www.maximintegrated.com/en']
     
     script = '''
         function main(splash, args)
@@ -22,7 +22,7 @@ class FindAllLinksSpider(scrapy.Spider):
     link_counter = 0
 
     def start_requests(self):
-        yield SplashRequest(url='https://www.maximintegrated.com', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
+        yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
 
     def parse(self, response):
         links = response.xpath('//a')
