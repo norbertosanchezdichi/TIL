@@ -20,27 +20,29 @@ class FindAllLinksSpider(scrapy.Spider):
     '''
     
     def start_requests(self):
-        #yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
-        yield scrapy.Request(url='https://www.maximintegrated.com/en', callback=self.parse, meta={'splash': {'args': {'lua_source': self.script}}})
+        yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
 
     def parse(self, response):
-        links = response.xpath('//a')
         origin_url = response.url
+        links = response.xpath('//a')
+        links_dictionary = {}
         
         for link in links:
             link_url = response.urljoin(link.xpath('.//@href').get())
-            
-            yield scrapy.Request(url=link_url, meta={'splash': {'args': {'lua_source': self.script}}})
             
             if link.xpath('.//img').get():
                 link_text = link.xpath('.//img/@alt').get()
             else:
                 link_text = link.xpath('.//text()').get()
-            
-            yield {
-                'link_text': link_text,
-                'link_url': link_url,
-                'link_title': response.xpath('//title/text()').get(),
-                'HTTP status code': response.status,
-                'origin_url': origin_url
-            }
+                
+            links_dictionary.append(link_url: link_text)
+                
+        print(links_dictionary)
+        
+        #yield {
+        #    'link_text': link_text,
+        #    'link_url': link_url,
+        #    'link_title': response.xpath('//title/text()').get(),
+        #    'HTTP status code': response.status,
+        #    'origin_url': origin_url
+        #}
