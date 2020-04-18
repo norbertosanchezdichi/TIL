@@ -23,8 +23,17 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     '''
     
     rules = (
-        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True)
+        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True, process_request='use_splash')
     )
+    
+    def use_splash(self, request):
+        request.meta.update(splash={
+          'args': {
+              'wait': 1,
+          },
+          'endpoint': 'render.html',           
+        })
+        return request
     
     def start_requests(self):
         url = 'https://www.maximintegrated.com/en'
