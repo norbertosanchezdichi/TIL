@@ -33,22 +33,20 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
         yield SplashRequest(url='https://www.maximintegrated.com', callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
 
     def parse_item(self, response):
-        link_url = response.url
-
-        #if link_url.xpath('.//img').get():
-        #    link_text = link_url.xpath('.//img/@alt').get()
-        #else:
-        #    link_text = link_url.xpath('.//text()').get()
+        links = response.xpath('//a')
+        origin_url = response.url
+        for link in links:
+            if link.xpath('.//img').get():
+                link_text = link.xpath('.//img/@alt').get()
+            else:
+                link_text = link.xpath('.//text()').get()
             
-        self.link_counter += 1
-        #print(f'Link #{link_counter}\n')
-        #print(f'Link text: {link_text}\n')
-        print(f'Link url:  {link_url}')
-        print(f'HTTP status code: {response.status}\n\n')
-        
-        
-        yield {
-                #'link_text': link_text,
-                'link_url': response.urljoin(link_url),
-                'HTTP status code': response.status
-        }
+            link_url = response.urljoin(link.xpath('.//@href').get())
+            
+            yield {
+                'link_text': link_text,
+                'link_url': link_url,
+                'link_title': response.xpath('//title'),
+                'HTTP status code': response.status,
+                'origin_url': origin_url
+            }
