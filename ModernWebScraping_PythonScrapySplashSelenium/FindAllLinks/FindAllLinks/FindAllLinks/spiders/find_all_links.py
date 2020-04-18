@@ -20,7 +20,8 @@ class FindAllLinksSpider(scrapy.Spider):
     '''
     
     def start_requests(self):
-        yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
+        #yield SplashRequest(url='https://www.maximintegrated.com/en', callback=self.parse, endpoint='execute', args={'lua_source': self.script})
+        yield scrapy.Request(url='https://www.maximintegrated.com/en', callback=self.parse, meta={'splash': {'args': {'lua_source': self.script}}})
 
     def parse(self, response):
         links = response.xpath('//a')
@@ -29,7 +30,7 @@ class FindAllLinksSpider(scrapy.Spider):
             link_url = response.urljoin(link.xpath('.//@href').get())
             
             if "javascript" not in link_url:
-                yield SplashRequest(url=link_url, callback=self.parse, endpoint='execute', args={'lua_source': self.script})
+                yield scrapy.Request(url=link_url, callback=self.parse, meta={'splash': {'args': {'lua_source': self.script}}})
             else:
                 continue
             
