@@ -37,8 +37,10 @@ class FindAllLinksSpider(scrapy.Spider):
                 
             links_dictionary[link_url] = link_text
                 
-        for link_url, link_text in links_dictionary:
-        
+        for key, value in links_dictionary:
+            link_url = key
+            link_text = value
+            
             yield SplashRequest(url=link_url, endpoint='execute', args={'lua_source': self.script})
         
             yield {
