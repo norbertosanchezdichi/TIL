@@ -44,6 +44,10 @@ class FindAllLinksSpider(scrapy.Spider):
             
             if link_absolute_url not in self.links_crawled:
                 self.links_crawled.append(link_absolute_url)
+                
+                if 'javascript' in link_absolute_url:
+                    continue
+                
                 #try:
                 yield SplashRequest(url=link_absolute_url, callback=self.parse_page, endpoint='execute', args={'lua_source': self.script})
                 link_title = response.xpath('//title/text()').get()
