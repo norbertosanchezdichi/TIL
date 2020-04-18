@@ -36,6 +36,10 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
         links = response.xpath('//a')
         origin_url = response.url
         for link in links:
+            link_counter += 1
+            if link_counter > 500:
+                break
+            
             if link.xpath('.//img').get():
                 link_text = link.xpath('.//img/@alt').get()
             else:
