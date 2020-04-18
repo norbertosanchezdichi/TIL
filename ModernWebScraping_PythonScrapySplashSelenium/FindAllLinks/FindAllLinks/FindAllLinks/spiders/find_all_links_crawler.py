@@ -43,7 +43,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
         self.link_counter += 1
         #print(f'Link #{link_counter}\n')
         #print(f'Link text: {link_text}\n')
-        print(f'Link url:  {link_url}\n')
+        print(f'Link url:  {link_url}')
         print(f'HTTP status code: {response.status}\n\n')
         
         
