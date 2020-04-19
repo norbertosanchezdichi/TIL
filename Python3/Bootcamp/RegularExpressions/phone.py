@@ -1,7 +1,7 @@
 import re
 
 def extra_phone(input):
-    phone_regex = re.compile(r'\d{3} \d{3}-\d{4}')
+    phone_regex = re.compile(r'\b\d{3} \d{3}-\d{4}\b')
     match = phone_regex.search(input)
     return match.group()
     
