@@ -64,6 +64,12 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
         return r
             
     def parse_item(self, response):
+        """Parse response into item also create new requests."""
+    
+        page = RescrapItem()
+        
+    
+    
         origin_url = response.url
         links = response.xpath('//a')
         
@@ -103,3 +109,22 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
             }
             
         print(f"links_crawled length: {len(self.links_crawled)}")
+    
+    
+    
+    
+        yield page
+    
+        if isinstance(response, (HtmlResponse, SplashTextResponse)):
+            seen = set()
+            for n, rule in enumerate(self._rules):
+                links = [lnk for lnk in rule.link_extractor.extract_links(response)
+                         if lnk not in seen]
+                if links and rule.process_links:
+                    links = rule.process_links(links)
+                for link in links:
+                    seen.add(link)
+                    r = SplashRequest(url=link.url, callback=self._response_downloaded, 
+                                                  args=SPLASH_RENDER_ARGS)
+                    r.meta.update(rule=rule, link_text=link.text)
+                    yield rule.process_request(r)
