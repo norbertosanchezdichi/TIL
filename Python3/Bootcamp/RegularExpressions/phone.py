@@ -18,4 +18,13 @@ def extra_all_phone(input):
 print(extract_all_phone("my number is 323 240-4325 or call me here 423 432-4321"))
 print(extract_all_phone("my number is 323 240-43224"))
 
-#def is_valid_phone():
+def is_valid_phone(input):
+    phone_regex = re.compile(r'^\d{3} \d{3}-\d{4}$')
+    match = phone_regex.search(input)
+    if match:
+        return match.group()
+    return None
+
+print(is_valid_phone("432 434-3254"))
+print(is_valid_phone("432 434-3254 adg"))
+print(is_valid_phone("4ss 432 434-3254 ds"))
