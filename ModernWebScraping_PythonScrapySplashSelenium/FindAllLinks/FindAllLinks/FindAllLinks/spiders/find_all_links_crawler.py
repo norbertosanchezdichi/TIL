@@ -31,7 +31,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     def use_splash(self, request):
         request.meta.update(splash={
           'args': {
-              'wait': 1,
+              'lua_source': self.script,
           },
           'endpoint': 'execute',           
         })
@@ -39,9 +39,9 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
     
     def start_requests(self):
         url = 'https://www.maximintegrated.com/en'
-        yield SplashRequest(url=url, callback=self.parse_item, endpoint='execute', dont_filter=True,args={
-                'url': url, 'lua_source': self.script
-            })
+        #yield SplashRequest(url=url, callback=self.parse_item, endpoint='execute', dont_filter=True,args={'url': url, 'lua_source': self.script})
+        
+        yield scrapy.Request(url=url, callback=self.parseitem, meta={'splash': {'args': {'lua_source': self.script}}})
 
     def _requests_to_follow(self, response):
         #if not isinstance(response, (HtmlResponse, SplashJsonResponse, SplashTextResponse)):
@@ -84,7 +84,8 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
             if link_absolute_url not in self.links_crawled:
                 self.links_crawled.append(link_absolute_url)
                 try:
-                    yield SplashRequest(url=link_absolute_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
+                    yield scrapy.Request(url=url, callback=self.parseitem, meta={'splash': {'args': {'lua_source': self.script}}})
+                    #yield SplashRequest(url=link_absolute_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
                     link_title = response.xpath('//title/text()').get()
                     link_http_status = response.status
                 except:
