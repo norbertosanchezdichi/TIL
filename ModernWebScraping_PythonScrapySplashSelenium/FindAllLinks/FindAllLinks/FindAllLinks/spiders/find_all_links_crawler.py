@@ -24,45 +24,12 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
         end
     '''
     
-    rules = (
-        Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True, process_request='use_splash'),
-    )
-    
-    def use_splash(self, request):
-        request.meta.update(splash={
-          'args': {
-              'lua_source': self.script,
-          },
-          'endpoint': 'execute',           
-        })
-        return request
+    rules = (Rule(LinkExtractor(restrict_xpaths='//a'), callback='parse_item', follow=True),)
     
     def start_requests(self):
         url = 'https://www.maximintegrated.com/en'
-        #yield SplashRequest(url=url, callback=self.parse_item, endpoint='execute', dont_filter=True,args={'url': url, 'lua_source': self.script})
+        yield SplashRequest(url=url, callback=self.parse_item, endpoint='execute', dont_filter=True,args={'url': url, 'lua_source': self.script})
         
-        yield scrapy.Request(url=url, callback=self.parse_item, meta={'splash': {'args': {'lua_source': self.script}}})
-
-    def _requests_to_follow(self, response):
-        #if not isinstance(response, (HtmlResponse, SplashJsonResponse, SplashTextResponse)):
-        #   return
-        seen = set()
-        for n, rule in enumerate(self._rules):
-            links = [lnk for lnk in rule.link_extractor.extract_links(response)
-                     if lnk not in seen]
-            if links and rule.process_links:
-                links = rule.process_links(links)
-            for link in links:
-                seen.add(link)
-                r = self._build_request(n, link)
-                yield rule.process_request(r)
-
-    def _build_request(self, rule, link):
-        r = SplashRequest(url=link.url, callback=self._response_downloaded, meta={'rule': rule, 'link_text': link.text},
-                          args={'url': link.url, 'lua_source': self.script})
-        r.meta.update(rule=rule, link_text=link.text)
-        return r
-            
     def parse_item(self, response):
         origin_url = response.url
         links = response.xpath('//a')
@@ -84,8 +51,7 @@ class FindAllLinksCrawlerSpider(CrawlSpider):
             if link_absolute_url not in self.links_crawled:
                 self.links_crawled.append(link_absolute_url)
                 try:
-                    yield scrapy.Request(url=url, callback=self.parse_item, meta={'splash': {'args': {'lua_source': self.script}}})
-                    #yield SplashRequest(url=link_absolute_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
+                    yield SplashRequest(url=link_absolute_url, callback=self.parse_item, endpoint='execute', args={'lua_source': self.script})
                     link_title = response.xpath('//title/text()').get()
                     link_http_status = response.status
                 except:
