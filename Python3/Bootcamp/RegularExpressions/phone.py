@@ -20,10 +20,10 @@ print(extract_all_phone("my number is 323 240-43224"))
 
 def is_valid_phone(input):
     phone_regex = re.compile(r'^\d{3} \d{3}-\d{4}$')
-    match = phone_regex.search(input)
+    match = phone_regex.fullmatch(input)
     if match:
-        return match.group()
-    return None
+        return True
+    return False
 
 print(is_valid_phone("432 434-3254"))
 print(is_valid_phone("432 434-3254 adg"))
