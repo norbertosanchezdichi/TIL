@@ -27,3 +27,10 @@ columnTransformer = ColumnTransformer(transformers = [('encoder', OneHotEncoder(
 X = np.array(columnTransformer.fit_transform(X))
 
 print(f"X after one-hot encoding country column = {X}")
+
+## Dependent Variable
+from sklearn.preprocessing import LabelEncoder
+labelEncoder = LabelEncoder()
+Y = labelEncoder.fit_transform(Y)
+
+print(f"Y after one-hot encoding = {Y}")
