@@ -50,3 +50,7 @@ plt.clf()
 
 # Predict salary with 12 years of experience
 print(f"Salary w/ 12 YoE = {linearRegressor.predict([[12]])}\n")
+
+# Print simple linear regressor coefficient and intercept
+print(f"Coefficient = {linearRegressor.coef_}")
+print(f"Intercept = {linearRegressor.intercept_}")
