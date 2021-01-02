@@ -26,3 +26,6 @@ print()
 from sklearn.linear_model import  LinearRegression
 linearRegressor = LinearRegression()
 linearRegressor.fit(X_train, Y_train)
+
+# Predict Test Set results
+Y_prediction = linearRegressor.predict(X_test)
