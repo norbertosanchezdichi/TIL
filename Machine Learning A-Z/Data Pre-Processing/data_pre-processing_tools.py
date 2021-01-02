@@ -10,6 +10,7 @@ Y = dataset.iloc[:, -1].values
 
 print(f"X = {X}")
 print(f"Y = {Y}")
+print()
 
 # Imputation: Replacing unknown independent values.
 from sklearn.impute import SimpleImputer
@@ -18,6 +19,7 @@ imputer.fit(X[:, 1:3])
 X[:, 1:3] = imputer.transform(X[:, 1:3])
 
 print(f"X after imputation = {X}")
+print()
 
 # One-Hot Encoding: Encoding categorical data.
 ## Independent Variable
@@ -34,3 +36,6 @@ labelEncoder = LabelEncoder()
 Y = labelEncoder.fit_transform(Y)
 
 print(f"Y after one-hot encoding = {Y}")
+print()
+
+# Splitting Dataset: Training Set and Test Set
