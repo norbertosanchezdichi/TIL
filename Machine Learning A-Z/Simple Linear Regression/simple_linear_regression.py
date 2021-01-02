@@ -14,7 +14,7 @@ print()
 
 # Split Dataset: Training Set and Test Set
 from sklearn.model_selection import train_test_split
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 1)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 0)
 
 print(f"X_train = {X_train}")
 print(f"X_test = {X_test}")
@@ -41,7 +41,7 @@ plt.clf()
 
 # Output Test Set results
 plt.scatter(X_test, Y_test, color = 'red')
-plt.plot(X_train, linearRegressor.predict(X_train), color = 'blue')
+plt.plot(X_test, Y_predict, color = 'blue')
 plt.title('Salary v. Years of Experience (Test Set)')
 plt.xlabel('Years of Experience (years)')
 plt.ylabel('Salary ($)')
