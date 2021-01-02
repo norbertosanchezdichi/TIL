@@ -28,7 +28,7 @@ linearRegressor = LinearRegression()
 linearRegressor.fit(X_train, Y_train)
 
 # Predict Test Set results
-Y_prediction = linearRegressor.predict(X_test)
+Y_predict = linearRegressor.predict(X_test)
 
 # Output Training Set results
 plt.scatter(X_train, Y_train, color = 'red')
