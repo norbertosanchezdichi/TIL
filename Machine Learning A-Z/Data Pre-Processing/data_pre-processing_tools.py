@@ -8,5 +8,5 @@ dataset = pd.read_csv('Data.csv')
 X = dataset.iloc[:, :-1].values
 Y = dataset.iloc[:, -1].values
 
-print(X)
-print(Y)
+print(f"X = {X}")
+print(f"Y = {Y}")
