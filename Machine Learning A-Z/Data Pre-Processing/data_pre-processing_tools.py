@@ -18,3 +18,12 @@ imputer.fit(X[:, 1:3])
 X[:, 1:3] = imputer.transform(X[:, 1:3])
 
 print(f"X after imputation = {X}")
+
+# One-Hot Encoding: Encoding categorical data.
+## Independent Variable
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+columnTransformer = ColumnTransformer(transformers = [('encoder', OneHotEncoder(), [0])], remainder = 'passthrough')
+X = np.array(columnTransformer.fit_transform(X))
+
+print(f"X after one-hot encoding country column = {X}")
