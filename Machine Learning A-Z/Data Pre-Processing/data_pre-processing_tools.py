@@ -38,7 +38,7 @@ Y = labelEncoder.fit_transform(Y)
 print(f"Y after one-hot encoding = {Y}")
 print()
 
-# Splitting Dataset: Training Set and Test Set
+# Split Dataset: Training Set and Test Set
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 1)
 
