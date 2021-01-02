@@ -11,7 +11,7 @@ Y = dataset.iloc[:, -1].values
 print(f"X = {X}")
 print(f"Y = {Y}")
 
-# Imputation
+# Imputation: Replacing unknown independent values.
 from sklearn.impute import SimpleImputer
 imputer = SimpleImputer(missing_values = np.nan, strategy = 'mean')
 imputer.fit(X[:, 1:3])
