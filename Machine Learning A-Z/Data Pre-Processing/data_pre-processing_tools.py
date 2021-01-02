@@ -47,3 +47,13 @@ print(f"X_test = {X_test}")
 print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
+
+# Feature Scaling (done after splitting to avoid information leakage.)
+from sklearn.preprocessing import StandardScaler
+standardScaler = StandardScaler()
+X_train[:, 3:] = standardScaler.fit_transform(X_train[:, 3:])
+X_test[:, 3:] = standardScaler.transform(X_test[:, 3:])
+
+print(f"X_train after feature scaling = {X_train}")
+print(f"X_test after feature scaling = {X_test}")
+print()
