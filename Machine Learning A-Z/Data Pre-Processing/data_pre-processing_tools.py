@@ -21,7 +21,7 @@ X[:, 1:3] = imputer.transform(X[:, 1:3])
 print(f"X after imputation = {X}")
 print()
 
-# One-Hot Encoding: Encoding categorical data.
+# One-Hot Encoding: Encoding categorical data where order is not of importance.
 ## Independent Variable
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
