@@ -1,0 +1,28 @@
+ All-In "Elimination"
+ Used with prior knowledge (i.e. domain expertise).
+ All features are used because it is known they fit for the model.
+ Precursor to Backward Elimination.
+
+ Backward Elimination: Step-by-Step Model Creation (Fastest) (or Stepwise Regression)
+ 1. Select a significance level to stay in the model (SL = 0.05)
+ 2. Fit the full model with all possible predictors
+ 3. Consider the predictor with the highest P-value.  If P > SL, go to next step.  Otherwise, model is complete.
+ 4. Remove the predictor.
+ 5. Fit model without this variable.  Go back to step 3.   
+
+ Forward Selection: Step-by-Step Model Creation (or Stepwise Regression)
+ 1. Select a significance level to enter the model (SL = 0.05)
+ 2. Fit all simple regression models.  Select the one with the lowest P-value.
+ 3. Keep this variable and fit all possible models with one extra predictor added to the one(s) you already have.
+ 4. Consider the predictor with the lowest P-value.  If P < SL, go to step 3.  Otherwise, model is complete. 
+
+ Bidirectional Elimination: Step-by-Step Model Creation (or Stepwise Regression)
+ 1. Select a significance level to enter and to stay in the model e.g. SLENTER = 0.05, SLSTAY = 0.05
+ 2. Perform step 2 of Forward Selection (new variables must have P < SLENTER to enter)
+ 3. Perform step 3 of Backward Elimination (old variables must have P < SLSTAY to stay).  Go back to step 2.
+ 4. No new variables can enter and no old variables can exit.  The model is complete.
+
+ All Possible Models (Score Comparison)
+ 1. Select a criterion of goodness of fit (e.g. Akaike criterion)
+ 2. Construct all possible regression models: 2 ^ N - 1 total combinations where N is  of features.
+ 3. Select the one with the best criterion.  The model is ready.
