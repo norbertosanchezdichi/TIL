@@ -31,3 +31,9 @@ print(f"X_test = {X_test}")
 print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
+
+# Train Multiple Regression model on Training Set
+## LinearRegression takes care of the Dummy Variable Trap and employs Backward Elimination automatically to chose the best features that are statistically significant.
+from sklearn.linear_model import LinearRegression
+multipleRegressor = LinearRegression()
+multipleRegressor.fit(X_train, Y_train)
