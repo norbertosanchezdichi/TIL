@@ -40,3 +40,7 @@ regressor.fit(X_train, Y_train)
 
 # Predict Test Set results
 Y_predict = regressor.predict(X_test)
+
+#Output Training and Test Set results
+np.set_printoptions(precision = 2)
+print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 1), Y_test.reshape(len(Y_test), 1)), axis = 1)}")
