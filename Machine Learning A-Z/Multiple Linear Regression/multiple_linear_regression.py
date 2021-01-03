@@ -11,3 +11,13 @@ Y = dataset.iloc[:, -1].values
 print(f"X = {X}")
 print(f"Y = {Y}")
 print()
+
+# One-Hot Encoding: Encoding categorical data where order is not of importance.
+## Independent Variable
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+columnTransformer = ColumnTransformer(transformers = [('encoder', OneHotEncoder(), [3])], remainder = 'passthrough')
+X = np.array(columnTransformer.fit_transform(X))
+
+print(f"X after one-hot encoding state column = {X}")
+print()
