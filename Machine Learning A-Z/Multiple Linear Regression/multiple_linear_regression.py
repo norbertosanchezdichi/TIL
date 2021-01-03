@@ -37,3 +37,6 @@ print()
 from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, Y_train)
+
+# Predict Test Set results
+Y_predict = regressor.predict(X_test)
