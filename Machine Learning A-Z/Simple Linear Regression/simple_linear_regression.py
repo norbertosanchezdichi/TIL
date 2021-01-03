@@ -24,15 +24,15 @@ print()
 
 # Train Simple Linear Regression model on Training Set
 from sklearn.linear_model import LinearRegression
-linearRegressor = LinearRegression()
-linearRegressor.fit(X_train, Y_train)
+regressor = LinearRegression()
+regressor.fit(X_train, Y_train)
 
 # Predict Test Set results
-Y_predict = linearRegressor.predict(X_test)
+Y_predict = regressor.predict(X_test)
 
 # Output Training Set results
 plt.scatter(X_train, Y_train, color = 'red')
-plt.plot(X_train, linearRegressor.predict(X_train), color = 'blue')
+plt.plot(X_train, regressor.predict(X_train), color = 'blue')
 plt.title('Salary v. Years of Experience (Training Set)')
 plt.xlabel('Years of Experience (years)')
 plt.ylabel('Salary ($)')
@@ -49,8 +49,8 @@ plt.savefig('Salary v. Years of Experience (Test Set).png')
 plt.clf()
 
 # Predict salary with 12 years of experience
-print(f"Salary w/ 12 YoE = {linearRegressor.predict([[12]])}\n")
+print(f"Salary w/ 12 YoE = {regressor.predict([[12]])}\n")
 
 # Print simple linear regressor coefficient and intercept
-print(f"Coefficient = {linearRegressor.coef_}")
-print(f"Intercept = {linearRegressor.intercept_}")
+print(f"Coefficient = {regressor.coef_}")
+print(f"Intercept = {regressor.intercept_}")
