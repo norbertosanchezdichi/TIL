@@ -24,3 +24,11 @@ print()
 from sklearn.linear_model import LinearRegression
 linearRegressor = LinearRegression()
 linearRegressor.fit(X_train, Y_train)
+
+# Train Polynomial Regression model on Training Set
+from sklearn.preprocessing import PolynomialFeatures
+polynomialPreprocessor = PolynomialFeatures(degree = 2)
+X_polynomial = polynomialPreprocessor.fit_transform(X_train)
+
+linearRegressor_polynomial = LinearRegression()
+linearRegressor_polynomial.fit(X_polynomial, Y)
