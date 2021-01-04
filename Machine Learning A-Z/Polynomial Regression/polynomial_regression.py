@@ -20,12 +20,12 @@ print(f"X_train = {X_train}")
 print(f"Y_train = {Y_train}")
 print()
 
-# Train Linear Regression model on Training Set
+# Create and Train Linear Regression model on Training Set
 from sklearn.linear_model import LinearRegression
 linearRegressor = LinearRegression()
 linearRegressor.fit(X_train, Y_train)
 
-# Train Polynomial Regression model on Training Set
+# Create and Train Polynomial Regression model on Training Set
 from sklearn.preprocessing import PolynomialFeatures
 polynomialPreprocessor = PolynomialFeatures(degree = 2)
 X_polynomial = polynomialPreprocessor.fit_transform(X_train)
