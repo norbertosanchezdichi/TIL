@@ -48,8 +48,8 @@ print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 
 print()
 
 # Predict profit for a Californian startup with $160,000 R&D spend, $130,000 administration spend, $300,000 marketing spend.
-print(f"Profit for a Californian startup with $160,000 R&D spend, $130,000 administration spend, $300,000 marketing spend. = {regressor.predict([[12]])}\n")
+print(f"Profit for a Californian startup with $160,000 R&D spend, $130,000 administration spend, $300,000 marketing spend. = {regressor.predict([[1, 0, 0, 160000, 130000, 300000]])}\n")
 
 # Print multiple linear regressor coefficient and intercept.
-print(f"Coefficient = {regressor.coef_}")
+print(f"Coefficients = {regressor.coef_}")
 print(f"Intercept = {regressor.intercept_}")
