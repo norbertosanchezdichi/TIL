@@ -45,3 +45,11 @@ Y_predict = regressor.predict(X_test)
 #Output Training and Test Set results
 np.set_printoptions(precision = 2)
 print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 1), Y_test.reshape(len(Y_test), 1)), axis = 1)}")
+print()
+
+# Predict profit for a Californian startup with $160,000 R&D spend, $130,000 administration spend, $300,000 marketing spend.
+print(f"Profit for a Californian startup with $160,000 R&D spend, $130,000 administration spend, $300,000 marketing spend. = {regressor.predict([[12]])}\n")
+
+# Print multiple linear regressor coefficient and intercept.
+print(f"Coefficient = {regressor.coef_}")
+print(f"Intercept = {regressor.intercept_}")
