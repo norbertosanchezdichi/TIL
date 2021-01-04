@@ -19,3 +19,8 @@ Y_train = Y
 print(f"X_train = {X_train}")
 print(f"Y_train = {Y_train}")
 print()
+
+# Train Linear Regression model on Training Set
+from sklearn.linear_model import LinearRegression
+linearRegressor = LinearRegression()
+linearRegressor.fit(X_train, Y_train)
