@@ -41,3 +41,12 @@ plt.xlabel('Position Level')
 plt.ylabel('Salary')
 plt.savefig('Linear Regression.png')
 plt.clf()
+
+# Output Polynomial Regression Results
+plt.scatter(X_train, Y_train, color = 'red')
+plt.plot(X_train, linearRegressor_polynomial.predict(X_train_polynomial), color = 'blue')
+plt.title('Polynomial Regression Model')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.savefig('Polynomial Regression.png')
+plt.clf()
