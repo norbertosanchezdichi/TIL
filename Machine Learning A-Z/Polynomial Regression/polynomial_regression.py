@@ -50,3 +50,16 @@ plt.xlabel('Position Level')
 plt.ylabel('Salary')
 plt.savefig('Polynomial Regression.png')
 plt.clf()
+
+# Output Polynomial Regression Results w/ more data points
+X_train_grid = np.arange(min(X_train), max(X_train), 0.1)
+X_train_grid = X_train_grid.reshape((len(X_train_grid), 1))
+X_train_polynomial_grid = polynomialPreprocessor.fit_transform(X_train_grid)
+
+plt.scatter(X_train, Y_train, color = 'red')
+plt.plot(X_train_grid, linearRegressor_polynomial.predict(X_train_polynomial_grid), color = 'blue')
+plt.title('Polynomial Regression Model w/ More Data Points')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.savefig('Polynomial Regression w More Data Points.png')
+plt.clf()
