@@ -32,3 +32,12 @@ X_polynomial = polynomialPreprocessor.fit_transform(X_train)
 
 linearRegressor_polynomial = LinearRegression()
 linearRegressor_polynomial.fit(X_polynomial, Y)
+
+# Output Linear Regression Results
+plt.scatter(X_train, Y_train, color = 'red')
+plt.plot(X_train, linearRegressor.predict(X_train), color = 'blue')
+plt.title('Linear Regression Model')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.savefig('Linear Regression.png')
+plt.clf()
