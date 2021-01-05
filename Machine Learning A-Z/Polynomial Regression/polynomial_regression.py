@@ -28,10 +28,10 @@ linearRegressor.fit(X_train, Y_train)
 # Create and Train Polynomial Regression model on Training Set
 from sklearn.preprocessing import PolynomialFeatures
 polynomialPreprocessor = PolynomialFeatures(degree = 2)
-X_polynomial = polynomialPreprocessor.fit_transform(X_train)
+X_train_polynomial = polynomialPreprocessor.fit_transform(X_train)
 
 linearRegressor_polynomial = LinearRegression()
-linearRegressor_polynomial.fit(X_polynomial, Y)
+linearRegressor_polynomial.fit(X_train_polynomial, Y)
 
 # Output Linear Regression Results
 plt.scatter(X_train, Y_train, color = 'red')
