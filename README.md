@@ -5,4 +5,4 @@ Today I learned...
 
 ## Modern Web Scraping w/ Python3 using Scrapy, Splash, and Selenium
 
-## Machine Learning A-Z
+## Machine Learning
