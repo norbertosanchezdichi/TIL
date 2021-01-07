@@ -72,7 +72,6 @@ Y_linear_predict = linearRegressor.predict([[6.5]])
 print(f"Salary for a position 6 using linear regression is = {Y_linear_predict}\n")
 
 # Predict using Polynomial Regression
-
 Y_polynomial_predict = linearRegressor_polynomial.predict(polynomialPreprocessor.fit_transform([[6.5]]))
 
 # Predict salary for a position 6 using linear regression.
