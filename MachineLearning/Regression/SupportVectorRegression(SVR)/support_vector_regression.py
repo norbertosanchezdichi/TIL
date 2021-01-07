@@ -25,3 +25,16 @@ Y_train = Y_train.reshape(len(Y_train), 1)
 
 print(f"Y_train as a 2D array = {Y_train}")
 print()
+
+# Feature Scaling (done after splitting to avoid information leakage)
+## Feature scaling also done for dependent variable so as to not neglect them in the model
+## X_train and Y_train both have a different mean and standard deviation and so they require their own scale
+from sklearn.preprocessing import StandardScaler
+standardScaler_X = StandardScaler()
+standardScaler_Y = StandardScaler()
+X_train_scaled = standardScaler_X.fit_transform(X_train)
+Y_train_scaled = standardScaler_Y.fit_transform(Y_train)
+
+print(f"X_train_scaled = {X_train_scaled}")
+print(f"Y_train_scaled = {Y_train_scaled}")
+print()
