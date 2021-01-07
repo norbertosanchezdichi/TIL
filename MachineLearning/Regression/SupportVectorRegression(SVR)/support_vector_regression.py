@@ -65,3 +65,15 @@ plt.xlabel('Position Level')
 plt.ylabel('Salary')
 plt.savefig('Support_Vector_Regression.png')
 plt.clf()
+
+# Output Support Vector Regression Results w/ more data points
+X_train_grid = np.arange(min(standardScaler_X.inverse_transform(X_train_scaled)), max(standardScaler_X.inverse_transform(X_train_scaled)), 0.1)
+X_train_grid = X_train_grid.reshape((len(X_train_grid), 1))
+
+plt.scatter(standardScaler_X.inverse_transform(X_train_scaled), standardScaler_Y.inverse_transform(Y_train_scaled), color = 'red')
+plt.plot(X_train_grid, standardScaler_Y.inverse_transform(regressor.predict(standardScaler_X.transform(X_train_grid))), color = 'blue')
+plt.title('Support Vector Regression Model w/ more data points')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.savefig('Support_Vector_Regression_W_More_Data_Points.png')
+plt.clf()
