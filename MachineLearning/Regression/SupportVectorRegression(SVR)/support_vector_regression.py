@@ -56,3 +56,12 @@ Y_predict = standardScaler_Y.inverse_transform(regressor.predict(standardScaler_
 
 # Predict salary for a position 6
 print(f"Salary for a position 6.5 is = {Y_predict}")
+
+# Output Support Vector Regression Results
+plt.scatter(standardScaler_X.inverse_transform(X_train_scaled), standardScaler_Y.inverse_transform(Y_train_scaled), color = 'red')
+plt.plot(standardScaler_X.inverse_transform(X_train_scaled), standardScaler_Y.inverse_transform(regressor.predict(X_train_scaled)), color = 'blue')
+plt.title('Support Vector Regression Model')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.savefig('Support_Vector_Regression.png')
+plt.clf()
