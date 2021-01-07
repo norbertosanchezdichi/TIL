@@ -50,3 +50,9 @@ print()
 from sklearn.svm import SVR
 regressor = SVR(kernel = 'rbf')
 regressor.fit(X_train_scaled, Y_train_scaled.ravel())
+
+# Predict salary for a 6.5 level position
+Y_predict = regressor.predict([[6.5]])
+
+# Predict salary for a position 6
+print(f"Salary for a position 6.5 is = {Y_predict}")
