@@ -30,3 +30,21 @@ print()
 from sklearn.ensemble import RandomForestRegressor
 regressor = RandomForestRegressor(n_estimators = 10, random_state = 0)
 regressor.fit(X_train, Y_train)
+
+# Predict salary for a 6.5 level position
+Y_predict = regressor.predict([[6.5]])
+
+# Output prediction salary for a 6.5 level position
+print(f"Salary for a position 6.5 is = {Y_predict}")
+
+# Output Decistion Tree Regression Results w/ more data points
+X_train_grid = np.arange(min(X_train), max(X_train), 0.1)
+X_train_grid = X_train_grid.reshape((len(X_train_grid), 1))
+
+plt.scatter(X_train, Y_train, color = 'red')
+plt.plot(X_train_grid, regressor.predict(X_train_grid), color = 'blue')
+plt.title('Random Forest Regression Model w/ more data points')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.savefig('Random_Forest_Regression_W_More_Data_Points.png')
+plt.clf()
