@@ -24,3 +24,8 @@ print()
 ## Two types: Classification Trees and Regression Trees
 # Splits or 'terminal leaves' are created if they provide new useful information about the data set
 # No feature scaling is required because the splitting of data does not require it
+
+# Create and Train Decision Tree Regression Model
+from sklearn.tree import DecisionTreeRegressor
+regressor = DecisionTreeRegressor(random_state = 0)
+regressor.fit(X_train, Y_train)
