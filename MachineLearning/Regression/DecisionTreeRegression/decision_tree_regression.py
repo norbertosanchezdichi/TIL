@@ -29,3 +29,5 @@ print()
 from sklearn.tree import DecisionTreeRegressor
 regressor = DecisionTreeRegressor(random_state = 0)
 regressor.fit(X_train, Y_train)
+# Output prediction salary for a 6.5 level position
+print(f"Salary for a position 6.5 is = {Y_predict}")
