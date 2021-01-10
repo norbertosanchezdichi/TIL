@@ -22,7 +22,8 @@ print()
 
 # Decision Trees
 ## Two types: Classification Trees and Regression Trees
-# Splits or 'terminal leaves' are created if they provide new useful information about the data set
+# Splits or 'terminal leaves' are created if they holistically reduce the standard deviation of the predictions
+# The Information Gain is the Standard Deviation Reduction.  The more the standard deviation decreases, the less the entropy and the more homogenous the child nodes become
 # No feature scaling is required because the splitting of data does not require it
 
 # Create and Train Decision Tree Regression Model
