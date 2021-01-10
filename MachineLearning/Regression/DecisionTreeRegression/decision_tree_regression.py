@@ -35,3 +35,15 @@ Y_predict = regressor.predict([[6.15]])
 
 # Output prediction salary for a 6.5 level position
 print(f"Salary for a position 6.5 is = {Y_predict}")
+
+# Output Decistion Tree Regression Results w/ more data points
+X_train_grid = np.arange(min(X_train), max(X_train), 0.1)
+X_train_grid = X_train_grid.reshape((len(X_train_grid), 1))
+
+plt.scatter(X_train, Y_train, color = 'red')
+plt.plot(X_train_grid, regressor.predict(X_train_grid), color = 'blue')
+plt.title('Decision Tree Regression Model w/ more data points')
+plt.xlabel('Position Level')
+plt.ylabel('Salary')
+plt.savefig('Decision_Tree_Regression_W_More_Data_Points.png')
+plt.clf()
