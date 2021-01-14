@@ -40,3 +40,8 @@ print()
 # Print multiple linear regressor coefficient and intercept.
 print(f"Coefficients = {regressor.coef_}")
 print(f"Intercept = {regressor.intercept_}")
+print()
+
+# Evaluate Model Performance
+from sklearn.metrics import r2_score
+print(f"R2 Score = {r2_score(Y_test, Y_predict)}")

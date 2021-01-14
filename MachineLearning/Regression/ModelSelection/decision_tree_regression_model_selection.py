@@ -46,3 +46,7 @@ Y_predict = regressor.predict(X_test)
 np.set_printoptions(precision = 2)
 print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 1), Y_test.reshape(len(Y_test), 1)), axis = 1)}")
 print()
+
+# Evaluate Model Performance
+from sklearn.metrics import r2_score
+print(f"R2 Score = {r2_score(Y_test, Y_predict)}")

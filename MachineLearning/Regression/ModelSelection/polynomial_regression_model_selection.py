@@ -25,20 +25,25 @@ print()
 # Create and Train Polynomial Regression model on Training Set
 from sklearn.preprocessing import PolynomialFeatures
 polynomialPreprocessor = PolynomialFeatures(degree = 4)
-X_train_polynomial = polynomialPreprocessor.fit_transform(X_train)
+X_train = polynomialPreprocessor.fit_transform(X_train)
 
 from sklearn.linear_model import LinearRegression
 linearRegressor_polynomial = LinearRegression()
-linearRegressor_polynomial.fit(X_train_polynomial, Y_train)
+linearRegressor_polynomial.fit(X_train, Y_train)
 
 # Predict using Polynomial Regression
-Y_polynomial_predict = linearRegressor_polynomial.predict(polynomialPreprocessor.transform(X_test))
+Y_predict = linearRegressor_polynomial.predict(polynomialPreprocessor.transform(X_test))
 
 # Output Training and Test Set results
 np.set_printoptions(precision = 2)
-print(f"[Y_polynomial_predict Y_test] = {np.concatenate((Y_polynomial_predict.reshape(len(Y_polynomial_predict), 1), Y_test.reshape(len(Y_test), 1)), axis = 1)}")
+print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 1), Y_test.reshape(len(Y_test), 1)), axis = 1)}")
 print()
 
 # Print polynomial regressor coefficient and intercept.
 print(f"Coefficients = {linearRegressor_polynomial.coef_}")
 print(f"Intercept = {linearRegressor_polynomial.intercept_}")
+print()
+
+# Evaluate Model Performance
+from sklearn.metrics import r2_score
+print(f"R2 Score = {r2_score(Y_test, Y_predict)}")
