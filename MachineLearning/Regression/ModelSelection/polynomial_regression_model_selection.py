@@ -47,3 +47,5 @@ print()
 # Evaluate Model Performance
 from sklearn.metrics import r2_score
 print(f"R2 Score = {r2_score(Y_test, Y_predict)}")
+
+print(f"Adusted R2 Score = {1 - (1 - r2_score(Y_test, Y_predict)) * ((len(X_test) - 1) / (len(X_test) - len(X_test[0]) - 1))}")
