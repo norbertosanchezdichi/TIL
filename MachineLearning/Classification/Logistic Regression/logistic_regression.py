@@ -20,13 +20,22 @@ print()
 
 # Split Dataset: Training Set and Test Set
 from sklearn.model_selection import train_test_split
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 0)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)
 
 print(f"X_train = {X_train}")
 print(f"X_test = {X_test}")
 print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
+
+# Feature Scaling (done after splitting to avoid information leakage.)
+## Not required for Logistic Regression, however, it improves training performance and final predictions.
+# Feature Scaling (done after splitting to avoid information leakage.)
+from sklearn.preprocessing import StandardScaler
+standardScaler = StandardScaler()
+X_train[:, 3:] = standardScaler.fit_transform(X_train[:, 3:])
+X_test[:, 3:] = standardScaler.transform(X_test[:, 3:])
+
 
 # Logistic Regression
 ## Using the Sigmoid Function with Euler's number, solving for the dependent variable 'Y' in terms of the probability allows to model the solution with a linear equation.
