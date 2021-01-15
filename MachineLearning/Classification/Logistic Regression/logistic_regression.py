@@ -30,12 +30,15 @@ print()
 
 # Feature Scaling (done after splitting to avoid information leakage.)
 ## Not required for Logistic Regression, however, it improves training performance and final predictions.
-# Feature Scaling (done after splitting to avoid information leakage.)
+## Not done for dependent variable Y because the Logistic Regression model used is binary.
 from sklearn.preprocessing import StandardScaler
 standardScaler = StandardScaler()
-X_train[:, 3:] = standardScaler.fit_transform(X_train[:, 3:])
-X_test[:, 3:] = standardScaler.transform(X_test[:, 3:])
+X_train_scaled = standardScaler.fit_transform(X_train)
+X_test_scaled = standardScaler.transform(X_test)
 
+print(f"X_train_scaled = {X_train_scaled}")
+print(f"X_test_scaled = {X_test_scaled}")
+print()
 
 # Logistic Regression
 ## Using the Sigmoid Function with Euler's number, solving for the dependent variable 'Y' in terms of the probability allows to model the solution with a linear equation.
