@@ -12,12 +12,6 @@ print(f"X = {X}")
 print(f"Y = {Y}")
 print()
 
-# Convert Y to 2D Array for Feature Scaling
-Y = Y.reshape(len(Y), 1)
-
-print(f"Y as a 2D array = {Y}")
-print()
-
 # Split Dataset: Training Set and Test Set
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)
@@ -50,7 +44,7 @@ print()
 ## 4. Requires that the independent variables are linearly related to the log odds.
 from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression(random_state = 0)
-classifier.fit(X_train, Y_train.ravel())
+classifier.fit(X_train_scaled, Y_train)
 
 # Predict if-purchase for 30 year old customer earning $87,000
 Y_predict = classifier.predict(standardScaler.transform([[30, 87000]]))
