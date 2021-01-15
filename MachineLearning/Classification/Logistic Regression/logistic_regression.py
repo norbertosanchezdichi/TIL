@@ -53,3 +53,9 @@ Y_predict_probability = classifier.predict_proba(standardScaler.transform([[30, 
 # Output prediction salary for a position 6
 print(f"Purchase possible from 30 year old earning $87,000? = {Y_predict}.  What is the probability? = {Y_predict_probability}")
 print()
+
+# Predicting using Logistic Regression
+Y_predict = classifier.predict(X_test_scaled)
+print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 1), Y_test.reshape(len(Y_test), 1)), axis = 1)}")
+print()
+
