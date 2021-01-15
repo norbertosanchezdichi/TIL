@@ -51,3 +51,11 @@ print()
 from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression(random_state = 0)
 classifier.fit(X_train, Y_train.ravel())
+
+# Predict if-purchase for 30 year old customer earning $87,000
+Y_predict = classifier.predict(standardScaler.transform([[30, 87000]]))
+Y_predict_probability = classifier.predict_proba(standardScaler.transform([[30, 87000]]))
+
+# Output prediction salary for a position 6
+print(f"Purchase possible from 30 year old earning $87,000? = {Y_predict}.  What is the probability? = {Y_predict_probability}")
+print()
