@@ -53,7 +53,7 @@ print()
 ## Results in a non-linear separation between the two categories.
 ## For example, the intersection of three hyperplanes and the Gaussian RBF function is done in such a way that a non-linear solution projected to the 2-D space results in an accurate separation between the two categories.
 from sklearn.svm import SVC
-
+classifier = SVC(kernel = 'rbf', random_state = 0)
 classifier.fit(X_train_scaled, Y_train)
 
 # Predict if-purchase for 30 year old customer earning $87,000
