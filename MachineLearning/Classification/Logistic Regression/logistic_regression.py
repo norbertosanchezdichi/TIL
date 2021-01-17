@@ -59,3 +59,7 @@ Y_predict = classifier.predict(X_test_scaled)
 print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 1), Y_test.reshape(len(Y_test), 1)), axis = 1)}")
 print()
 
+# Create Confusion Matrix
+from sklearn.metrics import confusion_matrix
+print(f"Confusion Matrix: {confusion_matrix(Y_test, Y_predict)}")
+print()
