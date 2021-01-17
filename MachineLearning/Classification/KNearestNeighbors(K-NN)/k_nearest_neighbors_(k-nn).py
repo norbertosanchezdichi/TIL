@@ -78,11 +78,11 @@ plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(Y_train)):
     plt.scatter(X_set[Y_train == j, 0], X_set[Y_train == j, 1], c = ListedColormap(('red', 'green'))(i), label = j)
-plt.title('Logistic Regression (Training Set)')
+plt.title('K Nearest Neighbors (K-NN) (Training Set)')
 plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
 plt.legend()
-plt.savefig('Logistic_Regression_Training_Set_Results.png')
+plt.savefig('K_Nearest_Neighbors_Training_Set_Results.png')
 plt.clf()
 
 # Output Test Set Results
