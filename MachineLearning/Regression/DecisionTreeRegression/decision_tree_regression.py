@@ -22,10 +22,9 @@ print()
 
 # Decision Trees
 ## Two types: Classification Trees and Regression Trees
-# Splits or 'terminal leaves' are created if they holistically reduce the standard deviation of the predictions
-# The Information Gain is the Standard Deviation Reduction.  The more the standard deviation decreases, the less the entropy and the more homogenous the child nodes become
-# No feature scaling is required because the splitting of data does not require it
-
+## Splits or 'terminal leaves' are created if they holistically reduce the standard deviation of the predictions
+## The Information Gain is the Standard Deviation Reduction.  The more the standard deviation decreases, the less the entropy and the more homogenous the child nodes become
+## No feature scaling is required because the splitting of data does not require it
 # Create and Train Decision Tree Regression Model
 from sklearn.tree import DecisionTreeRegressor
 regressor = DecisionTreeRegressor(random_state = 0)

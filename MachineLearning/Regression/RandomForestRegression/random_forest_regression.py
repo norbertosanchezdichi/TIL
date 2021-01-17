@@ -21,13 +21,11 @@ print(f"Y_train = {Y_train}")
 print()
 
 # Random Forest Regression uses ensemble learning
-# A Random Forest Regression model has better predictability compared to a Decision Tree Regression Model.  However, it has less interpretability.
-
-## 1. Pick random K data points from Training Set.
-## 2. Build the Decision Tree associated with these K points.
-## 3. Choose the number N of trees to build and repeat #1 and #2
-## 4.  For a new data point, make each one of your N trees predict the value for the point in question.  The new predicted output is the average across all the predicted N values.
-
+## A Random Forest Regression model has better predictability compared to a Decision Tree Regression Model.  However, it has less interpretability.
+### 1. Pick random K data points from Training Set.
+### 2. Build the Decision Tree associated with these K points.
+### 3. Choose the number N of trees to build and repeat #1 and #2
+### 4.  For a new data point, make each one of your N trees predict the value for the point in question.  The new predicted output is the average across all the predicted N values.
 # Create and Train Random Forest Regression Model
 from sklearn.ensemble import RandomForestRegressor
 regressor = RandomForestRegressor(n_estimators = 10, random_state = 0)

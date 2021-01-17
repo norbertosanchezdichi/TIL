@@ -35,7 +35,9 @@ print(f"X_test_scaled = {X_test_scaled}")
 print()
 
 # Support Vector Machine (SVM)
-## A linear model where the Maximum Margin Hyperplane, which is the Maximum Margin Classifier, is chosen by its Maximum Margin.   The Support Vectors are what define the Maximum Margin using a Negative and Positive Hyperplane.
+## A linear model where the Maximum Margin Hyperplane, which is the Maximum Margin Classifier, is chosen by its Maximum Margin.   
+## The Support Vectors are what define the Maximum Margin using a Negative and Positive Hyperplane.
+# Create and train Support Vector Machine (SVM) model
 from sklearn.svm import SVC
 classifier = SVC(kernel = 'linear', random_state = 0)
 classifier.fit(X_train_scaled, Y_train)

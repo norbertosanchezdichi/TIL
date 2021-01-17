@@ -42,6 +42,7 @@ print()
 ## 2. Requires the observations to be independent of each other.
 ## 3. Requires little or no multicollinearity among the independent variables.
 ## 4. Requires that the independent variables are linearly related to the log odds.
+# Create and train Logistic Regression model
 from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression(random_state = 0)
 classifier.fit(X_train_scaled, Y_train)
