@@ -85,3 +85,19 @@ plt.legend()
 plt.savefig('Logistic_Regression_Training_Set_Results.png')
 plt.clf()
 
+# Output Test Set Results
+from matplotlib.colors import ListedColormap
+X1, X2 = np.meshgrid(np.arange(start = X_test[:, 0].min() - 10, stop = X_test[:, 0].max() + 10, step = 0.25),
+                     np.arange(start = X_test[:, 1].min() - 1000, stop = X_test[:, 1].max() + 1000, step = 0.25))
+plt.contourf(X1, X2, classifier.predict(standardScaler.transform(np.array([X1.ravel(), X2.ravel()]).T)).reshape(X1.shape),
+             alpha = 0.75, cmap = ListedColormap(('red', 'green')))
+plt.xlim(X1.min(), X1.max())
+plt.ylim(X2.min(), X2.max())
+for i, j in enumerate(np.unique(Y_test)):
+    plt.scatter(X_test[Y_test == j, 0], X_test[Y_test == j, 1], c = ListedColormap(('red', 'green'))(i), label = j)
+plt.title('Logistic Regression (Test set)')
+plt.xlabel('Age')
+plt.ylabel('Estimated Salary')
+plt.legend()
+plt.savefig('Logistic_Regression_Test_Set_Results.png')
+plt.clf()
