@@ -39,14 +39,15 @@ print()
 ## 2. Take the K nearest neighbors of data point according to the Euclidean distance.
 ## 3. Among these K neighbors, count the number of data points in each category.
 ## 4. Assign the new data point to the category where you counted the most neighbors.
-
+from sklearn.neighbors import KNeighborsClassifier
+classifier = KNeighborsClassifier(n_neighbors = 5, metric = 'minkowski', p = 2)
+classifier.fit(X_train_scaled, Y_train)
 
 # Predict if-purchase for 30 year old customer earning $87,000
 Y_predict = classifier.predict(standardScaler.transform([[30, 87000]]))
-Y_predict_probability = classifier.predict_proba(standardScaler.transform([[30, 87000]]))
 
 # Output prediction salary for a position 6
-print(f"Purchase possible from 30 year old earning $87,000? = {Y_predict}.  What is the probability? = {Y_predict_probability}")
+print(f"Purchase possible from 30 year old earning $87,000? = {Y_predict}.")
 print()
 
 # Predicting using Logistic Regression
