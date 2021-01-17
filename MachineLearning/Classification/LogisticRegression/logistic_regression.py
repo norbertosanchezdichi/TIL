@@ -60,7 +60,7 @@ print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 
 print()
 
 # Create Confusion Matrix
-## Not the optimal method to evaluate the performanc eof the model - K-Fold Cross Validation is preferred and it involves using validation tests.
+## Not the optimal method to evaluate the performance of the model - K-Fold Cross Validation is preferred and it involves using validation tests.
 from sklearn.metrics import confusion_matrix
 print(f"Confusion Matrix = {confusion_matrix(Y_test, Y_predict)}")
 print()
