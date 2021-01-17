@@ -69,14 +69,15 @@ print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
 
 # Output Training Set Results
 from matplotlib.colors import ListedColormap
-X1, X2 = np.meshgrid(np.arange(start = X_train[:, 0].min() - 10, stop = X_train[:, 0].max() + 10, step = 0.25),
-                     np.arange(start = X_train[:, 1].min() - 1000, stop = X_train[:, 1].max() + 1000, step = 0.25))
+X_set, Y_set = standardScaler.inverse_transform(X_train_scaled), Y_train
+X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 10, stop = X_set[:, 0].max() + 10, step = 0.25),
+                     np.arange(start = X_set[:, 1].min() - 1000, stop = X_set[:, 1].max() + 1000, step = 0.25))
 plt.contourf(X1, X2, classifier.predict(standardScaler.transform(np.array([X1.ravel(), X2.ravel()]).T)).reshape(X1.shape),
              alpha = 0.75, cmap = ListedColormap(('red', 'green')))
 plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(Y_train)):
-    plt.scatter(X_train[Y_train == j, 0], X_train[Y_train == j, 1], c = ListedColormap(('red', 'green'))(i), label = j)
+    plt.scatter(X_set[Y_train == j, 0], X_set[Y_train == j, 1], c = ListedColormap(('red', 'green'))(i), label = j)
 plt.title('Logistic Regression (Training Set)')
 plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
@@ -86,14 +87,15 @@ plt.clf()
 
 # Output Test Set Results
 from matplotlib.colors import ListedColormap
-X1, X2 = np.meshgrid(np.arange(start = X_test[:, 0].min() - 10, stop = X_test[:, 0].max() + 10, step = 0.25),
-                     np.arange(start = X_test[:, 1].min() - 1000, stop = X_test[:, 1].max() + 1000, step = 0.25))
+X_set, Y_set = standardScaler.inverse_transform(X_test_scaled), Y_test
+X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 10, stop = X_set[:, 0].max() + 10, step = 0.25),
+                     np.arange(start = X_set[:, 1].min() - 1000, stop = X_set[:, 1].max() + 1000, step = 0.25))
 plt.contourf(X1, X2, classifier.predict(standardScaler.transform(np.array([X1.ravel(), X2.ravel()]).T)).reshape(X1.shape),
              alpha = 0.75, cmap = ListedColormap(('red', 'green')))
 plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(Y_test)):
-    plt.scatter(X_test[Y_test == j, 0], X_test[Y_test == j, 1], c = ListedColormap(('red', 'green'))(i), label = j)
+    plt.scatter(X_set[Y_test == j, 0], X_set[Y_test == j, 1], c = ListedColormap(('red', 'green'))(i), label = j)
 plt.title('Logistic Regression (Test Set)')
 plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
