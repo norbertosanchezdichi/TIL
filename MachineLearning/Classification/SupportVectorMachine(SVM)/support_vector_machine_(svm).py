@@ -36,7 +36,8 @@ print()
 
 # Support Vector Machine (SVM)
 ## A linear model where the Maximum Margin Hyperplane, which is the Maximum Margin Classifier, is chosen by its Maximum Margin.   The Support Vectors are what define the Maximum Margin using a Negative and Positive Hyperplane.
-
+from sklearn.svm import SVC
+classifier = SVC(kernel = 'linear', random_state = 0)
 classifier.fit(X_train_scaled, Y_train)
 
 # Predict if-purchase for 30 year old customer earning $87,000
