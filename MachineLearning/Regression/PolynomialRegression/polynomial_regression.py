@@ -48,7 +48,7 @@ plt.plot(X_train, linearRegressor_polynomial.predict(X_train_polynomial), color 
 plt.title('Polynomial Regression Model')
 plt.xlabel('Position Level')
 plt.ylabel('Salary')
-plt.savefig('Polynomial Regression.png')
+plt.savefig('Polynomial_Regression.png')
 plt.clf()
 
 # Output Polynomial Regression Results w/ more data points
@@ -61,7 +61,7 @@ plt.plot(X_train_grid, linearRegressor_polynomial.predict(X_train_polynomial_gri
 plt.title('Polynomial Regression Model w/ More Data Points')
 plt.xlabel('Position Level')
 plt.ylabel('Salary')
-plt.savefig('Polynomial Regression w More Data Points.png')
+plt.savefig('Polynomial_Regression_with_More_Data_Points.png')
 plt.clf()
 
 # Predict using Linear Regression

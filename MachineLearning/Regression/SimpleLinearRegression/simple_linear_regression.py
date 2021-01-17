@@ -36,7 +36,7 @@ plt.plot(X_train, regressor.predict(X_train), color = 'blue')
 plt.title('Salary v. Years of Experience (Training Set)')
 plt.xlabel('Years of Experience (years)')
 plt.ylabel('Salary ($)')
-plt.savefig('Salary v. Years of Experience (Training Set).png')
+plt.savefig('Salary_v_Years_of_Experience_(Training_Set).png')
 plt.clf()
 
 # Output Test Set results
@@ -45,7 +45,7 @@ plt.plot(X_test, Y_predict, color = 'blue')
 plt.title('Salary v. Years of Experience (Test Set)')
 plt.xlabel('Years of Experience (years)')
 plt.ylabel('Salary ($)')
-plt.savefig('Salary v. Years of Experience (Test Set).png')
+plt.savefig('Salary_v_Years_of_Experience_(Test_Set).png')
 plt.clf()
 
 # Predict salary with 12 years of experience
