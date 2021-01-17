@@ -57,12 +57,12 @@ print()
 # Create Confusion Matrix
 ## Not the optimal method to evaluate the performanc eof the model - K-Fold Cross Validation is preferred and it involves using validation tests.
 from sklearn.metrics import confusion_matrix
-print(f"Confusion Matrix: {confusion_matrix(Y_test, Y_predict)}")
+print(f"Confusion Matrix = {confusion_matrix(Y_test, Y_predict)}")
 print()
 
 # Generate Accuracy Score
 from sklearn.metrics import accuracy_score
-print(f"Accuracy Score: {accuracy_score(Y_test, Y_predict)}")
+print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
 
 # Output Training Set Results
 from matplotlib.colors import ListedColormap
