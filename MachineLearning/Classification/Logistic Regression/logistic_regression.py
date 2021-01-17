@@ -63,3 +63,7 @@ print()
 from sklearn.metrics import confusion_matrix
 print(f"Confusion Matrix: {confusion_matrix(Y_test, Y_predict)}")
 print()
+
+# Generate Accuracy Score
+from sklearn.metrics import accuracy_score
+print(f"Accuracy Score: {accuracy_score(Y_test, Y_predict)}")
