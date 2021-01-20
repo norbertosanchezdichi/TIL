@@ -34,7 +34,7 @@ print(f"X_train_scaled = {X_train_scaled}")
 print(f"X_test_scaled = {X_test_scaled}")
 print()
 
-# Kernel Support Vector Machine (SVM)
+# Kernel Support Vector Machine (SVM) Classifier
 ## Effective for data sets that are non-linearly separable by mapping to a higher dimension.
 ## The data set becomes separable by using a line, a hyperplane, or other structure with a dimension less than the mapped higher dimension.
 ## Mapping to a higher dimensional space can become computationally expensive.
@@ -52,6 +52,9 @@ print()
 # Non-Linear Support Vector Regression (SVR)
 ## Results in a non-linear separation between the two categories.
 ## For example, the intersection of three hyperplanes and the Gaussian RBF function is done in such a way that a non-linear solution projected to the 2-D space results in an accurate separation between the two categories.
+
+# Create and train Kernel Support Vector Machine (SVM) model
+## Use Gaussian Radial-Basis Function (RBF) kernel
 from sklearn.svm import SVC
 classifier = SVC(kernel = 'rbf', random_state = 0)
 classifier.fit(X_train_scaled, Y_train)

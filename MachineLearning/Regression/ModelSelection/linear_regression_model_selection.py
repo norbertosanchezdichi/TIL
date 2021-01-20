@@ -22,7 +22,7 @@ print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
 
-# Create and Train Simple Linear Regression model on Training Set
+# Create and train the Simple Linear Regression model
 from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, Y_train)

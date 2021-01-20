@@ -36,7 +36,8 @@ print()
 ## 3. Choose the number N of trees to build and repeat #1 and #2
 ## 4.  For a new data point, make each one of your N trees predict the value for the point in question.  The new predicted output is the average across all the predicted N values.
 
-# Create and Train Random Forest Regression Model
+# Create and train the Random Forest Regression model
+## Use 10 trees in the forest
 from sklearn.ensemble import RandomForestRegressor
 regressor = RandomForestRegressor(n_estimators = 10, random_state = 0)
 regressor.fit(X_train, Y_train.ravel())

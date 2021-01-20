@@ -34,7 +34,7 @@ print(f"X_train_scaled = {X_train_scaled}")
 print(f"X_test_scaled = {X_test_scaled}")
 print()
 
-# Logistic Regression
+# Logistic Regression Classifier
 ## Using the Sigmoid Function with Euler's number, solving for the dependent variable 'Y' in terms of the probability allows to model the solution with a linear equation.
 ## The solution is in terms of probability using the natural log - hence why it is called Logistic Regression.
 # Assumptions when using Logistic Regression
@@ -42,6 +42,7 @@ print()
 ## 2. Requires the observations to be independent of each other.
 ## 3. Requires little or no multicollinearity among the independent variables.
 ## 4. Requires that the independent variables are linearly related to the log odds.
+
 # Create and train Logistic Regression model
 from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression(random_state = 0)

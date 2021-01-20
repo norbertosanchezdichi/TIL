@@ -34,14 +34,16 @@ print(f"X_train_scaled = {X_train_scaled}")
 print(f"X_test_scaled = {X_test_scaled}")
 print()
 
-# K Nearest Neighbors (K-NN)
+# K Nearest Neighbors (K-NN) Classifier
 ## A non-linear model.  
 ## When a data point has an equal number of neighbors, one category is randomly chosen.
 ### 1. Choose the number K of neighbors (commonly 5).
 ### 2. Take the K nearest neighbors of data point according to the Euclidean distance.
 ### 3. Among these K neighbors, count the number of data points in each category.
 ### 4. Assign the new data point to the category where you counted the most neighbors.
+
 # Create and train K Neighbors Classifier Model
+## Use the minkowski distance metric and a power parameter of 2 to use the Euclidean metric.
 from sklearn.neighbors import KNeighborsClassifier
 classifier = KNeighborsClassifier(n_neighbors = 5, metric = 'minkowski', p = 2)
 classifier.fit(X_train_scaled, Y_train)

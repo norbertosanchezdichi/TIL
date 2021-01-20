@@ -34,7 +34,7 @@ print()
 # The Information Gain is the Standard Deviation Reduction.  The more the standard deviation decreases, the less the entropy and the more homogenous the child nodes become
 # No feature scaling is required because the splitting of data does not require it
 
-# Create and Train Decision Tree Regression Model
+# Create and train the Decision Tree Regression model
 from sklearn.tree import DecisionTreeRegressor
 regressor = DecisionTreeRegressor(random_state = 0)
 regressor.fit(X_train, Y_train)

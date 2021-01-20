@@ -44,9 +44,12 @@ print()
 ## ε-Insensitive Tube is a margin of error in SVR that is allowed for the model.
 ## Slack Variables ζ1* (below ε-Insensitive Tube) and ζ2 (above ε-Insensitive Tube) are used to calculate error.
 ### The Slack Variables are the support vectors that form the structure of the ε-Insensitive Tube.
-# Create and Train Support Vector Regression (SVR) Model
+# Create and train Support Vector Regression (SVR) model
 ## Use The Gaussian Radial Basis Function (RBF) Kernel
 ## Other kernels are Polynomial, Gaussian, Laplace RBF, Hyperbolic Tangent, Sigmoid, Bessel Function of First Kind, Anova RB, and Linear Spline in 1D
+
+# Create and train Support Vector Regression (SVR) model
+## Use the Gaussian Radial-Basis Function (RBF)
 from sklearn.svm import SVR
 regressor = SVR(kernel = 'rbf')
 regressor.fit(X_train_scaled, Y_train_scaled.ravel())

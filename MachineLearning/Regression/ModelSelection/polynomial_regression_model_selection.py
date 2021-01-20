@@ -22,7 +22,7 @@ print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
 
-# Create and Train Polynomial Regression model on Training Set
+# Create and train the Polynomial Regression model
 from sklearn.preprocessing import PolynomialFeatures
 polynomialPreprocessor = PolynomialFeatures(degree = 4)
 X_train = polynomialPreprocessor.fit_transform(X_train)

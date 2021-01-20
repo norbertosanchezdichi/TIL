@@ -22,7 +22,7 @@ print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
 
-# Create and Train Multiple Regression model on Training Set
+# Create and train the Multiple Regression model
 ## Skikit-Learn library takes care of the Dummy Variable Trap and employs Backward Elimination automatically to chose the best features that are statistically significant.
 ### The Dummary Variable Trap was solved by eliminating the first One-Hot Encoding column because if the state is not one or the other, having a value 0 for the second and third column already gives this information.
 from sklearn.linear_model import LinearRegression

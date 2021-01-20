@@ -20,12 +20,13 @@ print(f"X_train = {X_train}")
 print(f"Y_train = {Y_train}")
 print()
 
-# Decision Trees
+# Decision Tree Regressor
 ## Two types: Classification Trees and Regression Trees
 ## Splits or 'terminal leaves' are created if they holistically reduce the standard deviation of the predictions
 ## The Information Gain is the Standard Deviation Reduction.  The more the standard deviation decreases, the less the entropy and the more homogenous the child nodes become
 ## No feature scaling is required because the splitting of data does not require it
-# Create and Train Decision Tree Regression Model
+
+# Create and train the Decision Tree Regression model
 from sklearn.tree import DecisionTreeRegressor
 regressor = DecisionTreeRegressor(random_state = 0)
 regressor.fit(X_train, Y_train)
