@@ -36,13 +36,13 @@ print()
 
 # Kernel Support Vector Machine (SVM)
 ## Effective for data sets that are non-linearly separable by mapping to a higher dimension.
-## By mapping to a higher dimension, the data set becomes separable by using a line, a hyperplane, or other structure with a dimension less than the mapped higher dimension.
-## Mapping to a Higher Dimensional Space can become computationally expensive.
+## The data set becomes separable by using a line, a hyperplane, or other structure with a dimension less than the mapped higher dimension.
+## Mapping to a higher dimensional space can become computationally expensive.
 # The Kernel Trick using the Gaussian Radial-Basis Function (RBF)
 ## Its a function of a vector and a landmark, which is the center of the peak of the function.
-### Using Euler's number, the function is a three-dimensional function that uses σ to adjust the radius of the base of the peak.
+### Using Euler's number, the function is three-dimensional and uses σ to adjust the radius of the base of the peak.
 ## It is used to produce a decision boundary for a non-linearly separable dataset.
-## The optimal place for the landmark in the non-linear dataset is found and along with tuning σ, the dataset is easily separated into two categories.
+## By choosing the optimal place for the landmark in the non-linear dataset and by tuning σ, the dataset is easily separated into two categories.
 ## Multiple kernel functions can be used by adding them up such that multiple landmarks with a specific base radius are found to linearly separate the dataset in 3-D.  This allows to create a more complex decision boundary.
 # Types of Kernel Functions
 ## Gaussian Radial-Basis Function (RBF) Kernel
