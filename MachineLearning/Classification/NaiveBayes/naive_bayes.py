@@ -35,12 +35,14 @@ print(f"X_test_scaled = {X_test_scaled}")
 print()
 
 # Naïve-Bayes Classifier
+## A non-linear model with a probabilistic approach.
 ## Baye's Theorem
 ### 1. Calculate P(A|X) = P(X|A) * P(A) / P(X)
 #### P(A) -> Prior Probability
 ##### Equal to probability of A given a total number of observations.
 #### P(X) -> Marginal Likelihood
 ##### Select a radius around the obversation in question.
+###### Radius is chosen in the same way as in KNN.
 ##### All obvervations that lie inside the radius are deemed similar to the original observation in question.
 ##### Equal to the total of these similar observations divided by the total number of observations.
 #### P(X|A) -> Likelihood
@@ -67,9 +69,10 @@ classifier.fit(X_train_scaled, Y_train)
 
 # Predict if-purchase for 30 year old customer earning $87,000
 Y_predict = classifier.predict(standardScaler.transform([[30, 87000]]))
+Y_predict_probability = classifier.predict_proba(standardScaler.transform([[30, 87000]]))
 
 # Output prediction salary for a position 6
-print(f"Purchase possible from 30 year old earning $87,000? = {Y_predict}.")
+print(f"Purchase possible from 30 year old earning $87,000? = {Y_predict}. What is the probability? = {Y_predict_probability}")
 print()
 
 # Predicting using Logistic Regression
