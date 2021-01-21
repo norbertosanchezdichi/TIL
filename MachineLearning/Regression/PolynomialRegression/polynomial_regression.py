@@ -25,6 +25,10 @@ from sklearn.linear_model import LinearRegression
 linearRegressor = LinearRegression()
 linearRegressor.fit(X_train, Y_train)
 
+# Polynomial Regressor
+## To evaluate the polynomial regressor, compute the "Mean of Squared Residuals" (the mean of the squared errors).
+## Can't apply Backward Elimination to Polynomial Regression models because there are no coefficients combined in a linear regression equation and therefore there are no p-values.
+
 # Create and train Polynomial Regression model
 from sklearn.preprocessing import PolynomialFeatures
 polynomialPreprocessor = PolynomialFeatures(degree = 4)

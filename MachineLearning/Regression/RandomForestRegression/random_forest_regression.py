@@ -27,6 +27,8 @@ print()
 ### 2. Build the Decision Tree associated with these K points.
 ### 3. Choose the number N of trees to build and repeat #1 and #2
 ### 4.  For a new data point, make each one of your N trees predict the value for the point in question.  The new predicted output is the average across all the predicted N values.
+## To evaluate the Random Forest regressor, compute the "Mean of Squared Residuals" (the mean of the squared errors).
+## Can't apply Backward Elimination to Random Forest Regression models because there are no coefficients combined in a linear regression equation and therefore there are no p-values.
 
 # Create and train the Random Forest Regression model
 ## Use 10 trees in the forest
