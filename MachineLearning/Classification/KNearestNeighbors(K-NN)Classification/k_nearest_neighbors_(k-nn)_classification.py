@@ -23,8 +23,6 @@ print(f"Y_test = {Y_test}")
 print()
 
 # Feature Scaling (done after splitting to avoid information leakage.)
-## Not required for Logistic Regression, however, it improves training performance and final predictions.
-## Not done for dependent variable Y because the Logistic Regression model used is binary.
 from sklearn.preprocessing import StandardScaler
 standardScaler = StandardScaler()
 X_train_scaled = standardScaler.fit_transform(X_train)
