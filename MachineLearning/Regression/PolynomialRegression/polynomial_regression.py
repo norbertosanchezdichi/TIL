@@ -26,6 +26,9 @@ linearRegressor = LinearRegression()
 linearRegressor.fit(X_train, Y_train)
 
 # Polynomial Regressor
+## The Polynomial Regressor is linear on the coefficients because they are not raised to a power.
+## However, the Polynomial Regressor is a non-linear function because the inputs are raised to a power.
+## Feature Scaling is not required because the coefficients adjust to put everyting on the same scale.
 ## To evaluate the polynomial regressor, compute the "Mean of Squared Residuals" (the mean of the squared errors).
 ## Can't apply Backward Elimination to Polynomial Regression models because there are no coefficients combined in a linear regression equation and therefore there are no p-values.
 

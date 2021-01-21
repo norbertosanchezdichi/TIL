@@ -29,6 +29,9 @@ print(f"X after imputation = {X}")
 print()
 
 # One-Hot Encoding: Encoding categorical data where order is not of importance.
+## To avoid the Dummy Variable Trap, sklearn automatically employs Backward Elimination automatically to chose the best features that are statistically significant.
+### This step is automatically executed when creating and training the ML model.
+
 ## Independent Variable
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder

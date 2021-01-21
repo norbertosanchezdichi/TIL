@@ -31,6 +31,7 @@ print()
 # Feature Scaling (done after splitting to avoid information leakage)
 ## Feature scaling also done for dependent variable so as to not neglect them in the model
 ## X_train and Y_train both have a different mean and standard deviation and so they require their own scale
+## Feature Selection using P-Values to find most significant variables is not possible because SVR is a non-linear model.  However, Feature Extraction is possible using Dimensionality Reduction.
 from sklearn.preprocessing import StandardScaler
 standardScaler_X = StandardScaler()
 standardScaler_Y = StandardScaler()

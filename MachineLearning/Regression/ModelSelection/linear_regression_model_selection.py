@@ -30,6 +30,7 @@ print()
 #### Under this assumption, the observations are random and don't follow a certain pattern.
 ### The P-Value is the probability that the parameters associated to the independent variables have certain nonzero values given that the Null Hypothesis is true.
 ### The P-Value is a statistical metric: the lower its value, the more statistically significant is an independent variable (how much better a predictor it will be).
+### The P-Value only applies to linear models.
 
 # Create and train the Simple Linear Regression model
 from sklearn.linear_model import LinearRegression

@@ -22,7 +22,14 @@ print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
 
-# Create and train the Polynomial Regression model
+# Polynomial Regressor
+## The Polynomial Regressor is linear on the coefficients because they are not raised to a power.
+## However, the Polynomial Regressor is a non-linear function because the inputs are raised to a power.
+## Feature Scaling is not required because the coefficients adjust to put everyting on the same scale.
+## To evaluate the polynomial regressor, compute the "Mean of Squared Residuals" (the mean of the squared errors). 
+## Can't apply Backward Elimination to Polynomial Regression models because there are no coefficients combined in a linear regression equation and therefore there are no p-values.
+
+# Create and train Polynomial Regression model
 from sklearn.preprocessing import PolynomialFeatures
 polynomialPreprocessor = PolynomialFeatures(degree = 4)
 X_train = polynomialPreprocessor.fit_transform(X_train)

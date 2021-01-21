@@ -40,7 +40,7 @@ print()
 ### 4. For a new data point, make each one of your N trees predict the category.  Assign the new data point to the category that wins the majority vote.
 ## Gives better predictive power than Decision Trees.
 ## It does not give the same intrepability as a Decision Tree.  You cannot do the same with a Random Forest.
-## To find the optimal number of Decision Trees, use k-Fold Cross Validation and Grid Search.
+## To find the optimal number of Decision Trees, use k-Fold Cross Validation and Grid Search to use Parameter Tuning technique.
 
 # Create and train Random Forest model
 ## Use 10 trees in the forest

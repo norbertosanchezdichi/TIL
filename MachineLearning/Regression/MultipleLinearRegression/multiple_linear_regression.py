@@ -32,9 +32,18 @@ print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
 
+# Multiple Linear Regressor
+## 1. Linearity - Assumes a linear relationship between the dependent and independent variables.
+### Scatterplots can show whether there is a linear or curvilinear relationship.
+## 2. Homoscedasticity - Assumes variance of error terms is similar across the values of the independent variables.
+### A plot of standardized residuals versus predicted values shows whether points are equally distributed across all independent variables.
+## 3. Multivarate Normality - Assumes that the residuals are normally distributed.
+### The residuals are the differences between the observed and predicted values.
+## 4. Independence of Errors - Assumes the residuals are independent.
+## 5. Lack of Multicollinearity - Assumes that the independent variables are not highly correlated with each other.
+### This assumption is tested using Variance Inflation Factor (VIF) values.
+
 # Create and train the Multiple Regression model
-## Skikit-Learn library takes care of the Dummy Variable Trap and employs Backward Elimination automatically to chose the best features that are statistically significant.
-### The Dummary Variable Trap was solved by eliminating the first One-Hot Encoding column because if the state is not one or the other, having a value 0 for the second and third column already gives this information.
 from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, Y_train)
