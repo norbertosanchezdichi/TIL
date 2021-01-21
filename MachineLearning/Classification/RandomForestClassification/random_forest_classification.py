@@ -44,8 +44,9 @@ print()
 
 # Create and train Random Forest model
 ## Use 10 trees in the forest
+## Use entropy to measure the quality of the split.
 from sklearn.ensemble import RandomForestClassifier
-classifier = RandomForestClassifier(n_estimators = 10, random_state = 0)
+classifier = RandomForestClassifier(n_estimators = 100, criterion = 'entropy', random_state = 0)
 classifier.fit(X_train_scaled, Y_train)
 
 # Predict if-purchase for 30 year old customer earning $87,000
