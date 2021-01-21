@@ -13,6 +13,13 @@ print(f"Y = {Y}")
 print()
 
 # Imputation: Replacing unknown independent values.
+## Use the mean to replace unknown independent values only if a few are missing.
+## Other imputation strategies: median, most frequency, and prediction imputation.
+### The Prediction Imputation strategy involves using a ML model to predict the unknown values.
+#### 1. Set the feature column with missing values as the dependent variable.
+#### 2. Set the other columns that don't have unknown values as your independent variable.
+#### 3. Split the dataset into a Training and Test set.  The Training set has observations where the independent variable has no unknown values while the Test set has all the observations with unknown values.
+#### 4. Then perform predictions to replace the uknown values.
 from sklearn.impute import SimpleImputer
 imputer = SimpleImputer(missing_values = np.nan, strategy = 'mean')
 imputer.fit(X[:, 1:3])
@@ -39,6 +46,9 @@ print(f"Y after one-hot encoding = {Y}")
 print()
 
 # Split Dataset: Training Set and Test Set
+## The Training Set is a subset of the data on which the model will learn how to predict the dependent variable.
+## The Test Set is the complimentary subset from the training set on which the odel is evaluated on.
+## The sets are split based on the distribution of the values of the dependent variables.
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 1)
 
@@ -48,7 +58,14 @@ print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
 
-# Feature Scaling (done after splitting to avoid information leakage.)
+# Feature Scaling 
+## Done after splitting to avoid information leakage.
+## Leakage is the use of information in the model training process which would not be expected to be available at prediction time.
+### Causes the predictive scores to overestimate the model's utility when run in a production environment.
+## Feature Scaling is done to optimize the accuracy of model predictions.
+### It should be avoided if the goal is to keep the most interpration as possible about the model.
+### Use Normalization when the data is normally distributed.
+### Use Standardization when the data is not normally distributed.
 from sklearn.preprocessing import StandardScaler
 standardScaler = StandardScaler()
 X_train[:, 3:] = standardScaler.fit_transform(X_train[:, 3:])
