@@ -34,7 +34,7 @@ print(f"X_train_scaled = {X_train_scaled}")
 print(f"X_test_scaled = {X_test_scaled}")
 print()
 
-# Decision Tree Classifiier
+# Decision Tree Classifier
 ## Splits the dataset into homogenous classes with the goal to obtain the minimum entropy in each terminal leaf.
 ### Uses reduction of standard deviation of the predictions.
 ### Building a decision tree is all about finding the attribute that returns the highest standard deviation reduction.
