@@ -41,6 +41,9 @@ print()
 ## Gives better predictive power than Decision Trees.
 ## It does not give the same intrepability as a Decision Tree.  You cannot do the same with a Random Forest.
 ## To find the optimal number of Decision Trees, use k-Fold Cross Validation and Grid Search to use Parameter Tuning technique.
+## Feature Selection is not possible because the Random Forest model is non-linear.  However, Feature Extraction using Dimensionality Reduction is possible to redue the number of features.
+## To reduce overfitting, tune the penalization and regularization parameters.
+### The best way to reduce overfitting is to apply K-Fold Cross Validation and optimize a tuning parameter on bootstrapped data.
 
 # Create and train Random Forest model
 ## Use 10 trees in the forest
