@@ -22,7 +22,7 @@ print(f"Y_train = {Y_train}")
 print(f"Y_test = {Y_test}")
 print()
 
-# Simple Linear Regression
+# Simple Linear Regressor
 ## The squared differences are calculated instead of the absolute differences because it makes the calculation of the first derivative of the loss error function easier.
 ## Feature Scaling is not required because the prediction is a simple linear combination where the coefficients can adapt their scale to put everything on the same scale.
 ## Understanding the P-Value
