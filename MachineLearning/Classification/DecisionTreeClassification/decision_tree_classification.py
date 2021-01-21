@@ -53,7 +53,7 @@ Y_predict = classifier.predict(standardScaler.transform([[30, 87000]]))
 print(f"Purchase possible from 30 year old earning $87,000? = {Y_predict}.")
 print()
 
-# Predicting using Logistic Regression
+# Predict using Decision Tree model
 Y_predict = classifier.predict(X_test_scaled)
 print(f"[Y_predict Y_test] = {np.concatenate((Y_predict.reshape(len(Y_predict), 1), Y_test.reshape(len(Y_test), 1)), axis = 1)}")
 print()
