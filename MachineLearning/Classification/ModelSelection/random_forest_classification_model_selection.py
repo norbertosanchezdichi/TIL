@@ -69,5 +69,8 @@ print(f"Confusion Matrix = {confusion_matrix(Y_test, Y_predict)}")
 print()
 
 # Generate Accuracy Score
+## Accuracy Paradox
+### Do not rely just on the accuracy score to evaluate a model.
+### If a model only generates True Negatives and False Negatives, or only False Positives and True Positives, the accuracy might increase!
 from sklearn.metrics import accuracy_score
 print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
