@@ -83,7 +83,6 @@ Y_test_length = len(Y_test)
 Y_test_one_count = np.sum(Y_test)
 Y_test_zero_count = Y_test_length - Y_test_one_count
 
-
 ## Plot Perfect Model
 plt.plot([0, Y_test_one_count, Y_test_length], [0, Y_test_one_count, Y_test_one_count], c = 'g', linewidth = 2, label = 'Perfect Model')
 
@@ -93,7 +92,6 @@ plt.plot(np.arange(0, Y_test_length + 1), np.append([0], np.cumsum(classifier_CA
 
 ## Plot Random Model
 plt.plot([0, Y_test_length], [0, Y_test_one_count], c = 'r', linewidth = 2, label = 'Random Model')
-
 
 plt.legend()
 plt.title('Cumulative Accuracy Profile (CAP)')
