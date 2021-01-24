@@ -63,3 +63,33 @@ print()
 ### If a model only generates True Negatives and False Negatives, or only False Positives and True Positives, the accuracy might increase!
 from sklearn.metrics import accuracy_score
 print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
+
+# Cumulative Accuracy Profile (CAP)
+## Edit independent_variable_threshold definition depending on threshold of classifier output
+Y_test_only_zeros_and_ones = np.all(Y_test == 0) or np.all(Y_test == 1)
+independent_variable_threshold = 3
+if not Y_test_only_zeros_and_ones:
+	Y_test = (Y_test > independent_variable_threshold).astype(int)
+	Y_predict = (Y_predict > independent_variable_threshold).astype(int)
+
+Y_test_length = len(Y_test)
+Y_test_one_count = np.sum(Y_test)
+Y_test_zero_count = Y_test_length - Y_test_one_count
+
+## Plot Perfect Model
+plt.plot([0, Y_test_one_count, Y_test_length], [0, Y_test_one_count, Y_test_one_count], c = 'g', linewidth = 2, label = 'Perfect Model')
+
+## Plot Cumulative Accuracy Profile (CAP) for Logistic Regression model
+classifier_CAP = [y for _, y in sorted(zip(Y_predict, Y_test), reverse = True)]
+plt.plot(np.arange(0, Y_test_length + 1), np.append([0], np.cumsum(classifier_CAP)), c = 'k', linewidth = 2, label = 'Logistic Regression Classifier')
+
+## Plot Random Model
+plt.plot([0, Y_test_length], [0, Y_test_one_count], c = 'r', linewidth = 2, label = 'Random Model')
+
+plt.legend()
+plt.title('Cumulative Accuracy Profile (CAP)')
+plt.xlabel('# of Data Points in the Data Set')
+plt.ylabel('# of Predictions')
+plt.legend()
+plt.savefig('K_Nearest_Neighbors_(K-NN)_Classification_Cumulative_Accuracy_Profile_(CAP).png')
+plt.clf()
