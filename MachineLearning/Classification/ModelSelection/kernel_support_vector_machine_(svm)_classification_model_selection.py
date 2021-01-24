@@ -80,9 +80,7 @@ print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
 ## Edit independent_variable_threshold definition depending on threshold of classifier output
 Y_train_only_zeros_and_ones = True
 for y in Y_train:
-    if (y == 0) or (y == 1):
-        continue
-    else:
+    if not ((y == 0) or (y == 1)):
         Y_train_only_zeros_and_ones = False
         break
 
