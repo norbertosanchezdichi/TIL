@@ -87,16 +87,16 @@ print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
 ## Edit independent_variable_threshold definition depending on threshold of classifier output
 Y_train_only_zeros_and_ones = True
 for y in Y_train:
-	if (y == 0) or (y == 1):
-		continue
-	else:
-		Y_train_only_zeros_and_ones = False
-		break
+    if (y == 0) or (y == 1):
+        continue
+    else:
+        Y_train_only_zeros_and_ones = False
+        break
 
 independent_variable_threshold = 3
 if not Y_train_only_zeros_and_ones:
-	Y_test = (Y_test > independent_variable_threshold).astype(int)
-	Y_predict = (Y_predict > independent_variable_threshold).astype(int)
+    Y_test = (Y_test > independent_variable_threshold).astype(int)
+    Y_predict = (Y_predict > independent_variable_threshold).astype(int)
 
 Y_test_length = len(Y_test)
 Y_test_one_count = np.sum(Y_test)
