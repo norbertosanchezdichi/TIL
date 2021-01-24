@@ -77,9 +77,16 @@ print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
 
 # Cumulative Accuracy Profile (CAP)
 ## Edit independent_variable_threshold definition depending on threshold of classifier output
-Y_test_only_zeros_and_ones = np.all(Y_test == 0) or np.all(Y_test == 1)
+Y_train_only_zeros_and_ones = True
+for y in Y_train:
+	if (y == 0) or (y == 1):
+		continue
+	else:
+		Y_train_only_zeros_and_ones = False
+		break
+
 independent_variable_threshold = 3
-if not Y_test_only_zeros_and_ones:
+if not Y_train_only_zeros_and_ones:
 	Y_test = (Y_test > independent_variable_threshold).astype(int)
 	Y_predict = (Y_predict > independent_variable_threshold).astype(int)
 
