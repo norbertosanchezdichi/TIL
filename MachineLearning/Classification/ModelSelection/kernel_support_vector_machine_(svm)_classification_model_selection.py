@@ -75,6 +75,7 @@ print()
 ### If a model only generates True Negatives and False Negatives, or only False Positives and True Positives, the accuracy might increase!
 from sklearn.metrics import accuracy_score
 print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
+print()
 
 # Cumulative Accuracy Profile (CAP)
 ## Accuracy Ratio = Area under Perfect Model / Aread under Classifier CAP
