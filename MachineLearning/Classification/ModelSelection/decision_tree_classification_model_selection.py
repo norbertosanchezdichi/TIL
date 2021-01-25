@@ -65,6 +65,9 @@ from sklearn.metrics import accuracy_score
 print(f"Accuracy Score = {accuracy_score(Y_test, Y_predict)}")
 
 # Cumulative Accuracy Profile (CAP)
+## Accuracy Ratio = Area under Perfect Model / Aread under Classifier CAP
+### If Accuracy Ratio > 90%, may be overfitting or may have forward-looking variables.
+### If Accuracy Ratio < 70%, consider another model. 
 ## Edit independent_variable_threshold definition depending on threshold of classifier output
 Y_train_only_zeros_and_ones = True
 for y in Y_train:
@@ -84,18 +87,30 @@ Y_test_zero_count = Y_test_length - Y_test_one_count
 ## Plot Perfect Model
 plt.plot([0, Y_test_one_count, Y_test_length], [0, Y_test_one_count, Y_test_one_count], c = 'g', linewidth = 2, label = 'Perfect Model')
 
-## Plot Cumulative Accuracy Profile (CAP) for Logistic Regression model
+## Plot Cumulative Accuracy Profile (CAP) for classifier
 classifier_CAP = [y for _, y in sorted(zip(Y_predict, Y_test), reverse = True)]
 plt.plot(np.arange(0, Y_test_length + 1), np.append([0], np.cumsum(classifier_CAP)), c = 'k', linewidth = 2, label = 'Logistic Regression Classifier')
 
 ## Plot Random Model
 plt.plot([0, Y_test_length], [0, Y_test_one_count], c = 'r', linewidth = 2, label = 'Random Model')
 
+## Area under Random Model
+random_model_area = np.trapz([0, Y_test_one_count], [0, Y_test_length])
+
+## Area under classifier CAP
+classifier_CAP_area = np.trapz(np.append([0], np.cumsum(classifier_CAP)), np.arange(0, Y_test_length + 1)) - random_model_area
+
+## Area under Perfect Model
+perfect_model_area = np.trapz([0, Y_test_one_count, Y_test_one_count], [0, Y_test_one_count, Y_test_length]) - random_model_area
+
+## Accuracy Ratio
+accuracy_ratio = classifier_CAP_area / perfect_model_area
+print(f"Accuracy Ratio = {accuracy_ratio}")
+
 plt.legend()
-plt.title('Cumulative Accuracy Profile (CAP)')
+plt.title(f"Cumulative Accuracy Profile (CAP), AR = {round(accuracy_ratio, 3)}")
 plt.xlabel('# of Data Points in Y_test')
 plt.ylabel('# of True Positive Predictions')
 plt.legend()
-plt.savefig('Decision_Tree_Classification_Cumulative_Accuracy_Profile_(CAP).png')
+plt.savefig('Support_Vector_Machine_(SVM)_Classification_Cumulative_Accuracy_Profile_(CAP).png')
 plt.clf()
-
