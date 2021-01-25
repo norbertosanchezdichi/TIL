@@ -105,7 +105,7 @@ plt.plot([0, Y_test_length], [0, Y_test_one_count], c = 'r', linewidth = 2, labe
 plt.legend()
 plt.title('Cumulative Accuracy Profile (CAP)')
 plt.xlabel('# of Data Points in the Data Set')
-plt.ylabel('# of Predictions')
+plt.ylabel('# of True Positive Predictions')
 plt.legend()
 plt.savefig('Random_Forest_Classification_Cumulative_Accuracy_Profile_(CAP).png')
 plt.clf()
