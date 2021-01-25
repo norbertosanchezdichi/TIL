@@ -102,7 +102,7 @@ plt.plot([0, Y_test_one_count, Y_test_length], [0, Y_test_one_count, Y_test_one_
 
 ## Plot Cumulative Accuracy Profile (CAP) for classifier
 classifier_CAP = [y for _, y in sorted(zip(Y_predict, Y_test), reverse = True)]
-plt.plot(np.arange(0, Y_test_length + 1), np.append([0], np.cumsum(classifier_CAP)), c = 'k', linewidth = 2, label = 'Logistic Regression Classifier')
+plt.plot(np.arange(0, Y_test_length + 1), np.append([0], np.cumsum(classifier_CAP)), c = 'k', linewidth = 2, label = 'Kernel Support Vector Machine (SVM) Classifier')
 
 ## Plot Random Model
 plt.plot([0, Y_test_length], [0, Y_test_one_count], c = 'r', linewidth = 2, label = 'Random Model')
