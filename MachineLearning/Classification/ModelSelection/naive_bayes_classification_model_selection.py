@@ -34,6 +34,7 @@ print()
 
 # Naïve-Bayes Classifier
 ## A non-linear model with a probabilistic approach.
+## Helps rank predictions by their probability.
 ## Baye's Theorem
 ### 1. Calculate P(A|X) = P(X|A) * P(A) / P(X)
 #### P(A) -> Prior Probability

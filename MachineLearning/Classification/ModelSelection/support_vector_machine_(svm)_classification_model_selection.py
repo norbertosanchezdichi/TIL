@@ -37,6 +37,7 @@ print()
 # Support Vector Machine (SVM)
 ## A linear model where the Maximum Margin Hyperplane, which is the Maximum Margin Classifier, is chosen by its Maximum Margin.   
 ## The Support Vectors are what define the Maximum Margin using a Negative and Positive Hyperplane.
+## Helps predict to which segment do the input features belong to.
 
 # Create and train Support Vector Machine (SVM) model
 ## Use the linear kernel

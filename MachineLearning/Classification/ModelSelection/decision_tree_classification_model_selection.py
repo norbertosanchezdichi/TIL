@@ -34,6 +34,7 @@ print()
 
 # Decision Tree Classifier
 ## Splits the dataset into homogenous classes with the goal to obtain the minimum entropy in each terminal leaf.
+## Provides clear interpretation of model results.
 ### Uses reduction of standard deviation of the predictions.
 ### Building a decision tree is all about finding the attribute that returns the highest standard deviation reduction.
 ### The Information Gain is the reduction in standard deviation.

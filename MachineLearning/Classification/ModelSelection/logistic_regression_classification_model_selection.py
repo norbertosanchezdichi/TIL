@@ -35,6 +35,8 @@ print(f"X_test_scaled = {X_test_scaled}")
 print()
 
 # Logistic Regression Classifier
+## A inear model.
+## Helps rank predictions by their probability.
 ## Using the Sigmoid Function with Euler's number, solving for the dependent variable 'Y' in terms of the probability allows to model the solution with a linear equation.
 ## The solution is in terms of probability using the natural log - hence why it is called Logistic Regression.
 # Assumptions when using Logistic Regression
