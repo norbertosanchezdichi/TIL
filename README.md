@@ -6,3 +6,6 @@ Today I learned...
 ## Modern Web Scraping
 
 ## Machine Learning
+
+## Algorithms
+### Traveling Salesman
