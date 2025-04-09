@@ -1,5 +1,3 @@
-# Saving the README content as a downloadable markdown file
-readme_content = """
 # 📚 TIL (Today I Learned)
 
 Welcome to **TIL (Today I Learned)** — a growing digital garden 🌱 of concise lessons, code snippets, and insights collected through daily learning. Whether you're revisiting a concept or picking up something new, this repo serves as a handy, ever-expanding reference and learning log.
@@ -69,8 +67,7 @@ An AI-powered tagging system designed to keep your PDFs nicely tagged for quick 
 - 🤖 Uses GPT-based models to semantically analyze content
 - 🏷️ Generates intelligent tags based on context
 - 🔍 Helps with filtering, categorizing, and finding relevant notes fast
-- 🛠️ Built in Python — check it out here: [TagSynthesizer](https://github.com/norbertosanchezdichi/TagSynthesizer)
-"""
+
 
 ---
 
@@ -106,8 +103,3 @@ Learning something new each day is a journey. Thanks for checking out this repo 
 
 > “An investment in knowledge always pays the best interest.” — Benjamin Franklin
 """
-
-with open("/mnt/data/README_TIL.md", "w", encoding="utf-8") as f:
-    f.write(readme_content)
-
-"/mnt/data/README_TIL.md"
