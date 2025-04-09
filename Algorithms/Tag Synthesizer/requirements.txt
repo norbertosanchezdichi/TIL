@@ -1,0 +1,4 @@
+PyMuPDF==1.23.20
+openai==1.14.3
+textblob==0.17.1
+tqdm==4.66.2
