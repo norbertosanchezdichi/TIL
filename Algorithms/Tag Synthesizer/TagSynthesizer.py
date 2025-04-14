@@ -11,9 +11,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
 import fitz
+import tempfile
+import shutil
 from openai import OpenAI
 from openai._exceptions import RateLimitError
 from textblob import TextBlob
+import tiktoken
 from tqdm import tqdm
 from tqdm import trange
 
@@ -23,22 +26,22 @@ FAILED_TAGS_CACHE = "TagSynth_failed_tags.json"
 LOG_FILE_PREFIX = "TagSynth_"
 
 def generate_log_filename(prefix=LOG_FILE_PREFIX, folder="logs"):
-    # Ensure logs/ exists
     os.makedirs(folder, exist_ok=True)
 
-    # Generate high-precision timestamp
     ns = time.time_ns()
-    dt = datetime.fromtimestamp(ns / 1e9)
-    date_str = dt.strftime("%Y-%m-%d_%H-%M-%S")
-    ms = (ns // 1_000_000) % 1000
-    us = (ns // 1_000) % 1000
-    ns_only = ns % 1000
+    sec = ns // 1_000_000_000
+    nano = ns % 1_000_000_000
 
-    timestamp = f"{date_str}_{ms:03}_{us:03}_{ns_only:03}"
-    filename = f"{prefix}_{timestamp}.log"
+    milliseconds = nano // 1_000_000
+    microseconds = (nano // 1_000) % 1_000
+    nanoseconds = nano % 1_000
 
+    dt = datetime.fromtimestamp(sec)
+    date_str = dt.strftime("%Y-%m-%d %H:%M:%S")
+
+    timestamp = f"{date_str},{milliseconds:03d},{microseconds:03d},{nanoseconds:03d}"
+    filename = f"{prefix}{timestamp}.log"
     return os.path.join(folder, filename)
-
 
 def configure_log(level=logging.INFO):
     filename = generate_log_filename()
@@ -49,11 +52,11 @@ def configure_log(level=logging.INFO):
             date_str = base.strftime("%Y-%m-%d %H:%M:%S")
             total_ns = int(record.created * 1_000_000_000)
 
-            ms = (total_ns // 1_000_000) % 1000
-            us = (total_ns // 1_000) % 1000
-            ns_only = total_ns % 1000
+            milliseconds = (total_ns // 1_000_000) % 1000
+            microseconds = (total_ns // 1_000) % 1000
+            nanoseconds = total_ns % 1000
 
-            return f"{date_str},{ms:03},{us:03},{ns_only:03}"
+            return f"{date_str},{milliseconds:03},{microseconds:03},{nanoseconds:03}"
 
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
@@ -94,7 +97,8 @@ def has_tagged_finder_tag(file_path):
     try:
         result = subprocess.run(
             ["mdls", "-name", "kMDItemUserTags", file_path],
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
             text=True,
             check=True
         )
@@ -105,48 +109,208 @@ def has_tagged_finder_tag(file_path):
 
 def find_untagged_pdfs(root_dir, max_workers, max_files=None):
     all_pdfs = find_pdfs(root_dir, max_files)
-    untagged_pdfs = []
     logging.info(f"🔎 Checking {len(all_pdfs)} PDFs for tags...")
 
+    def check_and_return(path):
+        try:
+            return path if not has_tagged_finder_tag(path) else None
+        except Exception as e:
+            logging.warning(f"⚠️ Error checking tags for {os.path.basename(path)}: {e}")
+            return None
+
+    untagged_pdfs = []
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_path = {executor.submit(has_tagged_finder_tag, path): path for path in all_pdfs}
-        for future in tqdm(as_completed(future_to_path), total=len(future_to_path), desc="📄 Scanning"):
-            path = future_to_path[future]
-            try:
-                if not future.result():
-                    untagged_pdfs.append(path)
-                    # logging.debug(f"Append {path}")
-            except Exception:
-                continue
+        for result in tqdm(executor.map(check_and_return, all_pdfs), total=len(all_pdfs), desc="📄 Scanning"):
+            if result:
+                untagged_pdfs.append(result)
+
     return untagged_pdfs
+
+def parse_problematic_pages(stderr_text):
+    bad_pages = set()
+
+    # 1. Known patterns like "page 123"
+    for match in re.findall(r"[Pp]age (\d+)", stderr_text):
+        bad_pages.add(int(match))
+
+    # 2. Range pattern like "pages 10 through 15"
+    for start, end in re.findall(r"[Pp]ages (\d+) through (\d+)", stderr_text):
+        bad_pages.update(range(int(start), int(end) + 1))
+
+    # 3. MuPDF/Ghostscript "cannot find resource" fallback
+    mupdf_lines = [line for line in stderr_text.splitlines() if "XObject resource" in line or "ExtGState resource" in line]
+    if mupdf_lines:
+        # Just warn and skip the *first few pages* as a fallback guess
+        logging.warning(f"⚠️ MuPDF resource errors found in OCR stderr. Unable to locate page numbers reliably.")
+        bad_pages.update(range(1, 4))  # fallback to skip first 3 pages
+
+    if "non-page object in page tree" in stderr_text:
+        logging.error("📌 PDF contains a non-page object in the page tree — cannot recover. Skipping.")
+        return []
+
+    return sorted(bad_pages)
 
 def extract_text_from_pdf(pdf_path):
     try:
         with fitz.open(pdf_path) as doc:
+            if len(doc) == 0:
+                logging.warning(f"⚠️ {os.path.basename(pdf_path)} appears to be empty or invalid (0 pages).")
+            
             text_parts = []
-            for page in doc:
-                text_parts.append(page.get_text())
-            return " ".join(text_parts).strip()
+            for page_index in range(len(doc)):
+                try:
+                    page = doc.load_page(page_index)
+                    text_parts.append(page.get_text())
+                except Exception as e:
+                    logging.warning(f"⚠️ Skipping page {page_index + 1} in {os.path.basename(pdf_path)} due to error: {e}")
+
+            text = " ".join(text_parts).strip()
+            if text:
+                return text
+            else:
+                logging.warning(f"⚠️ No text extracted from {os.path.basename(pdf_path)} — attempting OCR...")
+
+        # --- OCR Fallback (overwrite original file) ---
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+            ocr_output = tmp.name
+
+        file_size_kb = os.path.getsize(pdf_path) // 1024
+        logging.debug(f"📄 File info: {os.path.basename(pdf_path)} — Size: {file_size_kb} KB, Pages: {len(doc)}")
+
+        try:
+            with fitz.open(pdf_path) as doc_check:
+                logging.debug(f"📄 {os.path.basename(pdf_path)} — Pages: {len(doc_check)}")
+        except Exception as e:
+            logging.error(f"❌ Could not open {pdf_path} to inspect pages: {e}")
+
+        try:
+            result = subprocess.run(
+                ["ocrmypdf", "--force-ocr", "--jobs", str(os.cpu_count()), pdf_path, ocr_output],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                text=True
+            )
+            if result.returncode != 0:
+                logging.error(f"❌ OCR failed for {os.path.basename(pdf_path)}:")
+                logging.error(result.stderr.strip())
+
+                bad_page = None
+                match = re.search(r"Page (\d+)", result.stderr)
+                if match:
+                    bad_page = match.group(1)
+                    logging.warning(f"⚠️ Detected possible problematic page: {bad_page}. Retrying OCR without it...")
+
+                    try:
+                        result_retry = subprocess.run(
+                            ["ocrmypdf", "--force-ocr", f"--pages", f"1-{int(bad_page)-1},{int(bad_page)+1}-9999", pdf_path, ocr_output],
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            text=True
+                        )
+                        if result_retry.returncode == 0:
+                            logging.info(f"✅ OCR retry succeeded after skipping page {bad_page}")
+                            shutil.move(ocr_output, pdf_path)
+                            with fitz.open(pdf_path) as ocr_doc:
+                                return " ".join([p.get_text() for p in ocr_doc]).strip()
+                        else:
+                            logging.error("❌ Retry also failed.")
+                            logging.error(result_retry.stderr.strip())
+                    except Exception as e2:
+                        logging.error(f"❌ Retry OCR exception: {e2}")                
+                return ""
+
+            logging.info(f"📄 OCR complete for {os.path.basename(pdf_path)} — replacing original")
+
+            # Replace original with OCR’d version
+            shutil.move(ocr_output, pdf_path)
+
+            # Re-extract from the updated file
+            with fitz.open(pdf_path) as ocr_doc:
+                ocr_text = " ".join([page.get_text() for page in ocr_doc]).strip()
+                if ocr_text:
+                    logging.info(f"✅ OCR text extracted and saved in {os.path.basename(pdf_path)}")
+                else:
+                    logging.warning(f"❌ OCR'd file still yielded no text: {os.path.basename(pdf_path)}")
+                return ocr_text
+
+        except subprocess.CalledProcessError as e:
+            stderr_text = result.stderr.strip()
+            logging.error(f"❌ OCR failed for {os.path.basename(pdf_path)}:")
+            logging.error(stderr_text)
+
+            # Attempt to parse and skip problematic pages
+            problem_pages = parse_problematic_pages(stderr_text)
+            if problem_pages:
+                logging.warning(f"🩹 Detected problematic pages: {problem_pages}. Retrying with these pages skipped...")
+                
+                # Build a page exclusion list (e.g., if PDF has 10 pages, exclude page 3 → --pages 1,2,4-10)
+                with fitz.open(pdf_path) as temp_doc:
+                    total_pages = len(temp_doc)
+                valid_pages = [str(i+1) for i in range(total_pages) if (i+1) not in problem_pages]
+                if not valid_pages:
+                    logging.error(f"❌ All pages problematic — cannot OCR {os.path.basename(pdf_path)}.")
+                    return ""
+
+                pages_arg = ",".join(valid_pages)
+                try:
+                    retry = subprocess.run(
+                        ["ocrmypdf", "--force-ocr", "--pages", pages_arg, pdf_path, ocr_output],
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                        text=True
+                    )
+                    if retry.returncode == 0:
+                        shutil.move(ocr_output, pdf_path)
+                        logging.info(f"✅ OCR succeeded after skipping pages {problem_pages}")
+                        with fitz.open(pdf_path) as final_doc:
+                            return " ".join(page.get_text() for page in final_doc).strip()
+                    else:
+                        logging.error(f"❌ Retry OCR still failed for {os.path.basename(pdf_path)}")
+                        logging.error(retry.stderr.strip())
+                except Exception as retry_ex:
+                    logging.error(f"❌ Exception during retry OCR for {os.path.basename(pdf_path)}: {retry_ex}")
+            return ""
+
+        finally:
+            try:
+                os.remove(ocr_output)
+            except Exception:
+                pass
+
     except Exception as e:
-        logging.error(f"❌ Failed to extract from {pdf_path}: {e}")
+        logging.error(f"❌ Failed to extract from {os.path.basename(pdf_path)}: {e}")
         return ""
 
-def dynamically_chunk_text(text, max_total_tokens=12000, min_chunk_tokens=1000):
-    words = text.split()
-    total_words = len(words)
+def dynamically_chunk_text(text, max_total_tokens=12000, min_chunk_tokens=1000, model_name="gpt-4o"):
+    enc = tiktoken.encoding_for_model(model_name)
+    tokens = enc.encode(text)
 
-    if total_words < min_chunk_tokens:
-        logging.debug(f"🧪 Single chunk size: {total_words} words")
+    total_tokens = len(tokens)
+    if total_tokens < min_chunk_tokens:
+        logging.debug(f"🧪 Single chunk size: {total_tokens} tokens")
         return [text]
 
-    ideal_chunk_size = max(min_chunk_tokens, min(len(words) // 3, 4000))
+    ideal_chunk_size = max(min_chunk_tokens, min(total_tokens // 3, 4000))
+    logging.debug(f"📐 Target chunk size: {ideal_chunk_size} tokens")
+
     chunks = []
+    current_chunk = []
+    current_count = 0
 
-    for i in range(0, total_words, ideal_chunk_size):
-        chunk = " ".join(words[i:i + ideal_chunk_size])
-        logging.debug(f"🔪 Chunk {len(chunks)+1} size: {len(chunk.split())} words")
-        chunks.append(chunk)
+    for token in tokens:
+        current_chunk.append(token)
+        current_count += 1
 
+        if current_count >= ideal_chunk_size:
+            chunk_text = enc.decode(current_chunk)
+            chunks.append(chunk_text)
+            current_chunk = []
+            current_count = 0
+
+    if current_chunk:
+        chunks.append(enc.decode(current_chunk))
+
+    logging.debug(f"🔪 Total chunks: {len(chunks)}")
     return chunks
 
 def clean_text(text: str) -> str:
@@ -193,6 +357,8 @@ def extract_and_filter(pdf_path, skip_filter=False):
     return text_extracted_clean_filter
 
 def clean_tags(tag_list):
+    if not tag_list:
+        return []
     clean = []
     for tag in tag_list:
         tag = tag.strip().lower()
@@ -207,24 +373,62 @@ def clean_tags(tag_list):
             clean.append(tag)
     return clean
 
+def generate_tags_for_chunk_batch(relative_path, chunks, model, num_tags=25, max_retries=3, backoff=10):
+    batch_prompt = f"""
+                    You are a technical assistant helping tag engineering documents.
+                    For each of the chunks below, generate **exactly {num_tags} lowercase, relevant tags** that summarize each chunk.
+                    Format each output like:
+                    Chunk 1 Tags:
+                    - tag
+                    - tag
+                    ...
+                    Chunks:
+                    """
+    for i, chunk in enumerate(chunks, 1):
+        batch_prompt += f"\nChunk {i}:\n{chunk.strip()[:3000]}...\n"
+
+    for attempt in range(max_retries):
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": batch_prompt}],
+                temperature=0.3,
+            )
+            content = response.choices[0].message.content.strip()
+
+            # Parse output
+            tag_sets = []
+            matches = re.findall(r"Chunk\s+\d+\s+Tags:([\s\S]+?)(?=(\nChunk\s+\d+\s+Tags:)|$)", content)
+            for tags_raw, _ in matches:
+                tags = [line.strip("•- \t") for line in tags_raw.strip().splitlines() if line.strip()]
+                tag_sets.append(tags[:num_tags])
+
+            return tag_sets
+
+        except RateLimitError:
+            wait_time = backoff * (2 ** attempt)
+            logging.warning(f"⏳ GPT rate-limited on batch. Retrying in {wait_time}s...")
+            time.sleep(wait_time)
+
+        except Exception as e:
+            logging.error(f"❌ GPT batch tagging error: {e}")
+            break
+    return []
+
 def generate_tags_from_text(relative_path, text, model, num_tags=25, max_retries=3, backoff=10):
     prompt = f"""
             You are an expert technical assistant helping categorize academic and engineering documents.
-
             Your task is to read the following text and generate **exactly {num_tags} concise, relevant tags** that best summarize and capture the key themes, topics, and technical focus of the content.
-
             **Instructions:**
             - Tags should be **specific**, not generic (e.g., use "flyback converter" not just "electronics")
             - Tags must reflect **core concepts, technologies, design methods, or components** discussed
             - **Do not include full sentences**, explanations, or commentary
             - Use **lowercase** only
             - Format output as a simple list (one tag per line, no numbering)
-
-            Text:
-            {text}
-
+            Text: {text}
             Return only the {num_tags} tags.
             """
+    text = text.strip()
     logging.debug(f"🧠 Sending chunk to GPT: {relative_path} (length: {len(text.split())} words)")
 
     for attempt in range(max_retries):
@@ -251,71 +455,105 @@ def generate_tags_from_text(relative_path, text, model, num_tags=25, max_retries
     logging.info(f"🚫 Max retries reached. Skipping \"{relative_path}\".\n")
     return []
 
-def merge_tags_with_gpt(chunk_tag_lists, model, num_tags=25, max_retries=3, backoff=10):
-    prompt = f"""
-    You are a domain expert assistant tasked with distilling high-quality tags.
-
-    Given the following sets of tags extracted from chunks of a single technical PDF,
-    combine and synthesize them into **exactly {num_tags} unique, relevant tags**
-    that best represent the full document's themes and concepts.
-
-    **Instructions:**
-    - Eliminate duplicates and overly broad terms
-    - Prioritize specific, technical, and high-signal tags
-    - Use lowercase only
-    - Return the final list of tags as one tag per line (no numbering)
-
-    Chunk Tags:
-    """
-    logging.debug(f"🧠 Merging {len(chunk_tag_lists)} tag sets with GPT...")
-
-    for i, taglist in enumerate(chunk_tag_lists, 1):
-        joined = ", ".join(taglist)
-        prompt += f"\nChunk {i}: {joined}"
-    logging.debug(f"🤲 Joined tags: {joined}")
-
-    for attempt in range(max_retries):
-        try:
-            response = client.chat.completions.create(
-                model=model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.3,
-            )
-            content = response.choices[0].message.content.strip()
-            tags = [line.strip("•- \t") for line in content.splitlines() if line.strip()]
-            logging.debug(f"🧪 GPT merged output (raw): {tags}")
-            return clean_tags(tags[:num_tags])
-        
-        except RateLimitError:
-            wait = backoff * (2 ** attempt)
-            logging.warning(f"⏳ Rate limit hit while merging tags. Retrying in {wait}s (attempt {attempt+1}/{max_retries})...")
-            time.sleep(wait)
-
-        except Exception as e:
-            wait = backoff * (2 ** attempt)
-            logging.error(f"❌ GPT merge error (attempt {attempt+1}/{max_retries}): {e}. Retrying in {wait}s...")
-            time.sleep(wait)
-    logging.error("🚫 Max retries reached while merging tags. Skipping merge.")
-    return []
-
-def generate_tags_for_large_doc(relative_path, full_text, model, num_tags=25):
-    chunks = dynamically_chunk_text(full_text)
-    logging.debug(f"Chunked {relative_path} into {len(chunks)} parts.")
-    chunk_tags = []
-
-    for i in trange(len(chunks), desc=f"🤏 Chunks for {os.path.basename(relative_path)}", leave=False):
-        chunk = chunks[i]
-        tags = generate_tags_from_text(f"{relative_path} [chunk {i+1}]", chunk, model, num_tags)
-        if tags:
-            chunk_tags.append(tags)
-        logging.debug(f"📦 Chunk {i+1}/{len(chunks)} tags for {os.path.basename(relative_path)}: {tags}")
-
-    if not chunk_tags:
+def merge_tags_with_gpt(chunk_tag_lists, model, num_tags=25, max_retries=3, backoff=10, depth=0):
+    if not chunk_tag_lists:
         return []
 
-    logging.debug(f"🧩 All chunk-level tags for {os.path.basename(relative_path)}:\n" +
-              "\n".join([f"Chunk {i+1}: {', '.join(tags)}" for i, tags in enumerate(chunk_tags)]))
-    merged = merge_tags_with_gpt(chunk_tags, model, num_tags)
+    # Base case: if short enough, do the normal merge
+    if len(chunk_tag_lists) <= 6:
+        prompt = f"""
+                You are a domain expert assistant tasked with distilling high-quality tags.
+                Given the following sets of tags extracted from chunks of a single technical PDF,
+                combine and synthesize them into **exactly {num_tags} unique, relevant tags**
+                that best represent the full document's themes and concepts.
+                **Instructions:**
+                - Eliminate duplicates and overly broad terms
+                - Prioritize specific, technical, and high-signal tags
+                - Use lowercase only
+                - Return the final list of tags as one tag per line (no numbering)
+                Chunk Tags:
+                """
+        logging.debug(f"🌀 Merge recursion depth: {depth} | Tag sets: {len(chunk_tag_lists)}")
+        for i, taglist in enumerate(chunk_tag_lists, 1):
+            joined = ", ".join(taglist)
+            prompt += f"\nChunk {i}: {joined}"
+
+        for attempt in range(max_retries):
+            try:
+                response = client.chat.completions.create(
+                    model=model,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0.3,
+                )
+                content = response.choices[0].message.content.strip()
+                tags = [line.strip("•- \t") for line in content.splitlines() if line.strip()]
+                logging.debug(f"🧪 GPT merge depth {depth} output: {tags}")
+                return clean_tags(tags[:num_tags])
+
+            except RateLimitError:
+                wait = backoff * (2 ** attempt)
+                logging.warning(f"⏳ Rate limit during merging (depth {depth}). Retrying in {wait}s...")
+                time.sleep(wait)
+
+            except Exception as e:
+                logging.error(f"❌ Merge error at depth {depth}: {e}")
+                break
+
+        logging.error(f"🚫 Merge failed at depth {depth}. Returning empty list.")
+        return []
+
+    # Recursive merge: break into batches
+    logging.debug(f"🔀 Recursively merging {len(chunk_tag_lists)} tag sets at depth {depth}")
+    grouped = [chunk_tag_lists[i:i + 4] for i in range(0, len(chunk_tag_lists), 4)]
+    merged_batches = []
+
+    for i, batch in enumerate(grouped):
+        logging.debug(f"🔁 Merging batch {i+1}/{len(grouped)} at depth {depth}")
+        merged = merge_tags_with_gpt(batch, model, num_tags, max_retries, backoff, depth=depth+1)
+        if merged:
+            merged_batches.append(merged)
+
+    return merge_tags_with_gpt(merged_batches, model, num_tags, max_retries, backoff, depth=depth+1)
+
+def generate_tags_for_large_doc(relative_path, full_text, model, num_tags=25):
+    chunks = dynamically_chunk_text(full_text, model_name=model)
+    logging.debug(f"Chunked {relative_path} into {len(chunks)} parts.")
+
+    merged_chunk_sets = []
+    current_batch = []
+    current_token_count = 0
+    enc = tiktoken.encoding_for_model(model)
+
+    # Group smaller chunks into batch prompts (targeting ~6000 tokens per batch)
+    for chunk in chunks:
+        tokens = enc.encode(chunk)
+        if current_token_count + len(tokens) > 6000 and current_batch:
+            merged_chunk_sets.append(current_batch)
+            current_batch = []
+            current_token_count = 0
+
+        current_batch.append(chunk)
+        current_token_count += len(tokens)
+
+    if current_batch:
+        merged_chunk_sets.append(current_batch)
+
+    logging.debug(f"🪵 Merged into {len(merged_chunk_sets)} chunk batches for {relative_path}.")
+
+    all_tags = []
+    for i, batch_chunks in enumerate(merged_chunk_sets, 1):
+        batch_text = "\n".join(batch_chunks)
+        tags = generate_tags_from_text(f"{relative_path} [merged chunk {i}]", batch_text, model, num_tags)
+        if tags:
+            all_tags.append(tags)
+        logging.debug(f"📦 Batch {i}/{len(merged_chunk_sets)} tags for {os.path.basename(relative_path)}: {tags}")
+
+    if not all_tags:
+        return []
+
+    logging.debug(f"🧩 All merged chunk-level tags for {os.path.basename(relative_path)}:\n" +
+                  "\n".join([f"Set {i+1}: {', '.join(tags)}" for i, tags in enumerate(all_tags)]))
+    merged = merge_tags_with_gpt(all_tags, model, num_tags)
     return merged
 
 def load_failed_tag_cache():
@@ -347,27 +585,38 @@ def apply_finder_tags(file_path, tags):
         if not os.path.exists(file_path):
             logging.error(f"❌ File not found: {file_path}")
             return
-        subprocess.run(["tag", "--set", tag_string, file_path], check=True)
-
+        subprocess.run(
+            ["tag", "--set", tag_string, file_path],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=True
+        )
     except subprocess.CalledProcessError as e:
         logging.error(f"❌ Failed to apply tags to {file_path}: {e}")
 
 def process_tagging_queue(filtered_texts, queue, model, max_tags):
     tag_results = {}
     successful, failed = set(), set()
-    for rel_path in tqdm(queue, desc="🤖 Tagging"):
+    
+    def tag_doc_wrapper(rel_path):
         text = filtered_texts.get(rel_path)
         if not text:
-            failed.add(rel_path)
-            continue
+            return rel_path, None
         tags = generate_tags_for_large_doc(rel_path, text, model, max_tags)
-        tags = clean_tags(tags)
+        if not tags:
+            return rel_path, None
+        return rel_path, clean_tags(tags)
+
+    with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+        futures = {executor.submit(tag_doc_wrapper, path): path for path in queue}
+        for future in tqdm(as_completed(futures), total=len(futures), desc="🤖 Tagging"):
+            rel_path, tags = future.result()
+            if not tags:
+                failed.add(rel_path)
+            else:
+                tag_results[rel_path] = tags
+                successful.add(rel_path)
         logging.debug(f"Cleaned tags: {tags}")
-        if tags:
-            tag_results[rel_path] = tags
-            successful.add(rel_path)
-        else:
-            failed.add(rel_path)
         logging.debug(f"tag_results = {tag_results} - successful = {successful} - failed = {failed}")
     return tag_results, successful, failed
 
@@ -386,6 +635,39 @@ def extract_all_texts(paths, root_dir, max_workers, skip_filter=False):
                 logging.error(f"❌ Failed to process {rel_path}: {e}")
                 failed.add(rel_path)
     return filtered, failed
+
+def strip_and_redo_ocr(pdf_path):
+    import tempfile
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+        stripped_output = tmp.name
+
+    try:
+        logging.info(f"🧽 Stripping and redoing OCR for {os.path.basename(pdf_path)}...")
+        result = subprocess.run(
+            [
+                "ocrmypdf",
+                "--redo-ocr",             # remove existing OCR and re-OCR
+                "--output-type", "pdfa",
+                "--optimize", "0",
+                pdf_path,
+                stripped_output,
+                "--jobs", str(os.cpu_count())
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True
+        )
+        shutil.move(stripped_output, pdf_path)
+        logging.info(f"✅ Replaced with re-OCR’d version: {os.path.basename(pdf_path)}")
+
+    except subprocess.CalledProcessError as e:
+        logging.error(f"❌ Failed to redo OCR for {os.path.basename(pdf_path)}: {e.stderr.strip()}")
+        try:
+            os.remove(stripped_output)
+        except Exception:
+            pass
 
 def main():
     parser = argparse.ArgumentParser(description="Tag PDFs in Finder using GPT-generated tags")
@@ -410,11 +692,10 @@ def main():
         logging.info("⚠️ --force-reprocess is enabled. Overriding tag checks, cache, and dry-run.")
 
     failed_files = set() 
-
-    configure_log(level=logging.DEBUG if args.verbose else logging.INFO)
+    log_file_path = configure_log(level=logging.DEBUG if args.verbose else logging.INFO)
     clear_console()
 
-    logging.info(f"📂 Scanning current directory: {args.dir}")
+    logging.info(f"📂 Scanning current directory: {os.path.basename(args.dir)}")
 
     # Phase 1: Find untagged PDFs 
     if args.force_reprocess:
@@ -445,23 +726,46 @@ def main():
         # Phase 2: Extracing and filtering text
         logging.info(f"\n🧩 Processing batch #{i//args.batch_size + 1} - 🔎 extracting and filtering text from {len(batch_paths)} PDFs...")
         filtered_texts, extraction_failures = extract_all_texts(batch_paths, args.dir, args.workers)
+        logging.info(f"🧠 Filtered {len(filtered_texts)} documents in batch #{i//args.batch_size + 1}")
         new_failures |= extraction_failures
+        tagging_queue = filtered_texts.keys() - failed_files
+        logging.info(f"💬 Generating tags using ChatGPT for {len(tagging_queue)} documents (batch #{i//args.batch_size + 1})...")
         batch_results, success, fail = process_tagging_queue(
-            filtered_texts, filtered_texts.keys() - failed_files, args.model, args.max_tags
+            filtered_texts, tagging_queue, args.model, args.max_tags
         )
 
         # Phase 3: First-pass tagging
-        logging.info(f"💬 Generating tags using ChatGPT for {len(batch_paths)} PDFs...")
         tag_results.update(batch_results)
         successful_files |= success
         new_failures |= fail
+        logging.info(f"🍕 Batch #{i//args.batch_size + 1} - ✅ Tagged: {len(success)}, ❌ Failed: {len(fail)}")
 
     # Phase 5: Retry failed items once
-    logging.info("\n🔁 Retrying failed files once more...")
-    retry_results, success, fail = process_tagging_queue(filtered_texts, new_failures, args.model, args.max_tags)
-    tag_results.update(retry_results)
-    successful_files |= success
-    new_failures = fail 
+    if not new_failures:
+        logging.info("✅ No documents to retry — skipping retry phase.")
+    else:
+        logging.info(f"🔁 Retrying {len(new_failures)} failed documents...")
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            executor.map(lambda rel_path: strip_and_redo_ocr(os.path.join(args.dir, rel_path)), new_failures)
+
+        filtered_retry_texts, retry_extraction_failures = extract_all_texts(
+            [os.path.join(args.dir, path) for path in new_failures], args.dir, args.workers
+        )
+        retry_results, success, fail = process_tagging_queue(
+            filtered_retry_texts, filtered_retry_texts.keys(), args.model, args.max_tags
+        )
+        tag_results.update(retry_results)
+        successful_files |= success
+        new_failures = fail
+
+        # Log retry results
+        logging.info(f"✅ Tagged on retry: {len(success)}")
+        logging.info(f"❌ Still failed after retry: {len(fail)}")
+
+        if success:
+            logging.info("🟢 Successfully tagged on retry:\n" + "\n".join(sorted(success)))
+        if fail:
+            logging.info("🔴 Still failed on retry:\n" + "\n".join(sorted(fail)))
 
     # Phase 6: Save final failed cache
     logging.info("🛟 Saving failed cache...")
@@ -469,23 +773,32 @@ def main():
     save_failed_tag_cache(all_failures)
 
     # Phase 7: Output
-    for rel_path, tags in tag_results.items():
-        logging.debug(f"\n📄 {rel_path}\n🏷️ Tags: {', '.join(tags)}")
-        full_path = os.path.join(args.dir, rel_path)
-        all_tags = tags + (["tagged"] if "tagged" not in tags else [])
-        if not args.dry_run:
-            apply_finder_tags(full_path, all_tags)
-        else:
-            logging.info(f"🌵 (dry-run) Tagging skipped for {rel_path}.")
+    def apply_wrapper(args):
+        rel_path, full_path, all_tags = args
+        apply_finder_tags(full_path, all_tags)
+        return rel_path
+    
+    tagging_inputs = [
+        (rel_path, os.path.join(args.dir, rel_path), tags + (["tagged"] if "tagged" not in tags else []))
+        for rel_path, tags in tag_results.items()
+    ]
+
+    if not args.dry_run:
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            list(tqdm(executor.map(apply_wrapper, tagging_inputs), total=len(tagging_inputs), desc="🏷️ Applying Tags"))
+    else:
+        logging.info(f"🌵 (dry-run) Tagging skipped for {rel_path}.")
 
     total_attempted = len(successful_files) + len(new_failures)
     duration = time.time() - start_time
 
-    logging.info(f"\n📊 Summary:")
+    logging.info(f"📊 Summary:")
     logging.info(f"   🟢 Tagged: {len(successful_files)}")
     logging.info(f"   🔴 Failed: {len(new_failures)}")
     logging.info(f"   📄 Total processed: {total_attempted}")
-    logging.info(f"   ⏱️ Duration: {round(duration, 3)} seconds")
+    logging.info(f"   ⏱️ Duration: {round(duration/60, 3)} minutes.")
+    logging.info(f"🗂️ Full log saved to: {log_file_path}")
+
 
 if __name__ == "__main__":
     main()
